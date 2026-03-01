@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Portfolio</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    /* ── Figma brand tokens ── */
+    :root {
+      --bg:      #111111;
+      --surface: #1a1a1a;
+      --border:  #2a2a2a;
+      --text:    #ffffff;
+      --muted:   #888888;
+      --sub:     #555555;
+
+      /* Figma logo 4 colors */
+      --fig-red:    #F24E1E;
+      --fig-pink:   #FF7262;
+      --fig-purple: #A259FF;
+      --fig-blue:   #1ABCFE;
+      --fig-green:  #0ACF83;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .wrap {
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 80px 32px 120px;
+    }
+
+    /* ── Nav ── */
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 96px;
+    }
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--text);
+      letter-spacing: -0.01em;
+    }
+    /* Figma logo mark (4 circles) */
+    .figmark {
+      width: 22px;
+      height: 22px;
+      position: relative;
+      flex-shrink: 0;
+    }
+    .figmark svg { width: 22px; height: 22px; }
+
+    nav .links {
+      display: flex;
+      gap: 24px;
+    }
+    nav .links a {
+      font-size: 0.82rem;
+      font-weight: 500;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.15s;
+    }
+    nav .links a:hover { color: var(--text); }
+
+    /* ── Hero ── */
+    .hero {
+      margin-bottom: 80px;
+    }
+    .hero-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--muted);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+    }
+    .hero-tag .dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--fig-green);
+    }
+    .hero h1 {
+      font-size: clamp(2.4rem, 6vw, 3.6rem);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      line-height: 1.1;
+      margin-bottom: 20px;
+    }
+    .hero h1 em {
+      font-style: normal;
+      background: linear-gradient(90deg, var(--fig-purple), var(--fig-blue));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .hero p {
+      font-size: 1rem;
+      color: var(--muted);
+      font-weight: 500;
+      max-width: 420px;
+    }
+
+    /* ── Section ── */
+    section { margin-bottom: 64px; }
+
+    .label {
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--sub);
+      margin-bottom: 24px;
+    }
+
+    /* ── About ── */
+    .about p {
+      font-size: 0.95rem;
+      color: #aaa;
+      font-weight: 500;
+      line-height: 1.8;
+    }
+
+    /* ── Skills ── */
+    .skills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .skill {
+      font-size: 0.8rem;
+      font-weight: 600;
+      padding: 6px 14px;
+      border-radius: 6px;
+      border: 1px solid var(--border);
+      color: #ccc;
+      background: var(--surface);
+      transition: border-color 0.15s, color 0.15s;
+    }
+    .skill:hover { border-color: #555; color: #fff; }
+
+    /* colored left-border variant */
+    .skill-red    { border-left: 3px solid var(--fig-red); }
+    .skill-pink   { border-left: 3px solid var(--fig-pink); }
+    .skill-purple { border-left: 3px solid var(--fig-purple); }
+    .skill-blue   { border-left: 3px solid var(--fig-blue); }
+    .skill-green  { border-left: 3px solid var(--fig-green); }
+
+    /* ── Works ── */
+    .works { display: flex; flex-direction: column; gap: 0; }
+
+    .work-item {
+      display: grid;
+      grid-template-columns: 36px 1fr;
+      gap: 16px;
+      align-items: start;
+      padding: 20px 0;
+      border-bottom: 1px solid var(--border);
+      transition: background 0.15s;
+      cursor: pointer;
+    }
+    .work-item:first-child { border-top: 1px solid var(--border); }
+    .work-item:hover { background: var(--surface); margin: 0 -16px; padding: 20px 16px; }
+
+    .work-num {
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: var(--sub);
+      padding-top: 3px;
+      font-variant-numeric: tabular-nums;
+    }
+    .work-info h3 {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--text);
+      letter-spacing: -0.01em;
+      margin-bottom: 4px;
+    }
+    .work-info p {
+      font-size: 0.82rem;
+      color: var(--muted);
+      font-weight: 500;
+    }
+    .work-tags {
+      display: flex;
+      gap: 6px;
+      margin-top: 10px;
+      flex-wrap: wrap;
+    }
+    .work-tag {
+      font-size: 0.68rem;
+      font-weight: 600;
+      padding: 2px 8px;
+      border-radius: 4px;
+      color: var(--sub);
+      border: 1px solid var(--border);
+    }
+
+    /* ── Contact ── */
+    .contact-links {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+    .contact-link {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 18px 0;
+      border-bottom: 1px solid var(--border);
+      text-decoration: none;
+      color: var(--text);
+      font-size: 0.92rem;
+      font-weight: 600;
+      transition: color 0.15s;
+    }
+    .contact-link:first-child { border-top: 1px solid var(--border); }
+    .contact-link:hover { color: var(--fig-purple); }
+    .contact-link:hover .arrow { transform: translate(3px, -3px); }
+    .arrow {
+      font-size: 0.9rem;
+      color: var(--sub);
+      transition: transform 0.2s;
+    }
+    .contact-link small {
+      color: var(--sub);
+      font-size: 0.78rem;
+      font-weight: 500;
+    }
+
+    /* ── Footer ── */
+    footer {
+      margin-top: 80px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.72rem;
+      color: var(--sub);
+      font-weight: 500;
+    }
+    .footer-dots {
+      display: flex;
+      gap: 5px;
+    }
+    .footer-dots span {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+
+    <!-- Nav -->
+    <nav>
+      <div class="logo">
+        <!-- Figma-style 4-color logo mark -->
+        <svg class="figmark" viewBox="0 0 38 57" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M19 28.5C19 23.25 23.25 19 28.5 19C33.75 19 38 23.25 38 28.5C38 33.75 33.75 38 28.5 38C23.25 38 19 33.75 19 28.5Z" fill="#1ABCFE"/>
+          <path d="M0 47.5C0 42.25 4.25 38 9.5 38H19V47.5C19 52.75 14.75 57 9.5 57C4.25 57 0 52.75 0 47.5Z" fill="#0ACF83"/>
+          <path d="M19 0V19H28.5C33.75 19 38 14.75 38 9.5C38 4.25 33.75 0 28.5 0H19Z" fill="#FF7262"/>
+          <path d="M0 9.5C0 14.75 4.25 19 9.5 19H19V0H9.5C4.25 0 0 4.25 0 9.5Z" fill="#F24E1E"/>
+          <path d="M0 28.5C0 33.75 4.25 38 9.5 38H19V19H9.5C4.25 19 0 23.25 0 28.5Z" fill="#A259FF"/>
+        </svg>
+        あなたの名前
+      </div>
+      <div class="links">
+        <a href="#works">Works</a>
+        <a href="#contact">Contact</a>
+      </div>
+    </nav>
+
+    <!-- Hero -->
+    <div class="hero">
+      <div class="hero-tag">
+        <span class="dot"></span>
+        Available for work
+      </div>
+      <h1>Designer &<br><em>Frontend Dev.</em></h1>
+      <p>かわいくて使いやすいUIを作るのが得意です。デザインとコードの間に生きています。</p>
+    </div>
+
+    <!-- About -->
+    <section class="about">
+      <div class="label">About</div>
+      <p>
+        はじめまして、○○です。Webデザインとフロントエンド開発が好きで、Figmaでデザインを考えてからコードに落とし込むワークフローが得意です。シンプルで心地よいUIを追求しています。
+      </p>
+    </section>
+
+    <!-- Skills -->
+    <section>
+      <div class="label">Skills</div>
+      <div class="skills">
+        <span class="skill skill-red">HTML / CSS</span>
+        <span class="skill skill-pink">JavaScript</span>
+        <span class="skill skill-purple">React</span>
+        <span class="skill skill-purple">TypeScript</span>
+        <span class="skill skill-blue">Next.js</span>
+        <span class="skill skill-blue">Tailwind CSS</span>
+        <span class="skill skill-green">Figma</span>
+        <span class="skill skill-green">Git / GitHub</span>
+      </div>
+    </section>
+
+    <!-- Works -->
+    <section id="works">
+      <div class="label">Works</div>
+      <div class="works">
+        <div class="work-item">
+          <span class="work-num">01</span>
+          <div class="work-info">
+            <h3>かわいいECサイト</h3>
+            <p>ハンドメイドアクセサリーのショッピングサイト。カートや決済機能付き。</p>
+            <div class="work-tags">
+              <span class="work-tag">React</span>
+              <span class="work-tag">Stripe</span>
+              <span class="work-tag">Figma</span>
+            </div>
+          </div>
+        </div>
+        <div class="work-item">
+          <span class="work-num">02</span>
+          <div class="work-info">
+            <h3>天気アプリ</h3>
+            <p>OpenWeatherAPIを使ったリアルタイム天気表示アプリ。</p>
+            <div class="work-tags">
+              <span class="work-tag">Next.js</span>
+              <span class="work-tag">API</span>
+            </div>
+          </div>
+        </div>
+        <div class="work-item">
+          <span class="work-num">03</span>
+          <div class="work-info">
+            <h3>UIコンポーネント集</h3>
+            <p>Figmaで作成したオリジナルデザインシステム。</p>
+            <div class="work-tags">
+              <span class="work-tag">Figma</span>
+              <span class="work-tag">Design System</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact -->
+    <section id="contact">
+      <div class="label">Contact</div>
+      <div class="contact-links">
+        <a href="https://github.com/" class="contact-link">
+          <div>
+            GitHub
+            <small style="margin-left:12px">@username</small>
+          </div>
+          <span class="arrow">↗</span>
+        </a>
+        <a href="https://twitter.com/" class="contact-link">
+          <div>
+            Twitter / X
+            <small style="margin-left:12px">@username</small>
+          </div>
+          <span class="arrow">↗</span>
+        </a>
+        <a href="mailto:your@email.com" class="contact-link">
+          <div>
+            Email
+            <small style="margin-left:12px">your@email.com</small>
+          </div>
+          <span class="arrow">↗</span>
+        </a>
+      </div>
+    </section>
+
+    <footer>
+      <span>© 2026 あなたの名前</span>
+      <div class="footer-dots">
+        <span style="background:#F24E1E"></span>
+        <span style="background:#A259FF"></span>
+        <span style="background:#1ABCFE"></span>
+        <span style="background:#0ACF83"></span>
+      </div>
+    </footer>
+
+  </div>
+</body>
+</html>
