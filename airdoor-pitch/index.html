@@ -1,0 +1,1243 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>エアドア — おとりのない賃貸ポータル</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
+  <style>
+    *{ box-sizing:border-box; margin:0; padding:0; }
+
+    html, body{
+      height: 100%;
+      overflow: hidden;
+    }
+
+    body{
+      background:#0A1628;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      justify-content:center;
+      padding: 0;
+      gap: 0;
+    }
+
+    /* ── 16:9 wrapper ── */
+    .deck-outer{
+      /* 縦幅を基準に横幅を計算、ナビ分(44px)を引く */
+      width: min(100vw, calc((100vh - 44px) * 16 / 9));
+      aspect-ratio: 16/9;
+      overflow: hidden;
+      position: relative;
+      flex-shrink: 0;
+    }
+    .deck{
+      width: 1280px;
+      height: 720px;
+      transform-origin: top left;
+      transform: scale(var(--s,1));
+      position: absolute;
+      top:0; left:0;
+      font-family:'Noto Sans JP','Hiragino Kaku Gothic ProN','Yu Gothic',sans-serif;
+      --blue:#1AAFE8;
+      --navy:#0D1B2A;
+      --text:#1A1A2E;
+      --muted:#6B7280;
+      --red:#EF4444;
+      --green:#10B981;
+      --bg:#F8FAFB;
+    }
+
+    .slide{ position:absolute; inset:0; display:none; }
+    .slide.active{ display:block; }
+
+    /* ── nav ── */
+    .nav{
+      height: 44px;
+      width: 100%;
+      display:flex; align-items:center; justify-content:center;
+      gap:10px;
+      flex-shrink: 0;
+    }
+    .nbtn{
+      width:28px; height:28px; border-radius:50%;
+      background:rgba(255,255,255,.08);
+      border:1px solid rgba(255,255,255,.15);
+      color:rgba(255,255,255,.6); font-size:13px; cursor:pointer;
+      display:flex; align-items:center; justify-content:center;
+      transition:background .15s;
+    }
+    .nbtn:hover{ background:rgba(255,255,255,.18); color:#fff; }
+    .dots{ display:flex; gap:5px; }
+    .dot{
+      height:5px; width:5px; border-radius:3px;
+      background:rgba(255,255,255,.2); cursor:pointer;
+      transition:all .2s;
+    }
+    .dot.on{ background:#1AAFE8; width:16px; }
+    .ncnt{ color:rgba(255,255,255,.3); font-size:11px; min-width:32px; text-align:center; }
+
+    /* ============================================================
+       GLOBAL SLIDE PARTS
+    ============================================================ */
+    .logo-mark{
+      display:flex; align-items:center; gap:7px;
+      position:absolute; top:22px; left:40px; z-index:10;
+    }
+    .logo-tri{
+      width:16px; height:16px;
+      background:#1AAFE8;
+      clip-path:polygon(15% 10%,90% 50%,15% 90%);
+    }
+    .logo-txt{ font-size:14px; font-weight:700; letter-spacing:-.02em; }
+
+    .slide-num{
+      position:absolute; bottom:18px; right:40px;
+      font-size:11px; font-weight:500; letter-spacing:.06em;
+    }
+
+    /* ============================================================
+       S1 — COVER
+    ============================================================ */
+    #s1{ background:var(--navy); }
+
+    .s1-panel{
+      position:absolute; right:0; top:0;
+      width:480px; height:100%;
+      background:var(--blue);
+      clip-path:polygon(18% 0,100% 0,100% 100%,0% 100%);
+    }
+
+    .s1-content{
+      position:absolute; left:56px; top:0; bottom:0;
+      display:flex; flex-direction:column; justify-content:center;
+    }
+    .s1-eyebrow{
+      font-size:11px; font-weight:500;
+      color:rgba(255,255,255,.45);
+      letter-spacing:.14em; text-transform:uppercase;
+      margin-bottom:16px;
+    }
+    .s1-h1{
+      font-size:72px; font-weight:900; line-height:1.06;
+      letter-spacing:-.025em; color:#fff;
+      margin-bottom:14px;
+    }
+    .s1-h1 em{ font-style:normal; color:var(--blue); }
+    .s1-sub{
+      font-size:20px; font-weight:500;
+      color:rgba(255,255,255,.55);
+      margin-bottom:40px;
+    }
+    .s1-speaker{
+      display:flex; align-items:center; gap:14px;
+    }
+    .s1-avatar{
+      width:44px; height:44px; border-radius:50%; overflow:hidden;
+      background:rgba(255,255,255,.12);
+      border:2px solid rgba(255,255,255,.2);
+      flex-shrink:0;
+    }
+    .s1-name{ font-size:16px; font-weight:700; color:#fff; }
+    .s1-role{ font-size:12px; color:rgba(255,255,255,.45); margin-top:2px; }
+
+    /* right illustration */
+    .s1-illust{
+      position:absolute; right:32px; top:50%;
+      transform:translateY(-50%);
+    }
+
+    /* ============================================================
+       S2 — USER PAIN JOURNEY
+    ============================================================ */
+    #s2{ background:#fff; }
+
+    .s2-header{
+      position:absolute; top:28px; left:48px; right:48px;
+    }
+    .slide-label{
+      font-size:10px; font-weight:700; letter-spacing:.12em;
+      text-transform:uppercase; color:var(--blue);
+      margin-bottom:6px;
+    }
+    .slide-h{
+      font-size:40px; font-weight:900;
+      color:var(--text); letter-spacing:-.025em;
+      line-height:1.1;
+    }
+
+    .s2-journey{
+      position:absolute; left:36px; right:36px;
+      top:155px;
+      display:flex; align-items:flex-start;
+      gap:0;
+    }
+    .journey-step{ flex:1; display:flex; flex-direction:column; align-items:center; }
+    .journey-icon{ margin-bottom:10px; }
+    .journey-arrow{
+      width:48px; display:flex; align-items:center;
+      padding-top:44px; flex-shrink:0;
+    }
+    .journey-label{
+      font-size:14px; font-weight:700; color:var(--text);
+      text-align:center; margin-bottom:6px;
+    }
+    .journey-desc{
+      font-size:12px; color:var(--muted);
+      text-align:center; line-height:1.6;
+    }
+    .journey-badge{
+      margin-top:10px;
+      padding:4px 12px;
+      border-radius:100px;
+      font-size:11px; font-weight:700;
+    }
+    .badge-bad{ background:#FEE2E2; color:var(--red); }
+    .badge-ok{ background:#E8F7FD; color:var(--blue); }
+
+    /* ============================================================
+       S3 — STRUCTURE PROBLEM
+    ============================================================ */
+    #s3{ background:var(--bg); }
+
+    .s3-header{
+      position:absolute; top:28px; left:48px;
+    }
+    .s3-diagram{
+      position:absolute; left:72px; right:72px;
+      top:185px;
+    }
+    .s3-chain{
+      display:flex; align-items:center; gap:0;
+      margin-bottom:32px;
+    }
+    .chain-box{
+      display:flex; flex-direction:column;
+      align-items:center; justify-content:center;
+      width:160px; height:80px;
+      border-radius:12px;
+      font-size:13px; font-weight:700;
+      flex-shrink:0;
+      position:relative;
+    }
+    .chain-box-label{ font-size:10px; font-weight:500; margin-top:4px; }
+    .chain-arrow{ flex:1; display:flex; align-items:center; justify-content:center; }
+
+    .chain-main{ background:#E8F7FD; color:var(--blue); border:2px solid var(--blue); }
+    .chain-mid{ background:#F3F4F6; color:#374151; border:2px solid #E5E7EB; }
+    .chain-user{ background:#F3F4F6; color:#374151; border:2px solid #E5E7EB; }
+
+    .s3-problem{
+      position:absolute;
+      background:#FEF2F2;
+      border:1.5px solid #FECACA;
+      border-radius:12px;
+      padding:14px 20px;
+      display:flex; align-items:center; gap:12px;
+    }
+    .s3-problem-text{ font-size:13px; color:#991B1B; line-height:1.6; font-weight:500; }
+
+    .decay-note{
+      position:absolute;
+      background:rgba(239,68,68,.08);
+      border-top:2px dashed rgba(239,68,68,.35);
+      border-radius:0 0 8px 8px;
+    }
+    .decay-label{
+      font-size:11px; font-weight:700; color:var(--red);
+      text-align:center; padding:6px;
+    }
+
+    /* ============================================================
+       S4 — AIRDOOR SOLUTION
+    ============================================================ */
+    #s4{ background:#fff; }
+
+    .s4-split{
+      position:absolute; inset:0;
+      display:flex;
+    }
+    .s4-left{
+      width:50%; padding:64px 48px;
+      border-right:1px solid #F3F4F6;
+      display:flex; flex-direction:column;
+    }
+    .s4-right{
+      width:50%; padding:64px 48px;
+      display:flex; flex-direction:column;
+      background:var(--bg);
+    }
+    .s4-tag{
+      font-size:10px; font-weight:700;
+      letter-spacing:.1em; text-transform:uppercase;
+      padding:4px 10px; border-radius:4px;
+      display:inline-flex; align-items:center; gap:5px;
+      margin-bottom:20px; width:fit-content;
+    }
+    .tag-before{ background:#FEE2E2; color:var(--red); }
+    .tag-after{ background:#E8F7FD; color:var(--blue); }
+    .s4-h{ font-size:22px; font-weight:900; color:var(--text); margin-bottom:24px; line-height:1.3; }
+    .s4-chain-small{
+      display:flex; flex-direction:column; gap:10px;
+    }
+    .s4-node{
+      display:flex; align-items:center; gap:10px;
+      padding:10px 14px; border-radius:8px;
+      font-size:13px; font-weight:600;
+    }
+    .node-arrow{ display:flex; align-items:center; padding-left:24px; }
+    .arrow-down svg{ color:var(--muted); }
+
+    .node-gray{ background:#F3F4F6; color:#374151; }
+    .node-red{ background:#FEE2E2; color:var(--red); }
+    .node-blue{ background:#E8F7FD; color:var(--blue); border:1.5px solid #B3E0F5; }
+    .node-navy{ background:var(--navy); color:#fff; }
+
+    .node-warn{ font-size:10px; color:var(--red); margin-left:auto; }
+    .node-ok{ font-size:10px; color:var(--green); margin-left:auto; }
+
+    .s4-point{
+      margin-top:auto;
+      display:flex; flex-direction:column; gap:8px;
+    }
+    .s4-pt{
+      display:flex; align-items:center; gap:8px;
+      font-size:13px; color:var(--text); font-weight:500;
+    }
+    .pt-dot{
+      width:8px; height:8px; border-radius:50%;
+      background:var(--blue); flex-shrink:0;
+    }
+
+    /* ============================================================
+       S5 — 3 DIFFERENTIATORS
+    ============================================================ */
+    #s5{ background:var(--navy); }
+
+    .s5-header{
+      position:absolute; top:56px; left:72px;
+    }
+    .s5-h{ font-size:44px; font-weight:900; color:#fff; letter-spacing:-.025em; }
+    .s5-cards{
+      position:absolute; left:72px; right:72px;
+      top:185px;
+      display:flex; gap:24px;
+    }
+    .s5-card{
+      flex:1;
+      background:rgba(255,255,255,.05);
+      border:1px solid rgba(255,255,255,.1);
+      border-radius:16px;
+      padding:32px 28px;
+      display:flex; flex-direction:column;
+      transition:background .2s;
+    }
+    .s5-card-icon{
+      width:52px; height:52px;
+      background:rgba(26,175,232,.15);
+      border-radius:14px;
+      display:flex; align-items:center; justify-content:center;
+      margin-bottom:20px;
+    }
+    .s5-card-num{
+      font-size:11px; font-weight:700;
+      color:var(--blue); letter-spacing:.1em;
+      margin-bottom:8px;
+    }
+    .s5-card-title{
+      font-size:22px; font-weight:900; color:#fff;
+      letter-spacing:-.02em; margin-bottom:12px;
+    }
+    .s5-card-desc{
+      font-size:13px; color:rgba(255,255,255,.55);
+      line-height:1.8;
+    }
+    .s5-card-tag{
+      margin-top:auto; padding-top:20px;
+      font-size:12px; font-weight:700;
+      color:var(--blue);
+    }
+
+    /* ============================================================
+       S6 — DATA × AI FUTURE
+    ============================================================ */
+    #s6{ background:#fff; }
+
+    .s6-header{
+      position:absolute; top:56px; left:72px;
+    }
+    .s6-diagram{
+      position:absolute; left:72px; right:72px;
+      top:190px;
+      display:flex; align-items:center; gap:0;
+    }
+    .s6-node{
+      display:flex; flex-direction:column;
+      align-items:center; gap:12px;
+      flex:1;
+    }
+    .s6-node-icon{
+      width:80px; height:80px; border-radius:20px;
+      display:flex; align-items:center; justify-content:center;
+    }
+    .s6-node-label{
+      font-size:14px; font-weight:700; color:var(--text);
+      text-align:center;
+    }
+    .s6-node-sub{
+      font-size:11px; color:var(--muted);
+      text-align:center; line-height:1.5;
+    }
+    .s6-arrow{ width:56px; flex-shrink:0; text-align:center; padding-bottom:40px; }
+    .s6-future{
+      position:absolute; left:72px; right:72px; bottom:72px;
+      background:linear-gradient(135deg,#E8F7FD,#EBF5FF);
+      border:1.5px solid #B3E0F5;
+      border-radius:14px;
+      padding:20px 28px;
+      display:flex; align-items:center; gap:20px;
+    }
+    .s6-future-icon{
+      width:44px; height:44px; border-radius:12px;
+      background:var(--blue);
+      display:flex; align-items:center; justify-content:center;
+      flex-shrink:0; color:#fff;
+    }
+    .s6-future-text{
+      font-size:14px; font-weight:600; color:var(--text);
+      line-height:1.7;
+    }
+    .s6-future-text em{
+      font-style:normal; color:var(--blue); font-weight:700;
+    }
+
+    /* ============================================================
+       S7 — CTA / CLOSING
+    ============================================================ */
+    #s7{ background:var(--blue); }
+
+    .s7-content{
+      position:absolute; left:0; right:0; top:0; bottom:0;
+      display:flex; flex-direction:column;
+      align-items:center; justify-content:center;
+      padding:72px;
+    }
+    .s7-label{
+      font-size:12px; font-weight:700;
+      letter-spacing:.14em; text-transform:uppercase;
+      color:rgba(255,255,255,.6);
+      margin-bottom:20px;
+    }
+    .s7-h{
+      font-size:52px; font-weight:900;
+      color:#fff; text-align:center;
+      line-height:1.15; letter-spacing:-.025em;
+      margin-bottom:12px;
+    }
+    .s7-sub{
+      font-size:18px; color:rgba(255,255,255,.7);
+      text-align:center; margin-bottom:52px;
+    }
+    .s7-actions{
+      display:flex; gap:16px; align-items:center;
+    }
+    .s7-btn-main{
+      padding:14px 36px;
+      background:#fff; color:var(--blue);
+      border-radius:10px;
+      font-size:16px; font-weight:700;
+      cursor:pointer;
+      border:none;
+    }
+    .s7-btn-sub{
+      padding:14px 36px;
+      background:rgba(255,255,255,.15); color:#fff;
+      border:2px solid rgba(255,255,255,.3);
+      border-radius:10px;
+      font-size:16px; font-weight:700;
+      cursor:pointer;
+    }
+    .s7-logo{
+      position:absolute; bottom:36px;
+      display:flex; align-items:center; gap:8px;
+    }
+    .s7-logo-tri{
+      width:16px; height:16px;
+      background:rgba(255,255,255,.7);
+      clip-path:polygon(15% 10%,90% 50%,15% 90%);
+    }
+    .s7-logo-text{ font-size:15px; font-weight:700; color:rgba(255,255,255,.7); letter-spacing:-.01em; }
+
+    /* ============================================================
+       S8 — CLOSING / AX MESSAGE
+    ============================================================ */
+    #s8{ background:var(--navy); }
+    .s8-content{
+      position:absolute; inset:0;
+      display:flex; flex-direction:column;
+      align-items:center; justify-content:center;
+      padding:60px 88px;
+    }
+    .s8-label{
+      font-size:11px; font-weight:700;
+      letter-spacing:.14em; text-transform:uppercase;
+      color:var(--blue); margin-bottom:24px;
+    }
+    .s8-heading{
+      font-size:46px; font-weight:900;
+      color:#fff; text-align:center;
+      line-height:1.2; letter-spacing:-.025em;
+      margin-bottom:40px;
+    }
+    .s8-grid{
+      display:grid; grid-template-columns:1fr 1fr;
+      gap:18px 44px; max-width:820px; width:100%;
+      margin-bottom:40px;
+    }
+    .s8-card{
+      display:flex; gap:14px; align-items:flex-start;
+    }
+    .s8-bar{
+      width:3px; min-width:3px; align-self:stretch;
+      background:var(--blue); border-radius:2px;
+    }
+    .s8-card p{
+      font-size:13.5px; color:rgba(255,255,255,.7);
+      line-height:1.85;
+    }
+    .s8-card strong{ color:#fff; }
+    .s8-badges{
+      display:flex; gap:12px; flex-wrap:wrap; justify-content:center;
+    }
+    .s8-badge{
+      padding:9px 22px;
+      background:rgba(26,175,232,.12);
+      border:1px solid rgba(26,175,232,.35);
+      border-radius:100px;
+      font-size:12px; font-weight:700;
+      color:var(--blue); letter-spacing:.04em;
+    }
+  </style>
+</head>
+<body>
+
+<div class="deck-outer">
+<div class="deck" id="deck">
+
+<!-- ======================================================
+     SLIDE 1: COVER
+====================================================== -->
+<div class="slide active" id="s1">
+  <!-- 右パネル（水色） -->
+  <div class="s1-panel"></div>
+
+  <!-- ロゴ -->
+  <div class="logo-mark">
+    <div class="logo-tri"></div>
+    <span class="logo-txt" style="color:#fff">airdoor</span>
+  </div>
+
+  <!-- 右側イラスト -->
+  <div class="s1-illust">
+    <svg width="340" height="420" viewBox="0 0 340 420" fill="none">
+      <!-- 建物A（大） -->
+      <rect x="60" y="120" width="110" height="240" rx="12" fill="rgba(255,255,255,0.22)"/>
+      <rect x="75" y="140" width="25" height="30" rx="4" fill="rgba(255,255,255,0.4)"/>
+      <rect x="112" y="140" width="25" height="30" rx="4" fill="rgba(255,255,255,0.4)"/>
+      <rect x="75" y="188" width="25" height="30" rx="4" fill="rgba(255,255,255,0.4)"/>
+      <rect x="112" y="188" width="25" height="30" rx="4" fill="rgba(255,255,255,0.6)"/>
+      <rect x="75" y="236" width="25" height="30" rx="4" fill="rgba(255,255,255,0.4)"/>
+      <rect x="112" y="236" width="25" height="30" rx="4" fill="rgba(255,255,255,0.4)"/>
+      <rect x="75" y="284" width="25" height="30" rx="4" fill="rgba(255,255,255,0.6)"/>
+      <rect x="112" y="284" width="25" height="30" rx="4" fill="rgba(255,255,255,0.4)"/>
+      <!-- エントランス -->
+      <rect x="97" y="320" width="26" height="40" rx="6" fill="rgba(255,255,255,0.5)"/>
+
+      <!-- 建物B（小） -->
+      <rect x="192" y="180" width="88" height="180" rx="10" fill="rgba(255,255,255,0.16)"/>
+      <rect x="204" y="196" width="20" height="24" rx="4" fill="rgba(255,255,255,0.4)"/>
+      <rect x="234" y="196" width="20" height="24" rx="4" fill="rgba(255,255,255,0.4)"/>
+      <rect x="204" y="234" width="20" height="24" rx="4" fill="rgba(255,255,255,0.6)"/>
+      <rect x="234" y="234" width="20" height="24" rx="4" fill="rgba(255,255,255,0.4)"/>
+      <rect x="204" y="272" width="20" height="24" rx="4" fill="rgba(255,255,255,0.4)"/>
+      <rect x="234" y="272" width="20" height="24" rx="4" fill="rgba(255,255,255,0.4)"/>
+      <rect x="216" y="316" width="20" height="44" rx="6" fill="rgba(255,255,255,0.45)"/>
+
+      <!-- 地面 -->
+      <rect x="40" y="358" width="270" height="6" rx="3" fill="rgba(255,255,255,0.2)"/>
+
+      <!-- チェックバッジ -->
+      <circle cx="170" cy="90" r="36" fill="rgba(255,255,255,0.18)"/>
+      <circle cx="170" cy="90" r="28" fill="rgba(255,255,255,0.25)"/>
+      <polyline points="155,90 167,102 188,76" stroke="white" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+
+      <!-- 人物（左） -->
+      <!-- 頭 -->
+      <circle cx="44" cy="290" r="14" fill="rgba(255,255,255,0.85)"/>
+      <!-- 髪 -->
+      <path d="M30 286C30 278.27 36.27 272 44 272C51.73 272 58 278.27 58 286V290H30V286Z" fill="rgba(255,255,255,0.4)"/>
+      <!-- 体 -->
+      <path d="M24 340C24 328.95 33.07 320 44 320C54.93 320 64 328.95 64 340H24Z" fill="rgba(255,255,255,0.85)"/>
+      <!-- 笑顔 -->
+      <path d="M38 293Q44 298 50 293" stroke="rgba(13,27,42,0.5)" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+
+      <!-- 人物（右） -->
+      <circle cx="296" cy="295" r="14" fill="rgba(255,255,255,0.85)"/>
+      <path d="M282 291C282 283.27 288.27 277 296 277C303.73 277 310 283.27 310 291V295H282V291Z" fill="rgba(255,255,255,0.4)"/>
+      <path d="M276 345C276 333.95 285.07 325 296 325C306.93 325 316 333.95 316 345H276Z" fill="rgba(255,255,255,0.85)"/>
+      <path d="M290 298Q296 303 302 298" stroke="rgba(13,27,42,0.5)" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+    </svg>
+  </div>
+
+  <!-- コンテンツ -->
+  <div class="s1-content">
+    <div class="s1-eyebrow">不動産DXカンファレンス 2026</div>
+    <h1 class="s1-h1">おとりのない<br>賃貸ポータル、<br><em>エアドア。</em></h1>
+    <p class="s1-sub">賃貸情報の構造を、変える。</p>
+    <div class="s1-speaker">
+      <div class="s1-avatar">
+        <svg width="46" height="46" viewBox="0 0 46 46" fill="none">
+          <circle cx="23" cy="23" r="23" fill="#1E3A52"/>
+          <circle cx="23" cy="18" r="8" fill="rgba(255,255,255,0.7)"/>
+          <path d="M8 42C8 33.16 14.72 26 23 26C31.28 26 38 33.16 38 42" fill="rgba(255,255,255,0.7)"/>
+        </svg>
+      </div>
+      <div>
+        <div class="s1-name">鬼頭 ○○</div>
+        <div class="s1-role">株式会社エアドア　CEO</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="slide-num" style="color:rgba(255,255,255,.25)">01 / 07</div>
+</div>
+
+
+<!-- ======================================================
+     SLIDE 2: USER PAIN JOURNEY
+====================================================== -->
+<div class="slide" id="s2">
+  <div style="background:#fff;position:absolute;inset:0;"></div>
+
+  <div class="logo-mark">
+    <div class="logo-tri"></div>
+    <span class="logo-txt" style="color:var(--navy)">airdoor</span>
+  </div>
+
+  <div class="s2-header">
+    <div class="slide-label">The Problem</div>
+    <h2 class="slide-h">部屋探し、してみたことありますか？</h2>
+  </div>
+
+  <!-- Journey Steps -->
+  <div class="s2-journey">
+
+    <!-- Step 1 -->
+    <div class="journey-step">
+      <div class="journey-icon">
+        <svg width="100" height="110" viewBox="0 0 100 110" fill="none">
+          <!-- Person -->
+          <circle cx="50" cy="22" r="14" fill="#1AAFE8"/>
+          <path d="M36 20C36 12.27 42.27 6 50 6C57.73 6 64 12.27 64 20V22H36V20Z" fill="#0E8EC5"/>
+          <path d="M30 72C30 60.95 39.07 52 50 52C60.93 52 70 60.95 70 72H30Z" fill="#1AAFE8"/>
+          <rect x="47" y="36" width="6" height="16" rx="3" fill="#FDDCB5"/>
+          <path d="M34 38Q50 45 66 38" stroke="#1AAFE8" stroke-width="8" stroke-linecap="round" fill="none"/>
+          <!-- スマホ -->
+          <rect x="60" y="40" width="24" height="36" rx="5" fill="#1E3A52"/>
+          <rect x="63" y="45" width="18" height="22" rx="2" fill="#E8F7FD"/>
+          <rect x="66" y="47" width="7" height="4" rx="1" fill="#1AAFE8"/>
+          <rect x="66" y="53" width="12" height="3" rx="1" fill="rgba(0,0,0,0.12)"/>
+          <rect x="66" y="58" width="9" height="3" rx="1" fill="rgba(0,0,0,0.12)"/>
+          <circle cx="71" cy="69" r="2" fill="rgba(255,255,255,0.4)"/>
+          <!-- 気持ち -->
+          <path d="M42 30Q50 36 58 30" stroke="#0D1B2A" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+          <circle cx="44" cy="25" r="2" fill="#0D1B2A"/>
+          <circle cx="56" cy="25" r="2" fill="#0D1B2A"/>
+        </svg>
+      </div>
+      <div class="journey-label">気に入った物件を発見</div>
+      <div class="journey-desc">ポータルで<br>理想の物件を見つけた</div>
+      <div class="journey-badge badge-ok">わくわく！</div>
+    </div>
+
+    <!-- Arrow -->
+    <div class="journey-arrow">
+      <svg width="48" height="20" viewBox="0 0 48 20" fill="none">
+        <path d="M0 10H40M40 10L30 4M40 10L30 16" stroke="#D1D5DB" stroke-width="2" stroke-linecap="round"/>
+      </svg>
+    </div>
+
+    <!-- Step 2 -->
+    <div class="journey-step">
+      <div class="journey-icon">
+        <svg width="100" height="110" viewBox="0 0 100 110" fill="none">
+          <!-- Phone call icon -->
+          <rect x="28" y="30" width="44" height="50" rx="8" fill="#F3F4F6"/>
+          <path d="M40 52C40 52 42 48 46 50C47 54 48 56 47 58C46 60 44 61 48 64C52 67 58 62 60 60C62 58 62 56 60 54C58 52 56 52 54 54C52 56 50 52 48 50C46 48 44 44 42 42C40 40 37 40 36 42C35 44 36 48 40 52Z" fill="#1AAFE8"/>
+          <!-- 吹き出し -->
+          <rect x="62" y="20" width="30" height="22" rx="8" fill="#E8F7FD" stroke="#B3E0F5" stroke-width="1.5"/>
+          <polygon points="68,42 76,42 70,50" fill="#E8F7FD"/>
+          <rect x="67" y="27" width="20" height="3" rx="1.5" fill="#1AAFE8"/>
+          <rect x="67" y="32" width="14" height="3" rx="1.5" fill="#1AAFE8" opacity="0.5"/>
+          <!-- Person (smaller) -->
+          <circle cx="50" cy="16" r="10" fill="#1AAFE8"/>
+          <path d="M30 92C30 83.16 39.07 76 50 76C60.93 76 70 83.16 70 92H30Z" fill="#1AAFE8"/>
+        </svg>
+      </div>
+      <div class="journey-label">問い合わせる</div>
+      <div class="journey-desc">「この物件、<br>見学できますか？」</div>
+      <div class="journey-badge badge-ok">連絡した</div>
+    </div>
+
+    <!-- Arrow -->
+    <div class="journey-arrow">
+      <svg width="48" height="20" viewBox="0 0 48 20" fill="none">
+        <path d="M0 10H40M40 10L30 4M40 10L30 16" stroke="#D1D5DB" stroke-width="2" stroke-linecap="round"/>
+      </svg>
+    </div>
+
+    <!-- Step 3 -->
+    <div class="journey-step">
+      <div class="journey-icon">
+        <svg width="100" height="110" viewBox="0 0 100 110" fill="none">
+          <!-- 吹き出し（断り） -->
+          <rect x="10" y="8" width="80" height="42" rx="10" fill="#FEE2E2" stroke="#FCA5A5" stroke-width="1.5"/>
+          <polygon points="34,50 50,50 40,62" fill="#FEE2E2"/>
+          <text x="50" y="28" text-anchor="middle" font-size="11" font-weight="700" fill="#991B1B" font-family="sans-serif">申し訳ございません、</text>
+          <text x="50" y="43" text-anchor="middle" font-size="11" font-weight="700" fill="#991B1B" font-family="sans-serif">その物件は…</text>
+          <!-- Person（困り顔） -->
+          <circle cx="50" cy="82" r="14" fill="#FDDCB5"/>
+          <path d="M36 79C36 71.27 42.27 65 50 65C57.73 65 64 71.27 64 79V82H36V79Z" fill="#6B7280"/>
+          <circle cx="45" cy="81" r="2" fill="#555"/>
+          <circle cx="55" cy="81" r="2" fill="#555"/>
+          <!-- 困り眉 -->
+          <path d="M43 76Q45 74 47 76" stroke="#555" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+          <path d="M53 76Q55 74 57 76" stroke="#555" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+          <!-- 口（への字） -->
+          <path d="M44 87Q50 84 56 87" stroke="#555" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+          <path d="M30 108C30 99.16 39.07 92 50 92C60.93 92 70 99.16 70 108H30Z" fill="#6B7280"/>
+        </svg>
+      </div>
+      <div class="journey-label">「すでに埋まっています」</div>
+      <div class="journey-desc">おとり物件だった<br>また探し直し</div>
+      <div class="journey-badge badge-bad">🔁 繰り返す</div>
+    </div>
+
+    <!-- Arrow -->
+    <div class="journey-arrow">
+      <svg width="48" height="20" viewBox="0 0 48 20" fill="none">
+        <path d="M0 10H40M40 10L30 4M40 10L30 16" stroke="#FCA5A5" stroke-width="2" stroke-linecap="round"/>
+      </svg>
+    </div>
+
+    <!-- Step 4 -->
+    <div class="journey-step">
+      <div class="journey-icon">
+        <svg width="100" height="110" viewBox="0 0 100 110" fill="none">
+          <!-- バツ円 -->
+          <circle cx="50" cy="46" r="34" fill="#FEE2E2"/>
+          <circle cx="50" cy="46" r="26" fill="#FECACA"/>
+          <line x1="36" y1="32" x2="64" y2="60" stroke="#EF4444" stroke-width="5" stroke-linecap="round"/>
+          <line x1="64" y1="32" x2="36" y2="60" stroke="#EF4444" stroke-width="5" stroke-linecap="round"/>
+          <!-- テキスト -->
+          <rect x="18" y="86" width="64" height="20" rx="6" fill="#FEE2E2"/>
+          <text x="50" y="100" text-anchor="middle" font-size="11" font-weight="700" fill="#EF4444" font-family="sans-serif">おとり物件</text>
+        </svg>
+      </div>
+      <div class="journey-label">これが"日常"</div>
+      <div class="journey-desc">信頼できる情報が<br>どこにもない</div>
+      <div class="journey-badge badge-bad">構造的な問題</div>
+    </div>
+
+  </div>
+
+  <div class="slide-num" style="color:var(--muted)">02 / 07</div>
+</div>
+
+
+<!-- ======================================================
+     SLIDE 3: STRUCTURE PROBLEM
+====================================================== -->
+<div class="slide" id="s3">
+  <div style="background:var(--bg);position:absolute;inset:0;"></div>
+
+  <div class="logo-mark">
+    <div class="logo-tri"></div>
+    <span class="logo-txt" style="color:var(--navy)">airdoor</span>
+  </div>
+
+  <div class="s3-header">
+    <div class="slide-label">Root Cause</div>
+    <h2 class="slide-h">なぜ、これが起きるのか。</h2>
+  </div>
+
+  <!-- Flow Diagram -->
+  <div style="position:absolute;left:72px;right:72px;top:180px;">
+
+    <!-- Chain -->
+    <div style="display:flex;align-items:center;gap:0;margin-bottom:16px;">
+
+      <!-- 管理会社 -->
+      <div style="display:flex;flex-direction:column;align-items:center;width:168px;flex-shrink:0;">
+        <div style="width:168px;height:72px;background:#E8F7FD;border:2px solid #1AAFE8;border-radius:12px;display:flex;flex-direction:column;align-items:center;justify-content:center;">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#1AAFE8" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v16"/></svg>
+          <span style="font-size:12px;font-weight:700;color:#1AAFE8;margin-top:4px;">管理会社</span>
+        </div>
+        <div style="font-size:11px;color:var(--muted);margin-top:8px;">一次情報を持つ</div>
+      </div>
+
+      <!-- Arrow 1 -->
+      <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;padding:0 4px;">
+        <svg width="100%" height="20" viewBox="0 0 80 20" preserveAspectRatio="none" fill="none">
+          <path d="M0 10H70M70 10L60 5M70 10L60 15" stroke="#D1D5DB" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+        <span style="font-size:10px;color:#EF4444;font-weight:600;">情報を渡す</span>
+      </div>
+
+      <!-- 仲介A -->
+      <div style="display:flex;flex-direction:column;align-items:center;width:148px;flex-shrink:0;position:relative;">
+        <div style="width:148px;height:72px;background:#F3F4F6;border:2px solid #E5E7EB;border-radius:12px;display:flex;flex-direction:column;align-items:center;justify-content:center;">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#9CA3AF" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+          <span style="font-size:12px;font-weight:700;color:#6B7280;margin-top:4px;">仲介業者 A</span>
+        </div>
+        <!-- Warning -->
+        <div style="position:absolute;top:-10px;right:-10px;width:22px;height:22px;background:#FEF3C7;border:1.5px solid #F59E0B;border-radius:50%;display:flex;align-items:center;justify-content:center;">
+          <span style="font-size:11px;">⚠</span>
+        </div>
+        <div style="font-size:11px;color:var(--muted);margin-top:8px;">情報が古くなる</div>
+      </div>
+
+      <!-- Arrow 2 -->
+      <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;padding:0 4px;">
+        <svg width="100%" height="20" viewBox="0 0 80 20" preserveAspectRatio="none" fill="none">
+          <path d="M0 10H70M70 10L60 5M70 10L60 15" stroke="#D1D5DB" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+        <span style="font-size:10px;color:#EF4444;font-weight:600;">コピーして転載</span>
+      </div>
+
+      <!-- 仲介B -->
+      <div style="display:flex;flex-direction:column;align-items:center;width:148px;flex-shrink:0;position:relative;">
+        <div style="width:148px;height:72px;background:#F3F4F6;border:2px solid #E5E7EB;border-radius:12px;display:flex;flex-direction:column;align-items:center;justify-content:center;">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#9CA3AF" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+          <span style="font-size:12px;font-weight:700;color:#6B7280;margin-top:4px;">仲介業者 B</span>
+        </div>
+        <div style="position:absolute;top:-10px;right:-10px;width:22px;height:22px;background:#FEE2E2;border:1.5px solid #FCA5A5;border-radius:50%;display:flex;align-items:center;justify-content:center;">
+          <span style="font-size:11px;">⚠</span>
+        </div>
+        <div style="font-size:11px;color:var(--muted);margin-top:8px;">さらに古くなる</div>
+      </div>
+
+      <!-- Arrow 3 -->
+      <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;padding:0 4px;">
+        <svg width="100%" height="20" viewBox="0 0 80 20" preserveAspectRatio="none" fill="none">
+          <path d="M0 10H70M70 10L60 5M70 10L60 15" stroke="#FCA5A5" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+        <span style="font-size:10px;color:#EF4444;font-weight:600;">おとり混入</span>
+      </div>
+
+      <!-- ポータル -->
+      <div style="display:flex;flex-direction:column;align-items:center;width:148px;flex-shrink:0;position:relative;">
+        <div style="width:148px;height:72px;background:#FEF2F2;border:2px solid #FCA5A5;border-radius:12px;display:flex;flex-direction:column;align-items:center;justify-content:center;">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#EF4444" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+          <span style="font-size:12px;font-weight:700;color:#EF4444;margin-top:4px;">ポータル</span>
+        </div>
+        <div style="font-size:11px;color:#EF4444;font-weight:600;margin-top:8px;">おとり物件が並ぶ</div>
+      </div>
+
+      <!-- Arrow 4 -->
+      <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;padding:0 4px;">
+        <svg width="100%" height="20" viewBox="0 0 80 20" preserveAspectRatio="none" fill="none">
+          <path d="M0 10H70M70 10L60 5M70 10L60 15" stroke="#FCA5A5" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+        <span style="font-size:10px;color:#EF4444;font-weight:600;">嘘の情報で探す</span>
+      </div>
+
+      <!-- ユーザー -->
+      <div style="display:flex;flex-direction:column;align-items:center;width:100px;flex-shrink:0;">
+        <svg width="72" height="80" viewBox="0 0 72 80" fill="none">
+          <circle cx="36" cy="20" r="14" fill="#FDDCB5"/>
+          <path d="M22 18C22 10.27 28.27 4 36 4C43.73 4 50 10.27 50 18V20H22V18Z" fill="#6B7280"/>
+          <circle cx="31" cy="19" r="2" fill="#555"/>
+          <circle cx="41" cy="19" r="2" fill="#555"/>
+          <path d="M30 25Q36 21 42 25" stroke="#555" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+          <path d="M16 68C16 56.95 25.07 48 36 48C46.93 48 56 56.95 56 68H16Z" fill="#6B7280"/>
+          <rect x="33" y="34" width="6" height="14" rx="3" fill="#FDDCB5"/>
+        </svg>
+        <div style="font-size:11px;color:var(--muted);margin-top:4px;text-align:center;">ユーザー<br>（困惑）</div>
+      </div>
+
+    </div>
+
+    <!-- Problem box -->
+    <div style="margin-top:32px;background:#FEF2F2;border:1.5px solid #FECACA;border-radius:14px;padding:18px 28px;display:flex;align-items:center;gap:20px;">
+      <div style="width:44px;height:44px;background:#FEE2E2;border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#EF4444" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+      </div>
+      <div>
+        <div style="font-size:15px;font-weight:700;color:#991B1B;margin-bottom:4px;">構造的な問題：多段の情報転載チェーン</div>
+        <div style="font-size:13px;color:#B91C1C;line-height:1.7;">管理会社から情報が流れるまでに複数の業者を経由。成約・取下げ情報が逆流しないため、<br>古い・存在しない物件が"おとり"としてポータルに残り続ける。</div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="slide-num" style="color:var(--muted)">03 / 07</div>
+</div>
+
+
+<!-- ======================================================
+     SLIDE 4: AIRDOOR SOLUTION
+====================================================== -->
+<div class="slide" id="s4">
+  <div class="s4-split">
+
+    <!-- LEFT: 従来 -->
+    <div class="s4-left">
+      <div class="s4-tag tag-before">
+        <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        従来の構造
+      </div>
+      <h3 class="s4-h">多段転載で<br>情報が劣化する</h3>
+      <div class="s4-chain-small">
+        <div class="s4-node node-gray">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v16"/></svg>
+          管理会社
+        </div>
+        <div class="node-arrow"><svg width="12" height="16" viewBox="0 0 12 16" fill="none"><path d="M6 0V12M6 12L2 8M6 12L10 8" stroke="#D1D5DB" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+        <div class="s4-node node-red">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
+          仲介業者 A
+          <span class="node-warn">⚠ 情報劣化</span>
+        </div>
+        <div class="node-arrow"><svg width="12" height="16" viewBox="0 0 12 16" fill="none"><path d="M6 0V12M6 12L2 8M6 12L10 8" stroke="#D1D5DB" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+        <div class="s4-node node-red">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
+          仲介業者 B
+          <span class="node-warn">⚠ 情報劣化</span>
+        </div>
+        <div class="node-arrow"><svg width="12" height="16" viewBox="0 0 12 16" fill="none"><path d="M6 0V12M6 12L2 8M6 12L10 8" stroke="#D1D5DB" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+        <div class="s4-node node-red">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/></svg>
+          ポータル（おとり混入）
+          <span class="node-warn">❌</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- RIGHT: エアドア -->
+    <div class="s4-right">
+      <div class="logo-mark" style="position:static;margin-bottom:0;">
+        <div class="logo-tri"></div>
+        <span class="logo-txt" style="color:var(--navy);font-size:14px;">airdoor</span>
+      </div>
+      <div style="height:8px;"></div>
+      <div class="s4-tag tag-after">
+        <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20,6 9,17 4,12"/></svg>
+        エアドアの構造
+      </div>
+      <h3 class="s4-h">管理会社から<br>直接・リアルタイムで</h3>
+
+      <div class="s4-chain-small">
+        <div class="s4-node node-blue">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v16"/></svg>
+          管理会社
+          <span class="node-ok">✓ 一次情報</span>
+        </div>
+        <div class="node-arrow">
+          <div style="display:flex;flex-direction:column;align-items:center;gap:3px;">
+            <svg width="12" height="16" viewBox="0 0 12 16" fill="none"><path d="M6 0V12M6 12L2 8M6 12L10 8" stroke="#1AAFE8" stroke-width="1.5" stroke-linecap="round"/></svg>
+            <span style="font-size:10px;color:var(--blue);font-weight:600;">直接連携</span>
+          </div>
+        </div>
+        <div class="s4-node node-navy" style="border:2px solid #1AAFE8;">
+          <div class="logo-tri" style="width:12px;height:12px;"></div>
+          エアドア
+          <span class="node-ok">✓ リアルタイム</span>
+        </div>
+        <div class="node-arrow">
+          <div style="display:flex;flex-direction:column;align-items:center;gap:3px;">
+            <svg width="12" height="16" viewBox="0 0 12 16" fill="none"><path d="M6 0V12M6 12L2 8M6 12L10 8" stroke="#1AAFE8" stroke-width="1.5" stroke-linecap="round"/></svg>
+            <span style="font-size:10px;color:var(--blue);font-weight:600;">本物の情報</span>
+          </div>
+        </div>
+        <div class="s4-node node-blue">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
+          ユーザー
+          <span class="node-ok">✓ 正確な情報</span>
+        </div>
+      </div>
+
+      <div class="s4-point">
+        <div class="s4-pt"><span class="pt-dot"></span>中間業者ゼロ。情報が劣化しない</div>
+        <div class="s4-pt"><span class="pt-dot"></span>成約・取下げが即時反映</div>
+        <div class="s4-pt"><span class="pt-dot"></span>載っている物件は全て本物</div>
+      </div>
+    </div>
+
+  </div>
+  <div class="slide-num" style="color:var(--muted)">04 / 07</div>
+</div>
+
+
+<!-- ======================================================
+     SLIDE 5: 3 DIFFERENTIATORS
+====================================================== -->
+<div class="slide" id="s5">
+  <div style="background:var(--navy);position:absolute;inset:0;"></div>
+
+  <div class="logo-mark">
+    <div class="logo-tri"></div>
+    <span class="logo-txt" style="color:#fff">airdoor</span>
+  </div>
+
+  <div class="s5-header">
+    <div class="slide-label" style="color:rgba(26,175,232,0.8);">Our Difference</div>
+    <h2 class="s5-h">3つの構造的差別化</h2>
+  </div>
+
+  <div class="s5-cards">
+
+    <!-- Card 1: おとりなし -->
+    <div class="s5-card">
+      <div class="s5-card-icon">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#1AAFE8" stroke-width="2"><path d="M12 22s-8-4.5-8-11.8A8 8 0 0112 2a8 8 0 018 8.2c0 7.3-8 11.8-8 11.8z"/><polyline points="9,12 11,14 15,10"/></svg>
+      </div>
+      <div class="s5-card-num">01</div>
+      <div class="s5-card-title">おとりなし</div>
+      <div class="s5-card-desc">掲載されている物件は全て管理会社が確認済みの本物。存在しない物件は一切ない。</div>
+      <div class="s5-card-tag">→ ユーザーが安心して探せる</div>
+    </div>
+
+    <!-- Card 2: 一次情報 -->
+    <div class="s5-card">
+      <div class="s5-card-icon">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#1AAFE8" stroke-width="2"><path d="M9 3H5a2 2 0 00-2 2v4m6-6h10a2 2 0 012 2v4M9 3v18m0 0h10a2 2 0 002-2V9M9 21H5a2 2 0 01-2-2V9m0 0h18"/></svg>
+      </div>
+      <div class="s5-card-num">02</div>
+      <div class="s5-card-title">一次情報</div>
+      <div class="s5-card-desc">管理会社から直接情報を受け取る。転載・コピーによる劣化がなく、常に原本に近い精度。</div>
+      <div class="s5-card-tag">→ 中間業者ゼロの構造</div>
+    </div>
+
+    <!-- Card 3: リアルタイム -->
+    <div class="s5-card">
+      <div class="s5-card-icon">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#1AAFE8" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12,6 12,12 16,14"/></svg>
+      </div>
+      <div class="s5-card-num">03</div>
+      <div class="s5-card-title">リアルタイム反映</div>
+      <div class="s5-card-desc">成約・取下げ・募集再開が即時更新。ポータル上の情報と現実が常に一致している。</div>
+      <div class="s5-card-tag">→ タイムラグのない情報</div>
+    </div>
+
+  </div>
+
+  <div class="slide-num" style="color:rgba(255,255,255,.25)">05 / 07</div>
+</div>
+
+
+<!-- ======================================================
+     SLIDE 6: DATA × AI FUTURE
+====================================================== -->
+<div class="slide" id="s6">
+  <div style="background:#fff;position:absolute;inset:0;"></div>
+
+  <div class="logo-mark">
+    <div class="logo-tri"></div>
+    <span class="logo-txt" style="color:var(--navy)">airdoor</span>
+  </div>
+
+  <div class="s6-header">
+    <div class="slide-label">Future Vision</div>
+    <h2 class="slide-h">正確なデータが、<em style="font-style:normal;color:var(--blue);">業務を変える。</em></h2>
+  </div>
+
+  <div class="s6-diagram">
+
+    <!-- Node 1: 管理会社 -->
+    <div class="s6-node">
+      <div class="s6-node-icon" style="background:#E8F7FD;">
+        <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#1AAFE8" stroke-width="1.5"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v16"/></svg>
+      </div>
+      <div class="s6-node-label">管理会社</div>
+      <div class="s6-node-sub">物件情報<br>一次情報</div>
+    </div>
+
+    <div class="s6-arrow">
+      <svg width="40" height="20" viewBox="0 0 40 20" fill="none"><path d="M0 10H32M32 10L24 5M32 10L24 15" stroke="#1AAFE8" stroke-width="2" stroke-linecap="round"/></svg>
+    </div>
+
+    <!-- Node 2: エアドア -->
+    <div class="s6-node">
+      <div class="s6-node-icon" style="background:var(--navy);">
+        <div class="logo-tri" style="width:24px;height:24px;"></div>
+      </div>
+      <div class="s6-node-label">エアドア</div>
+      <div class="s6-node-sub">一次情報を<br>蓄積・構造化</div>
+    </div>
+
+    <div class="s6-arrow">
+      <svg width="40" height="20" viewBox="0 0 40 20" fill="none"><path d="M0 10H32M32 10L24 5M32 10L24 15" stroke="#1AAFE8" stroke-width="2" stroke-linecap="round"/></svg>
+    </div>
+
+    <!-- Node 3: データ蓄積 -->
+    <div class="s6-node">
+      <div class="s6-node-icon" style="background:#EEF2FF;">
+        <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#6366F1" stroke-width="1.5"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3S3 13.66 3 12"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>
+      </div>
+      <div class="s6-node-label">リアルデータ蓄積</div>
+      <div class="s6-node-sub">相場・成約速度<br>問い合わせ傾向</div>
+    </div>
+
+    <div class="s6-arrow">
+      <svg width="40" height="20" viewBox="0 0 40 20" fill="none"><path d="M0 10H32M32 10L24 5M32 10L24 15" stroke="#6366F1" stroke-width="2" stroke-linecap="round"/></svg>
+    </div>
+
+    <!-- Node 4: AI -->
+    <div class="s6-node">
+      <div class="s6-node-icon" style="background:#F0FDF4;">
+        <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="1.5"><path d="M12 2a7 7 0 017 7c0 2.38-1.19 4.47-3 5.74V17a1 1 0 01-1 1H9a1 1 0 01-1-1v-2.26C6.19 13.47 5 11.38 5 9a7 7 0 017-7z"/><path d="M9 21h6M10 17v4M14 17v4"/></svg>
+      </div>
+      <div class="s6-node-label">AI 分析</div>
+      <div class="s6-node-sub">業務フロー<br>自動最適化</div>
+    </div>
+
+    <div class="s6-arrow">
+      <svg width="40" height="20" viewBox="0 0 40 20" fill="none"><path d="M0 10H32M32 10L24 5M32 10L24 15" stroke="#10B981" stroke-width="2" stroke-linecap="round"/></svg>
+    </div>
+
+    <!-- Node 5: デベ・管理 -->
+    <div class="s6-node">
+      <div class="s6-node-icon" style="background:#E8F7FD;">
+        <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#1AAFE8" stroke-width="1.5"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>
+      </div>
+      <div class="s6-node-label">デベ・管理会社</div>
+      <div class="s6-node-sub">業務効率化<br>意思決定支援</div>
+    </div>
+
+  </div>
+
+  <!-- Future statement -->
+  <div class="s6-future">
+    <div class="s6-future-icon">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><polygon points="13,2 3,14 12,14 11,22 21,10 12,10"/></svg>
+    </div>
+    <div class="s6-future-text">
+      正確な一次情報が蓄積されると、<em>相場予測・空室リスク検知・業務フロー自動化</em>が実現できる。<br>
+      エアドアは賃貸ポータルを起点に、<em>不動産業務インフラ</em>へと進化していく。
+    </div>
+  </div>
+
+  <div class="slide-num" style="color:var(--muted)">06 / 07</div>
+</div>
+
+
+<!-- ======================================================
+     SLIDE 7: CTA / CLOSING
+====================================================== -->
+<div class="slide" id="s7">
+  <div style="background:var(--blue);position:absolute;inset:0;"></div>
+
+  <!-- 装飾 -->
+  <div style="position:absolute;right:-80px;bottom:-80px;width:400px;height:400px;border-radius:50%;background:rgba(255,255,255,0.08);"></div>
+  <div style="position:absolute;right:60px;bottom:60px;width:200px;height:200px;border-radius:50%;background:rgba(255,255,255,0.06);"></div>
+  <div style="position:absolute;left:-60px;top:-60px;width:300px;height:300px;border-radius:50%;background:rgba(0,0,0,0.06);"></div>
+
+  <div class="s7-content">
+    <div class="s7-label">Take Action</div>
+    <h2 class="s7-h">御社の物件情報、<br>エアドアに載っていますか？</h2>
+    <p class="s7-sub">ユーザーの負を解消する構造に、一緒に乗りませんか。</p>
+
+    <!-- 3 points -->
+    <div style="display:flex;gap:32px;margin-bottom:52px;">
+      <div style="display:flex;flex-direction:column;align-items:center;gap:8px;">
+        <div style="width:48px;height:48px;border-radius:50%;background:rgba(255,255,255,0.2);display:flex;align-items:center;justify-content:center;">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v16"/></svg>
+        </div>
+        <span style="font-size:12px;font-weight:600;color:rgba(255,255,255,0.8);text-align:center;">掲載<br>無料相談</span>
+      </div>
+      <div style="display:flex;flex-direction:column;align-items:center;gap:8px;">
+        <div style="width:48px;height:48px;border-radius:50%;background:rgba(255,255,255,0.2);display:flex;align-items:center;justify-content:center;">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>
+        </div>
+        <span style="font-size:12px;font-weight:600;color:rgba(255,255,255,0.8);text-align:center;">協業<br>打ち合わせ</span>
+      </div>
+      <div style="display:flex;flex-direction:column;align-items:center;gap:8px;">
+        <div style="width:48px;height:48px;border-radius:50%;background:rgba(255,255,255,0.2);display:flex;align-items:center;justify-content:center;">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><polygon points="13,2 3,14 12,14 11,22 21,10 12,10"/></svg>
+        </div>
+        <span style="font-size:12px;font-weight:600;color:rgba(255,255,255,0.8);text-align:center;">未来像<br>共有</span>
+      </div>
+    </div>
+
+    <div class="s7-actions">
+      <button class="s7-btn-main">掲載・協業の相談をする</button>
+      <button class="s7-btn-sub">airdoor.jp を見てみる</button>
+    </div>
+  </div>
+
+  <div class="s7-logo">
+    <div class="s7-logo-tri"></div>
+    <span class="s7-logo-text">airdoor</span>
+  </div>
+
+  <div class="slide-num" style="color:rgba(255,255,255,.4)">07 / 07</div>
+</div>
+
+</div><!-- /deck -->
+</div><!-- /deck-outer -->
+
+<!-- Navigation -->
+<div class="nav">
+  <button class="nbtn" id="prev">&#8592;</button>
+  <div class="dots" id="dots"></div>
+  <button class="nbtn" id="next">&#8594;</button>
+  <span class="ncnt" id="cnt"></span>
+</div>
+
+<script>
+  const slides = [...document.querySelectorAll('.slide')];
+  const dotsEl = document.getElementById('dots');
+  const cnt    = document.getElementById('cnt');
+  let cur = 0;
+
+  // ドット生成
+  slides.forEach((_,i) => {
+    const d = document.createElement('div');
+    d.className = 'dot' + (i===0?' on':'');
+    d.onclick = () => go(i);
+    dotsEl.appendChild(d);
+  });
+
+  function go(n){
+    slides[cur].classList.remove('active');
+    document.querySelectorAll('.dot')[cur].classList.remove('on');
+    cur = (n + slides.length) % slides.length;
+    slides[cur].classList.add('active');
+    document.querySelectorAll('.dot')[cur].classList.add('on');
+    cnt.textContent = `${cur+1} / ${slides.length}`;
+  }
+
+  document.getElementById('next').onclick = () => go(cur+1);
+  document.getElementById('prev').onclick = () => go(cur-1);
+
+  document.addEventListener('keydown', e => {
+    if(e.key==='ArrowRight'||e.key==='ArrowDown') go(cur+1);
+    if(e.key==='ArrowLeft' ||e.key==='ArrowUp')   go(cur-1);
+  });
+
+  cnt.textContent = `1 / ${slides.length}`;
+
+  // スケーリング
+  function resize(){
+    const outer = document.querySelector('.deck-outer');
+    document.getElementById('deck').style.setProperty('--s', outer.offsetWidth/1280);
+    // CSS変数でなくstyleに直接
+    document.getElementById('deck').style.transform = `scale(${outer.offsetWidth/1280})`;
+  }
+  window.addEventListener('resize', resize);
+  resize();
+</script>
+
+</body>
+</html>

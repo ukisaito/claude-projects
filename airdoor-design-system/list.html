@@ -1,0 +1,1553 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>市川大野駅・船橋法典駅・西船橋駅の賃貸物件一覧 | エアドア</title>
+  <style>
+    /* ============================================================
+       DESIGN TOKENS
+    ============================================================ */
+    :root {
+      --color-brand:        #1AAFE8;
+      --color-primary-50:   #EBF5FF;
+      --color-primary-100:  #DAEEFF;
+      --color-primary-200:  #B3DAFE;
+      --color-primary-600:  #1D6CC8;
+      --color-primary-700:  #1558A8;
+      --color-cta:          #F5A500;
+      --color-cta-dark:     #D98E00;
+      --color-coral:        #F06060;
+      --color-coral-bg:     #FFF0F0;
+      --color-coral-border: #FFBABA;
+      --color-green:        #3DAA6E;
+      --color-green-light:  #E8F7EF;
+      --color-navy:         #1A3564;
+      --color-info-bg:      #EAF5FF;
+      --color-info-text:    #1D6CC8;
+      --color-neutral-0:    #ffffff;
+      --color-neutral-50:   #f7f7f7;
+      --color-neutral-100:  #f0f0f0;
+      --color-neutral-200:  #e0e0e0;
+      --color-neutral-300:  #cccccc;
+      --color-neutral-400:  #aaaaaa;
+      --color-neutral-500:  #888888;
+      --color-neutral-600:  #666666;
+      --color-neutral-700:  #444444;
+      --color-neutral-800:  #222222;
+
+      --font-family-base: "Hiragino Kaku Gothic ProN","Hiragino Sans","Noto Sans JP","Yu Gothic",sans-serif;
+      --font-size-xs:   0.75rem;
+      --font-size-sm:   0.875rem;
+      --font-size-base: 1rem;
+      --font-size-lg:   1.125rem;
+      --font-size-xl:   1.25rem;
+      --font-size-2xl:  1.5rem;
+
+      --font-weight-normal:   400;
+      --font-weight-medium:   500;
+      --font-weight-semibold: 600;
+      --font-weight-bold:     700;
+
+      --space-1:  0.25rem;
+      --space-2:  0.5rem;
+      --space-3:  0.75rem;
+      --space-4:  1rem;
+      --space-5:  1.25rem;
+      --space-6:  1.5rem;
+      --space-8:  2rem;
+      --space-10: 2.5rem;
+
+      --radius-sm:   0.25rem;
+      --radius-base: 0.5rem;
+      --radius-md:   0.75rem;
+      --radius-lg:   1rem;
+      --radius-full: 9999px;
+
+      --shadow-sm:   0 1px 2px rgba(0,0,0,.06);
+      --shadow-base: 0 2px 8px rgba(0,0,0,.08);
+      --shadow-md:   0 4px 16px rgba(0,0,0,.10);
+
+      --sidebar-width: 268px;
+      --container-max: 1160px;
+    }
+
+    /* ============================================================
+       RESET
+    ============================================================ */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { font-size: 16px; }
+    body {
+      font-family: var(--font-family-base);
+      font-size: var(--font-size-base);
+      line-height: 1.6;
+      color: var(--color-neutral-800);
+      background: var(--color-neutral-50);
+    }
+    a { color: var(--color-primary-600); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    ul, ol { list-style: none; }
+    button { cursor: pointer; font-family: var(--font-family-base); border: none; background: none; }
+    input, select { font-family: var(--font-family-base); }
+
+    /* ============================================================
+       HEADER
+    ============================================================ */
+    .header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: #fff;
+      border-bottom: 1px solid var(--color-neutral-200);
+      height: 56px;
+      display: flex;
+      align-items: center;
+    }
+    .header-inner {
+      max-width: var(--container-max);
+      margin: 0 auto;
+      padding: 0 var(--space-6);
+      width: 100%;
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+    }
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-shrink: 0;
+      text-decoration: none;
+    }
+    .logo-icon {
+      width: 26px;
+      height: 26px;
+      background: var(--color-brand);
+      clip-path: polygon(15% 10%, 90% 50%, 15% 90%);
+      flex-shrink: 0;
+    }
+    .logo-text {
+      font-size: var(--font-size-xl);
+      font-weight: var(--font-weight-bold);
+      color: var(--color-neutral-800);
+      letter-spacing: -.02em;
+    }
+    .header-search {
+      flex: 1;
+      max-width: 480px;
+      margin-left: var(--space-4);
+      display: flex;
+      align-items: center;
+      background: var(--color-neutral-100);
+      border: 1.5px solid var(--color-neutral-200);
+      border-radius: var(--radius-full);
+      padding: 0 var(--space-4);
+      height: 38px;
+      gap: var(--space-2);
+    }
+    .header-search input {
+      flex: 1;
+      border: none;
+      background: transparent;
+      outline: none;
+      font-size: var(--font-size-sm);
+      color: var(--color-neutral-800);
+    }
+    .header-search input::placeholder { color: var(--color-neutral-400); }
+    .header-nav {
+      margin-left: auto;
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+    }
+    .nav-btn {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      padding: 6px 14px;
+      border: 1.5px solid var(--color-neutral-300);
+      border-radius: var(--radius-base);
+      font-size: var(--font-size-sm);
+      color: var(--color-neutral-700);
+      background: #fff;
+      white-space: nowrap;
+    }
+    .nav-btn:hover { background: var(--color-neutral-50); }
+    .nav-icon-btn {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2px;
+      padding: 4px 8px;
+      color: var(--color-neutral-600);
+      font-size: 10px;
+    }
+
+    /* ============================================================
+       INFO BANNER
+    ============================================================ */
+    .info-banner {
+      background: var(--color-info-bg);
+      color: var(--color-info-text);
+      text-align: center;
+      padding: 8px var(--space-4);
+      font-size: var(--font-size-sm);
+    }
+    .info-banner strong { font-weight: var(--font-weight-bold); }
+
+    /* ============================================================
+       PAGE LAYOUT
+    ============================================================ */
+    .page-wrap {
+      max-width: var(--container-max);
+      margin: 0 auto;
+      padding: 0 var(--space-6);
+      display: flex;
+      gap: var(--space-6);
+      align-items: flex-start;
+      padding-top: var(--space-5);
+      padding-bottom: var(--space-12);
+    }
+
+    /* ============================================================
+       SIDEBAR / FILTER
+    ============================================================ */
+    .sidebar {
+      width: var(--sidebar-width);
+      flex-shrink: 0;
+      position: sticky;
+      top: 64px;
+      max-height: calc(100vh - 72px);
+      overflow-y: auto;
+      scrollbar-width: thin;
+    }
+    .sidebar::-webkit-scrollbar { width: 4px; }
+    .sidebar::-webkit-scrollbar-track { background: transparent; }
+    .sidebar::-webkit-scrollbar-thumb { background: var(--color-neutral-300); border-radius: 2px; }
+
+    .filter-card {
+      background: #fff;
+      border: 1px solid var(--color-neutral-200);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      margin-bottom: var(--space-3);
+    }
+    .filter-section {
+      border-bottom: 1px solid var(--color-neutral-100);
+    }
+    .filter-section:last-child { border-bottom: none; }
+
+    .filter-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: var(--space-3) var(--space-4);
+      cursor: pointer;
+      user-select: none;
+    }
+    .filter-header:hover { background: var(--color-neutral-50); }
+    .filter-title {
+      font-size: var(--font-size-sm);
+      font-weight: var(--font-weight-semibold);
+      color: var(--color-neutral-800);
+    }
+    .filter-chevron {
+      color: var(--color-neutral-400);
+      transition: transform .2s;
+      flex-shrink: 0;
+    }
+    .filter-body {
+      padding: 0 var(--space-4) var(--space-4);
+    }
+
+    /* Range inputs */
+    .range-row {
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+      font-size: var(--font-size-xs);
+      color: var(--color-neutral-500);
+    }
+    .range-select {
+      flex: 1;
+      border: 1.5px solid var(--color-neutral-300);
+      border-radius: var(--radius-sm);
+      padding: 5px 8px;
+      font-size: var(--font-size-xs);
+      color: var(--color-neutral-700);
+      background: #fff;
+      outline: none;
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='%23aaaaaa'%3E%3Cpath d='M5.23 7.21a.75.75 0 011.06.02L10 11.17l3.71-3.94a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 6px center;
+      background-size: 14px;
+      padding-right: 24px;
+      cursor: pointer;
+    }
+    .range-select:focus { border-color: var(--color-primary-600); }
+
+    /* Checkbox grid */
+    .checkbox-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6px;
+    }
+    .checkbox-grid.col-1 { grid-template-columns: 1fr; }
+    .check-item {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      cursor: pointer;
+      font-size: var(--font-size-xs);
+      color: var(--color-neutral-700);
+      padding: 3px 0;
+    }
+    .check-item input[type="checkbox"] {
+      width: 15px;
+      height: 15px;
+      flex-shrink: 0;
+      accent-color: var(--color-primary-600);
+      cursor: pointer;
+    }
+
+    /* Pill checkbox */
+    .pill-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+    .pill-check {
+      display: flex;
+      align-items: center;
+    }
+    .pill-check input { display: none; }
+    .pill-check label {
+      padding: 5px 12px;
+      border: 1.5px solid var(--color-neutral-300);
+      border-radius: var(--radius-full);
+      font-size: var(--font-size-xs);
+      color: var(--color-neutral-600);
+      cursor: pointer;
+      transition: all .15s;
+      user-select: none;
+    }
+    .pill-check input:checked + label {
+      border-color: var(--color-primary-600);
+      background: var(--color-primary-50);
+      color: var(--color-primary-600);
+      font-weight: var(--font-weight-medium);
+    }
+
+    /* Search button */
+    .sidebar-search-btn {
+      width: 100%;
+      padding: 11px;
+      background: var(--color-primary-600);
+      color: #fff;
+      border-radius: var(--radius-base);
+      font-size: var(--font-size-sm);
+      font-weight: var(--font-weight-bold);
+      border: none;
+      transition: background .15s;
+      margin-top: var(--space-3);
+    }
+    .sidebar-search-btn:hover { background: var(--color-primary-700); }
+
+    .sidebar-reset {
+      width: 100%;
+      padding: 8px;
+      text-align: center;
+      font-size: var(--font-size-xs);
+      color: var(--color-neutral-500);
+      margin-top: var(--space-2);
+      text-decoration: underline;
+    }
+    .sidebar-reset:hover { color: var(--color-neutral-700); }
+
+    /* ============================================================
+       MAIN CONTENT
+    ============================================================ */
+    .main-col { flex: 1; min-width: 0; }
+
+    /* Page heading */
+    .list-heading {
+      margin-bottom: var(--space-4);
+    }
+    .list-heading-title {
+      font-size: var(--font-size-xl);
+      font-weight: var(--font-weight-bold);
+      color: var(--color-neutral-800);
+      margin-bottom: var(--space-2);
+    }
+    .list-heading-sub {
+      font-size: var(--font-size-sm);
+      color: var(--color-neutral-500);
+    }
+
+    /* Active filters */
+    .active-filters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-2);
+      margin-bottom: var(--space-4);
+      padding: var(--space-3) var(--space-4);
+      background: #fff;
+      border: 1px solid var(--color-neutral-200);
+      border-radius: var(--radius-md);
+    }
+    .active-filter-label {
+      font-size: var(--font-size-xs);
+      color: var(--color-neutral-500);
+      display: flex;
+      align-items: center;
+      margin-right: var(--space-1);
+    }
+    .filter-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 4px 10px;
+      background: var(--color-primary-50);
+      border: 1px solid var(--color-primary-200);
+      border-radius: var(--radius-full);
+      font-size: var(--font-size-xs);
+      color: var(--color-primary-600);
+      font-weight: var(--font-weight-medium);
+    }
+    .filter-tag-remove {
+      color: var(--color-primary-400);
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+      padding: 0;
+      line-height: 1;
+    }
+    .filter-tag-remove:hover { color: var(--color-primary-700); }
+    .filter-reset-all {
+      font-size: var(--font-size-xs);
+      color: var(--color-neutral-400);
+      text-decoration: underline;
+      margin-left: auto;
+      display: flex;
+      align-items: center;
+    }
+
+    /* Toolbar */
+    .list-toolbar {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+      margin-bottom: var(--space-4);
+    }
+    .result-count {
+      font-size: var(--font-size-sm);
+      color: var(--color-neutral-600);
+    }
+    .result-count strong {
+      font-size: var(--font-size-lg);
+      font-weight: var(--font-weight-bold);
+      color: var(--color-neutral-800);
+    }
+    .toolbar-right {
+      margin-left: auto;
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+    }
+    .sort-select {
+      border: 1.5px solid var(--color-neutral-300);
+      border-radius: var(--radius-base);
+      padding: 6px 28px 6px 10px;
+      font-size: var(--font-size-sm);
+      color: var(--color-neutral-700);
+      background: #fff;
+      outline: none;
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='%23aaaaaa'%3E%3Cpath d='M5.23 7.21a.75.75 0 011.06.02L10 11.17l3.71-3.94a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 8px center;
+      background-size: 14px;
+      cursor: pointer;
+    }
+    .sort-select:focus { border-color: var(--color-primary-600); }
+
+    .view-toggle {
+      display: flex;
+      border: 1.5px solid var(--color-neutral-300);
+      border-radius: var(--radius-base);
+      overflow: hidden;
+    }
+    .view-toggle-btn {
+      padding: 6px 10px;
+      color: var(--color-neutral-400);
+      background: #fff;
+      border: none;
+      border-right: 1px solid var(--color-neutral-200);
+      display: flex;
+      align-items: center;
+    }
+    .view-toggle-btn:last-child { border-right: none; }
+    .view-toggle-btn.is-active { color: var(--color-primary-600); background: var(--color-primary-50); }
+
+    .map-btn {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      padding: 6px 14px;
+      border: 1.5px solid var(--color-primary-600);
+      border-radius: var(--radius-base);
+      font-size: var(--font-size-sm);
+      color: var(--color-primary-600);
+      background: #fff;
+    }
+    .map-btn:hover { background: var(--color-primary-50); }
+
+    /* ============================================================
+       PROPERTY CARD (List Style)
+    ============================================================ */
+    .property-list { display: flex; flex-direction: column; gap: var(--space-3); }
+
+    .prop-card {
+      background: #fff;
+      border: 1px solid var(--color-neutral-200);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      display: flex;
+      transition: box-shadow .2s;
+    }
+    .prop-card:hover { box-shadow: var(--shadow-md); }
+
+    .prop-card-img {
+      width: 200px;
+      flex-shrink: 0;
+      position: relative;
+      background: #d8dfe4;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.5rem;
+      color: var(--color-neutral-400);
+      overflow: hidden;
+    }
+    .prop-card-img-counter {
+      position: absolute;
+      bottom: var(--space-2);
+      right: var(--space-2);
+      background: rgba(0,0,0,.5);
+      color: #fff;
+      font-size: 10px;
+      padding: 2px 7px;
+      border-radius: var(--radius-full);
+    }
+    .prop-card-fav {
+      position: absolute;
+      top: var(--space-2);
+      right: var(--space-2);
+      width: 30px;
+      height: 30px;
+      border-radius: var(--radius-full);
+      background: rgba(255,255,255,.88);
+      border: 1px solid var(--color-neutral-200);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--color-neutral-400);
+    }
+    .prop-card-fav:hover { color: var(--color-coral); }
+
+    .prop-card-body {
+      flex: 1;
+      padding: var(--space-4);
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+    }
+
+    /* Top row: price + CTA */
+    .prop-card-top {
+      display: flex;
+      align-items: flex-start;
+      gap: var(--space-4);
+      margin-bottom: var(--space-2);
+    }
+    .prop-card-price-block { flex: 1; }
+    .prop-card-price {
+      font-size: var(--font-size-xl);
+      font-weight: var(--font-weight-bold);
+      color: var(--color-neutral-800);
+      line-height: 1.2;
+    }
+    .prop-card-kanri {
+      font-size: var(--font-size-xs);
+      color: var(--color-neutral-500);
+      margin-top: 2px;
+    }
+
+    /* 敷礼仲 row */
+    .prop-card-fees {
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+      font-size: var(--font-size-xs);
+      margin-top: var(--space-2);
+      flex-wrap: wrap;
+    }
+    .fee-shiki { color: var(--color-coral); font-weight: var(--font-weight-semibold); }
+    .fee-muryo { color: var(--color-coral); }
+    .fee-divider { color: var(--color-neutral-300); }
+    .fee-chu-tag {
+      background: var(--color-neutral-100);
+      color: var(--color-neutral-600);
+      padding: 2px 8px;
+      border-radius: var(--radius-sm);
+      font-size: 11px;
+    }
+
+    /* Badges row */
+    .prop-card-badges {
+      display: flex;
+      gap: var(--space-2);
+      flex-wrap: wrap;
+      margin-top: var(--space-2);
+    }
+    .badge-tokku {
+      background: var(--color-navy);
+      color: #fff;
+      font-size: 11px;
+      font-weight: var(--font-weight-bold);
+      padding: 2px 8px;
+      border-radius: var(--radius-sm);
+    }
+    .badge-new-arrival {
+      background: var(--color-cta);
+      color: #fff;
+      font-size: 11px;
+      font-weight: var(--font-weight-bold);
+      padding: 2px 8px;
+      border-radius: var(--radius-sm);
+    }
+    .badge-applied {
+      color: var(--color-coral);
+      border: 1px solid var(--color-coral-border);
+      background: var(--color-coral-bg);
+      font-size: 11px;
+      padding: 2px 8px;
+      border-radius: var(--radius-sm);
+    }
+
+    /* Meta info */
+    .prop-card-meta {
+      margin-top: var(--space-3);
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-1) var(--space-5);
+      font-size: var(--font-size-xs);
+      color: var(--color-neutral-600);
+    }
+    .prop-card-meta-item {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .meta-icon { color: var(--color-primary-600); flex-shrink: 0; }
+
+    /* Station */
+    .prop-card-station {
+      margin-top: var(--space-2);
+      font-size: var(--font-size-xs);
+      color: var(--color-neutral-600);
+      line-height: 1.6;
+    }
+
+    /* Status row */
+    .prop-card-status {
+      margin-top: var(--space-2);
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+      font-size: var(--font-size-xs);
+    }
+    .status-movein { color: var(--color-primary-600); font-weight: var(--font-weight-medium); }
+    .status-current { color: var(--color-neutral-500); }
+    .status-update {
+      margin-left: auto;
+      color: var(--color-neutral-400);
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .update-dot {
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      background: var(--color-green);
+      flex-shrink: 0;
+    }
+
+    /* Name link */
+    .prop-card-name {
+      margin-top: var(--space-2);
+      font-size: var(--font-size-xs);
+      color: var(--color-primary-600);
+      padding-top: var(--space-2);
+      border-top: 1px solid var(--color-neutral-100);
+    }
+
+    /* CTA */
+    .prop-card-cta {
+      flex-shrink: 0;
+      width: 140px;
+    }
+    .btn-cta {
+      width: 100%;
+      padding: 10px 0;
+      background: var(--color-cta);
+      color: #fff;
+      border-radius: var(--radius-base);
+      font-size: var(--font-size-xs);
+      font-weight: var(--font-weight-bold);
+      border: none;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding-left: 38px;
+    }
+    .btn-cta::before {
+      content: '無料';
+      position: absolute;
+      left: 0; top: 0; bottom: 0;
+      width: 34px;
+      background: var(--color-cta-dark);
+      border-radius: var(--radius-base) 0 0 var(--radius-base);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 10px;
+    }
+
+    /* ============================================================
+       ZERO RESULTS STATE
+    ============================================================ */
+    .zero-results {
+      background: #fff;
+      border: 1px solid var(--color-neutral-200);
+      border-radius: var(--radius-lg);
+      padding: var(--space-10) var(--space-8);
+      text-align: center;
+    }
+    .zero-results-icon {
+      width: 72px;
+      height: 72px;
+      background: var(--color-neutral-100);
+      border-radius: var(--radius-full);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto var(--space-5);
+      color: var(--color-neutral-400);
+    }
+    .zero-results-title {
+      font-size: var(--font-size-lg);
+      font-weight: var(--font-weight-bold);
+      color: var(--color-neutral-800);
+      margin-bottom: var(--space-2);
+    }
+    .zero-results-sub {
+      font-size: var(--font-size-sm);
+      color: var(--color-neutral-500);
+      line-height: 1.7;
+      margin-bottom: var(--space-6);
+    }
+
+    /* 現在の条件サマリー */
+    .zero-results-conditions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-2);
+      margin-bottom: var(--space-4);
+    }
+    .zero-condition-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 5px 12px;
+      background: var(--color-neutral-50);
+      border: 1px solid var(--color-neutral-200);
+      border-radius: var(--radius-full);
+      font-size: var(--font-size-xs);
+      color: var(--color-neutral-600);
+      font-weight: var(--font-weight-medium);
+    }
+    .zero-condition-tag svg { color: var(--color-neutral-400); flex-shrink: 0; }
+
+    .zero-results-divider {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+      margin-bottom: var(--space-6);
+      color: var(--color-neutral-300);
+      font-size: var(--font-size-xs);
+    }
+    .zero-results-divider::before,
+    .zero-results-divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--color-neutral-200);
+    }
+
+    /* 相談カード */
+    .consult-card {
+      background: linear-gradient(135deg, #EAF5FF 0%, #f0f7ff 100%);
+      border: 1.5px solid var(--color-primary-200);
+      border-radius: var(--radius-md);
+      padding: var(--space-5) var(--space-6);
+      text-align: left;
+      display: flex;
+      gap: var(--space-4);
+      align-items: flex-start;
+      margin-bottom: var(--space-4);
+    }
+    .consult-card-icon {
+      width: 72px;
+      height: 72px;
+      flex-shrink: 0;
+    }
+    .consult-card-body { flex: 1; }
+    .consult-card-label {
+      font-size: 10px;
+      font-weight: var(--font-weight-bold);
+      color: var(--color-primary-600);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+    .consult-card-title {
+      font-size: var(--font-size-base);
+      font-weight: var(--font-weight-bold);
+      color: var(--color-neutral-800);
+      margin-bottom: var(--space-1);
+    }
+    .consult-card-desc {
+      font-size: var(--font-size-xs);
+      color: var(--color-neutral-500);
+      line-height: 1.7;
+      margin-bottom: var(--space-4);
+    }
+    .consult-card-points {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      margin-bottom: var(--space-4);
+    }
+    .consult-point {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: var(--font-size-xs);
+      color: var(--color-neutral-700);
+      font-weight: var(--font-weight-medium);
+    }
+    .consult-point-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--color-brand);
+      flex-shrink: 0;
+    }
+    .btn-consult {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 11px 24px;
+      background: var(--color-brand);
+      color: #fff;
+      border: none;
+      border-radius: var(--radius-base);
+      font-size: var(--font-size-sm);
+      font-weight: var(--font-weight-bold);
+      cursor: pointer;
+      transition: opacity .15s;
+      width: 100%;
+      justify-content: center;
+    }
+    .btn-consult:hover { opacity: 0.88; }
+    .consult-notes {
+      margin-top: var(--space-2);
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+    .consult-notes p {
+      font-size: 11px;
+      color: var(--color-neutral-400);
+    }
+    .consult-conditions-label {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 11px;
+      font-weight: var(--font-weight-bold);
+      color: var(--color-neutral-500);
+      letter-spacing: 0.04em;
+      margin-bottom: var(--space-2);
+    }
+
+    /* 条件緩和リンク */
+    .relax-filters {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-2);
+    }
+    .relax-filter-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px var(--space-4);
+      background: #fff;
+      border: 1px solid var(--color-neutral-200);
+      border-radius: var(--radius-base);
+      font-size: var(--font-size-sm);
+      color: var(--color-neutral-700);
+      cursor: pointer;
+      transition: border-color .15s, background .15s;
+      text-align: left;
+      width: 100%;
+    }
+    .relax-filter-item:hover { border-color: var(--color-primary-600); background: var(--color-primary-50); color: var(--color-primary-600); }
+    .relax-filter-item-left { display: flex; align-items: center; gap: 10px; }
+    .relax-filter-badge {
+      font-size: 11px;
+      font-weight: var(--font-weight-bold);
+      color: var(--color-primary-600);
+      background: var(--color-primary-50);
+      border: 1px solid var(--color-primary-200);
+      padding: 2px 8px;
+      border-radius: var(--radius-full);
+    }
+    .relax-filter-item:hover .relax-filter-badge {
+      background: var(--color-primary-200);
+    }
+    .relax-filter-arrow { color: var(--color-neutral-400); }
+
+    /* ============================================================
+       PAGINATION
+    ============================================================ */
+    .pagination {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-1);
+      margin-top: var(--space-8);
+    }
+    .page-btn {
+      width: 36px;
+      height: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: var(--radius-base);
+      font-size: var(--font-size-sm);
+      color: var(--color-neutral-600);
+      background: #fff;
+      border: 1.5px solid var(--color-neutral-200);
+      transition: all .15s;
+    }
+    .page-btn:hover { border-color: var(--color-primary-600); color: var(--color-primary-600); }
+    .page-btn.is-active {
+      background: var(--color-primary-600);
+      border-color: var(--color-primary-600);
+      color: #fff;
+      font-weight: var(--font-weight-bold);
+    }
+    .page-btn.is-disabled { color: var(--color-neutral-300); border-color: var(--color-neutral-200); cursor: default; }
+    .page-ellipsis {
+      width: 36px;
+      height: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: var(--font-size-sm);
+      color: var(--color-neutral-400);
+    }
+
+    /* ============================================================
+       NOTICE BANNER (駅ページ)
+    ============================================================ */
+    .station-banner {
+      background: #fff;
+      border: 1px solid var(--color-neutral-200);
+      border-radius: var(--radius-md);
+      padding: var(--space-4);
+      margin-bottom: var(--space-4);
+      display: flex;
+      align-items: flex-start;
+      gap: var(--space-3);
+    }
+    .station-banner-icon {
+      width: 36px;
+      height: 36px;
+      background: var(--color-primary-50);
+      border-radius: var(--radius-full);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      color: var(--color-primary-600);
+    }
+    .station-banner-title {
+      font-size: var(--font-size-sm);
+      font-weight: var(--font-weight-bold);
+      margin-bottom: var(--space-1);
+      color: var(--color-neutral-800);
+    }
+    .station-banner-desc {
+      font-size: var(--font-size-xs);
+      color: var(--color-neutral-500);
+      line-height: 1.6;
+    }
+
+    /* ============================================================
+       FOOTER
+    ============================================================ */
+    .footer {
+      background: var(--color-neutral-800);
+      color: var(--color-neutral-300);
+      padding: var(--space-10) 0 var(--space-6);
+    }
+    .footer-inner {
+      max-width: var(--container-max);
+      margin: 0 auto;
+      padding: 0 var(--space-6);
+    }
+    .footer-logo { display: flex; align-items: center; gap: 6px; margin-bottom: var(--space-5); }
+    .footer-logo-icon {
+      width: 22px; height: 22px;
+      background: var(--color-brand);
+      clip-path: polygon(15% 10%, 90% 50%, 15% 90%);
+    }
+    .footer-logo-text { font-size: var(--font-size-lg); font-weight: var(--font-weight-bold); color: #fff; }
+    .footer-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-2) var(--space-6);
+      font-size: var(--font-size-xs);
+      margin-bottom: var(--space-6);
+    }
+    .footer-links a { color: var(--color-neutral-400); }
+    .footer-links a:hover { color: #fff; text-decoration: none; }
+    .footer-copy {
+      font-size: var(--font-size-xs);
+      color: var(--color-neutral-500);
+      border-top: 1px solid var(--color-neutral-700);
+      padding-top: var(--space-4);
+    }
+
+    @media (max-width: 900px) {
+      .sidebar { display: none; }
+      .prop-card-img { width: 140px; }
+      .prop-card-cta { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="header">
+  <div class="header-inner">
+    <a href="/" class="logo">
+      <div class="logo-icon"></div>
+      <span class="logo-text">airdoor</span>
+    </a>
+
+    <div class="header-search">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#aaaaaa" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      <input type="text" value="市川大野駅・船橋法典駅・西船橋駅" readonly />
+    </div>
+
+    <nav class="header-nav">
+      <button class="nav-btn">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 3H5a2 2 0 00-2 2v4m6-6h10a2 2 0 012 2v4M9 3v18m0 0h10a2 2 0 002-2V9M9 21H5a2 2 0 01-2-2V9m0 0h18"/></svg>
+        路線・駅から探す
+      </button>
+      <button class="nav-btn">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s-8-4.5-8-11.8A8 8 0 0112 2a8 8 0 018 8.2c0 7.3-8 11.8-8 11.8z"/><circle cx="12" cy="10" r="3"/></svg>
+        エリアから探す
+      </button>
+      <button class="nav-icon-btn">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
+        お気に入り
+      </button>
+      <button class="nav-icon-btn">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M19 21l-7-5-7 5V5a2 2 0 012-2h10a2 2 0 012 2z"/></svg>
+        保存条件
+      </button>
+      <button class="nav-icon-btn">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+        メニュー
+      </button>
+    </nav>
+  </div>
+</header>
+
+<!-- INFO BANNER -->
+<div class="info-banner">
+  エアドアなら <strong>おとり物件なしで安心のお部屋探し</strong>
+</div>
+
+<!-- MAIN -->
+<div class="page-wrap">
+
+  <!-- ========== SIDEBAR ========== -->
+  <aside class="sidebar">
+    <div class="filter-card">
+
+      <!-- 賃料 -->
+      <div class="filter-section">
+        <div class="filter-header">
+          <span class="filter-title">賃料</span>
+          <svg class="filter-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6,9 12,15 18,9"/></svg>
+        </div>
+        <div class="filter-body">
+          <div class="range-row">
+            <select class="range-select">
+              <option>下限なし</option>
+              <option>3万円</option>
+              <option>5万円</option>
+              <option>7万円</option>
+              <option>8万円</option>
+              <option>10万円</option>
+              <option>12万円</option>
+              <option>15万円</option>
+              <option>20万円</option>
+            </select>
+            <span>〜</span>
+            <select class="range-select">
+              <option>上限なし</option>
+              <option>5万円</option>
+              <option>7万円</option>
+              <option>8万円</option>
+              <option>10万円</option>
+              <option>12万円</option>
+              <option selected>15万円</option>
+              <option>20万円</option>
+              <option>30万円</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- 間取り -->
+      <div class="filter-section">
+        <div class="filter-header">
+          <span class="filter-title">間取り</span>
+          <svg class="filter-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6,9 12,15 18,9"/></svg>
+        </div>
+        <div class="filter-body">
+          <div class="pill-grid">
+            <label class="pill-check"><input type="checkbox"><label>ワンルーム</label></label>
+            <label class="pill-check"><input type="checkbox"><label>1K</label></label>
+            <label class="pill-check"><input type="checkbox"><label>1DK</label></label>
+            <label class="pill-check"><input type="checkbox"><label>1LDK</label></label>
+            <label class="pill-check"><input type="checkbox"><label>2K・2DK</label></label>
+            <label class="pill-check"><input type="checkbox"><label>2LDK</label></label>
+            <label class="pill-check"><input type="checkbox"><label>3K・3DK</label></label>
+            <label class="pill-check"><input type="checkbox" checked><label>3LDK</label></label>
+            <label class="pill-check"><input type="checkbox" checked><label>4LDK以上</label></label>
+          </div>
+        </div>
+      </div>
+
+      <!-- 面積 -->
+      <div class="filter-section">
+        <div class="filter-header">
+          <span class="filter-title">面積</span>
+          <svg class="filter-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6,9 12,15 18,9"/></svg>
+        </div>
+        <div class="filter-body">
+          <div class="range-row">
+            <select class="range-select">
+              <option>下限なし</option>
+              <option>20m²</option>
+              <option>30m²</option>
+              <option>40m²</option>
+              <option>50m²</option>
+              <option>60m²</option>
+              <option>70m²</option>
+              <option>80m²</option>
+            </select>
+            <span>〜</span>
+            <select class="range-select">
+              <option>上限なし</option>
+              <option>30m²</option>
+              <option>40m²</option>
+              <option>50m²</option>
+              <option>60m²</option>
+              <option>80m²</option>
+              <option>100m²</option>
+              <option>150m²</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- 築年数 -->
+      <div class="filter-section">
+        <div class="filter-header">
+          <span class="filter-title">築年数</span>
+          <svg class="filter-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6,9 12,15 18,9"/></svg>
+        </div>
+        <div class="filter-body">
+          <div class="pill-grid">
+            <label class="pill-check"><input type="checkbox"><label>新築</label></label>
+            <label class="pill-check"><input type="checkbox"><label>築5年以内</label></label>
+            <label class="pill-check"><input type="checkbox"><label>築10年以内</label></label>
+            <label class="pill-check"><input type="checkbox"><label>築20年以内</label></label>
+            <label class="pill-check"><input type="checkbox"><label>築30年以内</label></label>
+            <label class="pill-check"><input type="checkbox"><label>年数不問</label></label>
+          </div>
+        </div>
+      </div>
+
+      <!-- 建物種別 -->
+      <div class="filter-section">
+        <div class="filter-header">
+          <span class="filter-title">建物種別</span>
+          <svg class="filter-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6,9 12,15 18,9"/></svg>
+        </div>
+        <div class="filter-body">
+          <div class="pill-grid">
+            <label class="pill-check"><input type="checkbox"><label>マンション</label></label>
+            <label class="pill-check"><input type="checkbox" checked><label>一戸建て</label></label>
+            <label class="pill-check"><input type="checkbox"><label>アパート</label></label>
+            <label class="pill-check"><input type="checkbox"><label>テラスハウス</label></label>
+          </div>
+        </div>
+      </div>
+
+      <!-- 初期費用 -->
+      <div class="filter-section">
+        <div class="filter-header">
+          <span class="filter-title">初期費用</span>
+          <svg class="filter-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6,9 12,15 18,9"/></svg>
+        </div>
+        <div class="filter-body">
+          <div class="checkbox-grid col-1">
+            <label class="check-item"><input type="checkbox" checked /> 敷金なし</label>
+            <label class="check-item"><input type="checkbox" checked /> 礼金なし</label>
+            <label class="check-item"><input type="checkbox" /> 初月無料</label>
+            <label class="check-item"><input type="checkbox" /> フリーレント</label>
+          </div>
+        </div>
+      </div>
+
+      <!-- こだわり条件 -->
+      <div class="filter-section">
+        <div class="filter-header">
+          <span class="filter-title">こだわり条件</span>
+          <svg class="filter-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6,9 12,15 18,9"/></svg>
+        </div>
+        <div class="filter-body">
+          <div class="checkbox-grid">
+            <label class="check-item"><input type="checkbox" /> ペット可</label>
+            <label class="check-item"><input type="checkbox" /> 駐車場あり</label>
+            <label class="check-item"><input type="checkbox" /> 即入居可</label>
+            <label class="check-item"><input type="checkbox" /> 2人入居可</label>
+            <label class="check-item"><input type="checkbox" /> ルームシェア可</label>
+            <label class="check-item"><input type="checkbox" /> 楽器可</label>
+            <label class="check-item"><input type="checkbox" /> SOHO可</label>
+            <label class="check-item"><input type="checkbox" /> 事務所使用可</label>
+            <label class="check-item"><input type="checkbox" /> バス・トイレ別</label>
+            <label class="check-item"><input type="checkbox" /> 追焚付き</label>
+            <label class="check-item"><input type="checkbox" /> 専用庭あり</label>
+            <label class="check-item"><input type="checkbox" /> 宅配ボックス</label>
+          </div>
+        </div>
+      </div>
+
+      <!-- 徒歩分数 -->
+      <div class="filter-section">
+        <div class="filter-header">
+          <span class="filter-title">駅徒歩</span>
+          <svg class="filter-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6,9 12,15 18,9"/></svg>
+        </div>
+        <div class="filter-body">
+          <div class="pill-grid">
+            <label class="pill-check"><input type="checkbox"><label>1分以内</label></label>
+            <label class="pill-check"><input type="checkbox"><label>3分以内</label></label>
+            <label class="pill-check"><input type="checkbox"><label>5分以内</label></label>
+            <label class="pill-check"><input type="checkbox"><label>10分以内</label></label>
+            <label class="pill-check"><input type="checkbox"><label>15分以内</label></label>
+            <label class="pill-check"><input type="checkbox"><label>20分以内</label></label>
+          </div>
+        </div>
+      </div>
+
+      <div style="padding: var(--space-4);">
+        <button class="sidebar-search-btn">この条件で検索する</button>
+        <button class="sidebar-reset">条件をリセット</button>
+      </div>
+
+    </div>
+  </aside>
+
+  <!-- ========== MAIN ========== -->
+  <main class="main-col">
+
+    <!-- Heading -->
+    <div class="list-heading">
+      <h1 class="list-heading-title">市川大野駅・船橋法典駅・西船橋駅の賃貸物件</h1>
+      <p class="list-heading-sub">JR武蔵野線エリアの仲介手数料無料・割引物件</p>
+    </div>
+
+    <!-- Station info banner -->
+    <div class="station-banner">
+      <div class="station-banner-icon">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 3H5a2 2 0 00-2 2v4m6-6h10a2 2 0 012 2v4M9 3v18m0 0h10a2 2 0 002-2V9M9 21H5a2 2 0 01-2-2V9m0 0h18"/></svg>
+      </div>
+      <div>
+        <div class="station-banner-title">市川大野駅 / 船橋法典駅 / 西船橋駅</div>
+        <div class="station-banner-desc">JR武蔵野線・総武線エリア。千葉県市川市・船橋市の閑静な住宅街。都心へのアクセスも良好。</div>
+      </div>
+    </div>
+
+    <!-- Active filters -->
+    <div class="active-filters">
+      <span class="active-filter-label">絞り込み中：</span>
+      <span class="filter-tag">
+        3LDK・4LDK以上
+        <button class="filter-tag-remove" aria-label="削除">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </span>
+      <span class="filter-tag">
+        一戸建て
+        <button class="filter-tag-remove" aria-label="削除">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </span>
+      <span class="filter-tag">
+        敷金なし・礼金なし
+        <button class="filter-tag-remove" aria-label="削除">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </span>
+      <button class="filter-reset-all">すべてリセット</button>
+    </div>
+
+    <!-- Toolbar -->
+    <div class="list-toolbar">
+      <div class="result-count"><strong>0</strong> 件</div>
+      <div class="toolbar-right">
+        <button class="map-btn">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s-8-4.5-8-11.8A8 8 0 0112 2a8 8 0 018 8.2c0 7.3-8 11.8-8 11.8z"/><circle cx="12" cy="10" r="3"/></svg>
+          地図で見る
+        </button>
+        <select class="sort-select">
+          <option>新着順</option>
+          <option>家賃が安い順</option>
+          <option>家賃が高い順</option>
+          <option>面積が広い順</option>
+          <option>築年数が新しい順</option>
+          <option>駅徒歩が近い順</option>
+        </select>
+        <div class="view-toggle">
+          <button class="view-toggle-btn is-active" title="リスト表示">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+          </button>
+          <button class="view-toggle-btn" title="グリッド表示">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== 0件 Empty State ===== -->
+    <div class="zero-results">
+
+      <!-- アイコン -->
+      <div class="zero-results-icon">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/>
+          <polyline points="9,22 9,12 15,12 15,22"/>
+          <circle cx="19" cy="19" r="4" fill="#f0f0f0" stroke="currentColor"/>
+          <line x1="17.5" y1="17.5" x2="20.5" y2="20.5"/>
+        </svg>
+      </div>
+
+      <div class="zero-results-title">条件に合う物件が見つかりませんでした</div>
+      <p class="zero-results-sub">
+        現在の絞り込み条件では、掲載中の物件がありません。<br>
+        条件を変えるか、エアドアのスタッフへ直接ご相談ください。
+      </p>
+
+      <div class="zero-results-divider">または</div>
+
+      <!-- 相談CTA -->
+      <div class="consult-card">
+        <div class="consult-card-icon">
+          <!-- フラット人物イラスト -->
+          <svg width="72" height="72" viewBox="0 0 72 72" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <!-- 背景円 -->
+            <circle cx="36" cy="36" r="36" fill="#DAEEFF"/>
+            <!-- 髪 -->
+            <path d="M22 28C22 20.27 28.27 14 36 14C43.73 14 50 20.27 50 28V30H22V28Z" fill="#2D2D2D"/>
+            <!-- 頭 -->
+            <circle cx="36" cy="30" r="12" fill="#FDDCB5"/>
+            <!-- 耳 -->
+            <ellipse cx="24" cy="30" rx="2.5" ry="3" fill="#FDDCB5"/>
+            <ellipse cx="48" cy="30" rx="2.5" ry="3" fill="#FDDCB5"/>
+            <!-- 目 -->
+            <circle cx="31.5" cy="29" r="1.8" fill="#2D2D2D"/>
+            <circle cx="40.5" cy="29" r="1.8" fill="#2D2D2D"/>
+            <!-- 目のハイライト -->
+            <circle cx="32.2" cy="28.3" r="0.6" fill="white"/>
+            <circle cx="41.2" cy="28.3" r="0.6" fill="white"/>
+            <!-- 笑顔 -->
+            <path d="M31 34Q36 38.5 41 34" stroke="#C47D5A" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+            <!-- ほっぺ -->
+            <ellipse cx="28" cy="33" rx="3" ry="2" fill="#F9A8A8" opacity="0.45"/>
+            <ellipse cx="44" cy="33" rx="3" ry="2" fill="#F9A8A8" opacity="0.45"/>
+            <!-- 首 -->
+            <rect x="33" y="41" width="6" height="5" fill="#FDDCB5"/>
+            <!-- 体（スーツ） -->
+            <path d="M18 68C18 58.06 26.06 50 36 50C45.94 50 54 58.06 54 68H18Z" fill="#1AAFE8"/>
+            <!-- シャツ・襟 -->
+            <path d="M36 46L31 52H41L36 46Z" fill="white"/>
+            <path d="M31 52L28 68H44L41 52" fill="white" opacity="0.15"/>
+            <!-- スーツの折り返し左 -->
+            <path d="M36 46L28 50L26 60L31 52Z" fill="#0E8EC5"/>
+            <!-- スーツの折り返し右 -->
+            <path d="M36 46L44 50L46 60L41 52Z" fill="#0E8EC5"/>
+          </svg>
+        </div>
+        <div class="consult-card-body">
+          <div class="consult-card-label">無料相談</div>
+          <div class="consult-card-title">今の条件のまま、スタッフに相談してみる</div>
+          <div class="consult-card-desc">
+            サイトに載っていない未公開物件や、入居前に空く予定の物件をご紹介できる場合があります。<br>
+            希望条件をそのままお伝えください。
+          </div>
+          <!-- 現在の検索条件 -->
+          <div class="consult-conditions-label">
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="4" y1="6" x2="20" y2="6"/><line x1="8" y1="12" x2="20" y2="12"/><line x1="12" y1="18" x2="20" y2="18"/></svg>
+            現在の条件
+          </div>
+          <div class="zero-results-conditions">
+            <span class="zero-condition-tag">
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 3H5a2 2 0 00-2 2v4m6-6h10a2 2 0 012 2v4M9 3v18m0 0h10a2 2 0 002-2V9M9 21H5a2 2 0 01-2-2V9m0 0h18"/></svg>
+              JR山手線
+            </span>
+            <span class="zero-condition-tag">
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s-8-4.5-8-11.8A8 8 0 0112 2a8 8 0 018 8.2c0 7.3-8 11.8-8 11.8z"/><circle cx="12" cy="10" r="3"/></svg>
+              渋谷・新宿
+            </span>
+            <span class="zero-condition-tag">
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12,6 12,12 16,14"/></svg>
+              徒歩10分以内
+            </span>
+            <span class="zero-condition-tag">
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>
+              3LDK・4LDK以上
+            </span>
+            <span class="zero-condition-tag">
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/></svg>
+              一戸建て
+            </span>
+            <span class="zero-condition-tag">
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>
+              〜15万円
+            </span>
+            <span class="zero-condition-tag">
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9,11 12,14 22,4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
+              敷金・礼金なし
+            </span>
+            <span class="zero-condition-tag">
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12,6 12,12 16,14"/></svg>
+              築10年以内
+            </span>
+          </div>
+          <div class="consult-card-points">
+            <div class="consult-point">
+              <span class="consult-point-dot"></span>未公開・先行公開物件をご紹介
+            </div>
+            <div class="consult-point">
+              <span class="consult-point-dot"></span>条件交渉も代わりにお任せOK
+            </div>
+            <div class="consult-point">
+              <span class="consult-point-dot"></span>相談・内見は完全無料
+            </div>
+          </div>
+          <a href="consult.html" class="btn-consult">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+            この条件でスタッフに相談する（無料）
+          </a>
+          <div class="consult-notes">
+            <p>※仲介手数料は物件により金額が異なります</p>
+            <p>※他店舗で相談中の物件は対応できません</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 条件を緩めるサジェスト -->
+      <div class="zero-results-divider">条件を変えて再検索</div>
+
+      <div class="relax-filters">
+        <button class="relax-filter-item">
+          <div class="relax-filter-item-left">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>
+            間取りを広げる
+            <span class="relax-filter-badge">2LDK以上に変更 → 17件</span>
+          </div>
+          <svg class="relax-filter-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9,18 15,12 9,6"/></svg>
+        </button>
+        <button class="relax-filter-item">
+          <div class="relax-filter-item-left">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>
+            賃料上限を上げる
+            <span class="relax-filter-badge">〜20万円に変更 → 8件</span>
+          </div>
+          <svg class="relax-filter-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9,18 15,12 9,6"/></svg>
+        </button>
+        <button class="relax-filter-item">
+          <div class="relax-filter-item-left">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/></svg>
+            建物種別を広げる
+            <span class="relax-filter-badge">マンション含む → 24件</span>
+          </div>
+          <svg class="relax-filter-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9,18 15,12 9,6"/></svg>
+        </button>
+      </div>
+
+    </div><!-- /zero-results -->
+
+  </main>
+</div>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-logo">
+      <div class="footer-logo-icon"></div>
+      <span class="footer-logo-text">airdoor</span>
+    </div>
+    <div class="footer-links">
+      <a href="#">エアドアについて</a>
+      <a href="#">すべての建物一覧</a>
+      <a href="#">FAQ</a>
+      <a href="#">お問い合わせ</a>
+      <a href="#">利用規約</a>
+      <a href="#">プライバシーポリシー</a>
+      <a href="#">特定商取引法に基づく表記</a>
+      <a href="#">Instagram</a>
+      <a href="#">X（Twitter）</a>
+    </div>
+    <div class="footer-copy">
+      © 2024 Airdoor Inc. All rights reserved.
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

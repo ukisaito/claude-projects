@@ -1,0 +1,1889 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Airdoor デザインシステム</title>
+  <style>
+    /* ============================================================
+       DESIGN TOKENS
+    ============================================================ */
+    :root {
+      /* --- Colors: Brand Blue (ロゴ・アイコン) --- */
+      /* airdoor の三角ロゴ・アイコン類に使われる明るいシアン系ブルー */
+      --color-brand:       #1AAFE8;
+
+      /* --- Colors: Primary Blue (ボタン・リンク・アクティブ) --- */
+      /* 「初期費用概算の内訳をみる」ボタン、ステップ番号、リンクテキストなど */
+      --color-primary-50:  #EBF5FF;
+      --color-primary-100: #DAEEFF;
+      --color-primary-200: #B3DAFE;
+      --color-primary-300: #7EC0FD;
+      --color-primary-400: #4AA4F8;
+      --color-primary-500: #2384E0;
+      --color-primary-600: #1D6CC8;  /* ★ ボタン背景・リンクの主要カラー */
+      --color-primary-700: #1558A8;
+      --color-primary-800: #0E3F80;
+      --color-primary-900: #092B5C;
+
+      /* --- Colors: CTA Orange (メインCTAボタン) --- */
+      /* 「見学できるか相談したい」「実際に見学したい」ボタン */
+      --color-cta:         #F5A500;  /* ★ メインCTA */
+      --color-cta-dark:    #D98E00;  /* 「無料」バッジ部分（やや暗い） */
+      --color-cta-hover:   #E09800;
+
+      /* --- Colors: Coral/Red (敷・礼ラベル、申込あり) --- */
+      /* 「敷 無料」「礼 無料」のラベル文字色、「申込あり」バッジ */
+      --color-coral:       #F06060;
+      --color-coral-bg:    #FFF0F0;
+      --color-coral-border:#FFBABA;
+
+      /* --- Colors: Green (即入居可・募集中・更新ドット) --- */
+      --color-green:       #3DAA6E;
+      --color-green-light: #E8F7EF;
+
+      /* --- Colors: Navy (初期トクバッジ) --- */
+      --color-navy:        #1A3564;
+
+      /* --- Colors: Info Banner (おとり物件なしバナー) --- */
+      --color-info-bg:     #EAF5FF;
+      --color-info-text:   #1D6CC8;
+
+      /* --- Colors: Neutral --- */
+      --color-neutral-0:   #ffffff;
+      --color-neutral-50:  #f7f7f7;
+      --color-neutral-100: #f0f0f0;
+      --color-neutral-200: #e0e0e0;
+      --color-neutral-300: #cccccc;
+      --color-neutral-400: #aaaaaa;
+      --color-neutral-500: #888888;
+      --color-neutral-600: #666666;
+      --color-neutral-700: #444444;
+      --color-neutral-800: #222222;
+      --color-neutral-900: #111111;
+
+      /* --- Colors: Semantic --- */
+      --color-success: #3DAA6E;
+      --color-warning: #F5A500;
+      --color-error:   #F06060;
+      --color-info:    #1D6CC8;
+
+      /* --- Colors: Brand Specific --- */
+      --color-new-badge:   #F5A500;  /* 新着バッジ（オレンジ） */
+      --color-fee-free:    #3DAA6E;  /* 仲介手数料無料（グリーン） */
+
+      /* グラデーションは基本不使用。ロゴのみ参考として定義 */
+      --gradient-primary: linear-gradient(135deg, #1AAFE8, #1D6CC8);
+      --gradient-text:    linear-gradient(135deg, #1AAFE8, #1D6CC8);
+
+      /* --- Typography --- */
+      --font-family-base: "Hiragino Kaku Gothic ProN", "Hiragino Sans",
+                          "Noto Sans JP", "Yu Gothic", sans-serif;
+      --font-size-xs:   0.75rem;   /* 12px */
+      --font-size-sm:   0.875rem;  /* 14px */
+      --font-size-base: 1rem;      /* 16px */
+      --font-size-lg:   1.125rem;  /* 18px */
+      --font-size-xl:   1.25rem;   /* 20px */
+      --font-size-2xl:  1.5rem;    /* 24px */
+      --font-size-3xl:  1.875rem;  /* 30px */
+      --font-size-4xl:  2.25rem;   /* 36px */
+      --font-size-5xl:  3rem;      /* 48px */
+
+      --font-weight-normal:   400;
+      --font-weight-medium:   500;
+      --font-weight-semibold: 600;
+      --font-weight-bold:     700;
+
+      --line-height-tight:  1.25;
+      --line-height-normal: 1.5;
+      --line-height-relaxed: 1.75;
+
+      /* --- Spacing --- */
+      --space-1:  0.25rem;   /* 4px  */
+      --space-2:  0.5rem;    /* 8px  */
+      --space-3:  0.75rem;   /* 12px */
+      --space-4:  1rem;      /* 16px */
+      --space-5:  1.25rem;   /* 20px */
+      --space-6:  1.5rem;    /* 24px */
+      --space-8:  2rem;      /* 32px */
+      --space-10: 2.5rem;    /* 40px */
+      --space-12: 3rem;      /* 48px */
+      --space-16: 4rem;      /* 64px */
+      --space-20: 5rem;      /* 80px */
+
+      /* --- Border Radius --- */
+      --radius-sm:   0.25rem;   /* 4px  */
+      --radius-base: 0.5rem;    /* 8px  */
+      --radius-md:   0.75rem;   /* 12px */
+      --radius-lg:   1rem;      /* 16px */
+      --radius-xl:   1.5rem;    /* 24px */
+      --radius-full: 9999px;
+
+      /* --- Shadow --- */
+      --shadow-sm: 0 1px 2px rgba(0,0,0,.06);
+      --shadow-base: 0 2px 8px rgba(0,0,0,.08);
+      --shadow-md: 0 4px 16px rgba(0,0,0,.10);
+      --shadow-lg: 0 8px 32px rgba(0,0,0,.12);
+      --shadow-card: 0 2px 12px rgba(14,165,233,.10);
+
+      /* --- Breakpoints (reference) --- */
+      /* sp: ~767px  |  tablet: 768–1023px  |  pc: 1024px+ */
+
+      /* --- Container --- */
+      --container-max: 1200px;
+      --container-padding: 1.5rem;
+    }
+
+    /* ============================================================
+       RESET / BASE
+    ============================================================ */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { font-size: 16px; }
+    body {
+      font-family: var(--font-family-base);
+      font-size: var(--font-size-base);
+      line-height: var(--line-height-normal);
+      color: var(--color-neutral-800);
+      background: var(--color-neutral-50);
+    }
+    a { color: var(--color-primary-600); text-decoration: none; }
+    a:hover { opacity: 0.75; }
+
+    /* ============================================================
+       DESIGN SYSTEM PAGE LAYOUT
+    ============================================================ */
+    .ds-nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: var(--color-neutral-900);
+      color: var(--color-neutral-0);
+      padding: var(--space-4) var(--space-6);
+      display: flex;
+      align-items: center;
+      gap: var(--space-4);
+    }
+    .ds-nav-logo {
+      font-size: var(--font-size-lg);
+      font-weight: var(--font-weight-bold);
+      background: var(--gradient-text);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .ds-nav-badge {
+      font-size: var(--font-size-xs);
+      background: var(--color-neutral-700);
+      padding: 2px 10px;
+      border-radius: var(--radius-full);
+      color: var(--color-neutral-300);
+    }
+    .ds-nav-links {
+      margin-left: auto;
+      display: flex;
+      gap: var(--space-6);
+      font-size: var(--font-size-sm);
+      color: var(--color-neutral-400);
+      list-style: none;
+    }
+    .ds-nav-links a { color: var(--color-neutral-400); }
+    .ds-nav-links a:hover { color: #fff; opacity: 1; }
+
+    .ds-sidebar {
+      position: fixed;
+      top: 56px;
+      left: 0;
+      width: 220px;
+      height: calc(100vh - 56px);
+      overflow-y: auto;
+      background: var(--color-neutral-0);
+      border-right: 1px solid var(--color-neutral-200);
+      padding: var(--space-6) 0;
+    }
+    .ds-sidebar-section { margin-bottom: var(--space-2); }
+    .ds-sidebar-title {
+      font-size: var(--font-size-xs);
+      font-weight: var(--font-weight-semibold);
+      color: var(--color-neutral-400);
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      padding: var(--space-2) var(--space-4);
+    }
+    .ds-sidebar-link {
+      display: block;
+      padding: var(--space-2) var(--space-4);
+      font-size: var(--font-size-sm);
+      color: var(--color-neutral-600);
+      transition: background .15s, color .15s;
+    }
+    .ds-sidebar-link:hover {
+      background: var(--color-primary-50);
+      color: var(--color-primary-600);
+      opacity: 1;
+    }
+
+    .ds-main {
+      margin-left: 220px;
+      padding: var(--space-10) var(--space-10) var(--space-20);
+      max-width: calc(var(--container-max) + 220px);
+    }
+
+    /* ============================================================
+       SECTION LAYOUT
+    ============================================================ */
+    .ds-section {
+      margin-bottom: var(--space-16);
+      scroll-margin-top: 80px;
+    }
+    .ds-section-header {
+      border-bottom: 2px solid var(--color-neutral-200);
+      margin-bottom: var(--space-8);
+      padding-bottom: var(--space-4);
+    }
+    .ds-section-title {
+      font-size: var(--font-size-2xl);
+      font-weight: var(--font-weight-bold);
+      color: var(--color-neutral-900);
+    }
+    .ds-section-desc {
+      font-size: var(--font-size-sm);
+      color: var(--color-neutral-500);
+      margin-top: var(--space-2);
+    }
+
+    .ds-subsection { margin-bottom: var(--space-10); }
+    .ds-subsection-title {
+      font-size: var(--font-size-base);
+      font-weight: var(--font-weight-semibold);
+      color: var(--color-neutral-700);
+      margin-bottom: var(--space-4);
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+    }
+    .ds-subsection-title::before {
+      content: '';
+      display: inline-block;
+      width: 4px;
+      height: 1em;
+      background: var(--gradient-primary);
+      border-radius: var(--radius-sm);
+    }
+
+    .ds-token-label {
+      font-size: var(--font-size-xs);
+      color: var(--color-neutral-400);
+      margin-top: var(--space-1);
+      font-family: monospace;
+    }
+
+    /* Canvas for components */
+    .ds-canvas {
+      background: var(--color-neutral-0);
+      border: 1px solid var(--color-neutral-200);
+      border-radius: var(--radius-lg);
+      padding: var(--space-8);
+    }
+    .ds-canvas--dark {
+      background: var(--color-neutral-900);
+    }
+    .ds-canvas--gray {
+      background: var(--color-neutral-100);
+    }
+
+    /* Code block */
+    .ds-code {
+      background: var(--color-neutral-900);
+      color: #e2e8f0;
+      font-family: 'Menlo', 'Monaco', 'Courier New', monospace;
+      font-size: var(--font-size-xs);
+      padding: var(--space-4) var(--space-6);
+      border-radius: var(--radius-base);
+      overflow-x: auto;
+      margin-top: var(--space-3);
+      line-height: 1.6;
+    }
+
+    /* ============================================================
+       1. COLOR SWATCHES
+    ============================================================ */
+    .ds-color-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+      gap: var(--space-3);
+    }
+    .ds-swatch {
+      border-radius: var(--radius-base);
+      overflow: hidden;
+      border: 1px solid var(--color-neutral-200);
+    }
+    .ds-swatch-color {
+      height: 64px;
+    }
+    .ds-swatch-info {
+      padding: var(--space-2) var(--space-3);
+      background: var(--color-neutral-0);
+    }
+    .ds-swatch-name {
+      font-size: var(--font-size-xs);
+      font-weight: var(--font-weight-medium);
+      color: var(--color-neutral-700);
+    }
+    .ds-swatch-hex {
+      font-size: 11px;
+      color: var(--color-neutral-400);
+      font-family: monospace;
+    }
+
+    .ds-gradient-block {
+      height: 80px;
+      border-radius: var(--radius-lg);
+      display: flex;
+      align-items: flex-end;
+      padding: var(--space-3) var(--space-4);
+    }
+    .ds-gradient-block span {
+      font-size: var(--font-size-xs);
+      color: rgba(255,255,255,.8);
+      font-family: monospace;
+    }
+
+    /* ============================================================
+       2. TYPOGRAPHY
+    ============================================================ */
+    .ds-type-row {
+      display: flex;
+      align-items: baseline;
+      gap: var(--space-6);
+      padding: var(--space-4) 0;
+      border-bottom: 1px solid var(--color-neutral-100);
+    }
+    .ds-type-meta {
+      width: 180px;
+      flex-shrink: 0;
+      font-size: var(--font-size-xs);
+      color: var(--color-neutral-400);
+      font-family: monospace;
+    }
+    .ds-type-sample { flex: 1; }
+
+    /* ============================================================
+       3. SPACING
+    ============================================================ */
+    .ds-spacing-row {
+      display: flex;
+      align-items: center;
+      gap: var(--space-4);
+      margin-bottom: var(--space-3);
+    }
+    .ds-spacing-bar {
+      background: var(--gradient-primary);
+      height: 20px;
+      border-radius: var(--radius-sm);
+      opacity: .7;
+    }
+    .ds-spacing-meta {
+      font-size: var(--font-size-xs);
+      font-family: monospace;
+      color: var(--color-neutral-500);
+      min-width: 160px;
+    }
+
+    /* ============================================================
+       COMPONENT STYLES — Buttons
+    ============================================================ */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      font-family: var(--font-family-base);
+      font-weight: var(--font-weight-semibold);
+      border-radius: var(--radius-full);
+      cursor: pointer;
+      transition: opacity .15s, transform .1s, box-shadow .15s;
+      border: none;
+      text-decoration: none;
+      white-space: nowrap;
+      line-height: 1;
+    }
+    .btn:hover { opacity: .85; }
+    .btn:active { transform: scale(.97); }
+
+    /* Sizes */
+    .btn-sm  { padding: 8px 20px;  font-size: var(--font-size-sm);  }
+    .btn-md  { padding: 12px 28px; font-size: var(--font-size-base); }
+    .btn-lg  { padding: 16px 36px; font-size: var(--font-size-lg);  }
+
+    /* Variants */
+    .btn-primary {
+      background: var(--color-primary-600);
+      color: #fff;
+      box-shadow: 0 2px 8px rgba(29,108,200,.25);
+    }
+    .btn-primary:hover { background: var(--color-primary-700); opacity: 1; }
+
+    /* CTAオレンジ：「見学できるか相談したい」など主要行動ボタン */
+    .btn-cta {
+      background: var(--color-cta);
+      color: #fff;
+      border-radius: var(--radius-base);
+      box-shadow: 0 2px 8px rgba(245,165,0,.3);
+      position: relative;
+      overflow: hidden;
+      padding-left: 60px;
+    }
+    .btn-cta::before {
+      content: '無料';
+      position: absolute;
+      left: 0;
+      top: 0; bottom: 0;
+      width: 52px;
+      background: var(--color-cta-dark);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: var(--font-size-xs);
+      font-weight: var(--font-weight-bold);
+    }
+    .btn-cta:hover { background: var(--color-cta-hover); opacity: 1; }
+
+    /* CTAオレンジ（無料バッジなし） */
+    .btn-cta-plain {
+      background: var(--color-cta);
+      color: #fff;
+      border-radius: var(--radius-base);
+    }
+    .btn-cta-plain:hover { background: var(--color-cta-hover); opacity: 1; }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--color-primary-600);
+      border: 1.5px solid var(--color-primary-600);
+    }
+    .btn-outline:hover { background: var(--color-primary-50); opacity: 1; }
+
+    /* ナビゲーション用アウトライン（グレー） */
+    .btn-outline-gray {
+      background: transparent;
+      color: var(--color-neutral-700);
+      border: 1.5px solid var(--color-neutral-300);
+      border-radius: var(--radius-base);
+    }
+    .btn-outline-gray:hover { background: var(--color-neutral-100); opacity: 1; }
+
+    .btn-white {
+      background: #fff;
+      color: var(--color-primary-600);
+      box-shadow: var(--shadow-md);
+    }
+
+    .btn-ghost {
+      background: transparent;
+      color: var(--color-neutral-600);
+    }
+    .btn-ghost:hover { background: var(--color-neutral-100); opacity: 1; }
+
+    .btn-danger {
+      background: var(--color-error);
+      color: #fff;
+    }
+
+    /* Full width */
+    .btn-block { width: 100%; }
+
+    /* Disabled */
+    .btn:disabled {
+      opacity: .4;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    /* Button group */
+    .btn-group { display: flex; gap: var(--space-3); flex-wrap: wrap; align-items: center; }
+
+    /* ============================================================
+       COMPONENT STYLES — Badges / Tags
+    ============================================================ */
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-size: var(--font-size-xs);
+      font-weight: var(--font-weight-semibold);
+      padding: 3px 10px;
+      border-radius: var(--radius-full);
+      white-space: nowrap;
+    }
+    /* 敷・礼ラベル（コーラル） */
+    .badge-shiki { background: transparent; color: var(--color-coral); border: 1px solid var(--color-coral); }
+    /* 「無料」テキスト（コーラル） */
+    .badge-muryo { color: var(--color-coral); font-weight: var(--font-weight-semibold); }
+    /* 申込あり */
+    .badge-applied {
+      background: var(--color-coral-bg);
+      color: var(--color-coral);
+      border: 1px solid var(--color-coral-border);
+    }
+    /* 即入居可 */
+    .badge-movein { background: transparent; color: var(--color-green); font-weight: var(--font-weight-semibold); }
+    /* 募集中 */
+    .badge-recruiting { background: transparent; color: var(--color-green); }
+    /* 初期トク★★★（ネイビー） */
+    .badge-tokku {
+      background: var(--color-navy);
+      color: #fff;
+      border-radius: var(--radius-sm);
+    }
+    /* 初期費用クレカ決済可 */
+    .badge-card {
+      background: var(--color-primary-50);
+      color: var(--color-primary-600);
+      border: 1px solid var(--color-primary-200);
+      border-radius: var(--radius-sm);
+    }
+    /* 仲介手数料ラベル（グレー） */
+    .badge-commission {
+      background: var(--color-neutral-100);
+      color: var(--color-neutral-600);
+      border-radius: var(--radius-sm);
+    }
+    /* 汎用 */
+    .badge-new { background: var(--color-cta); color: #fff; }
+    .badge-fee { background: var(--color-green); color: #fff; }
+    .badge-primary { background: var(--color-primary-100); color: var(--color-primary-700); }
+    .badge-neutral { background: var(--color-neutral-100); color: var(--color-neutral-600); }
+    .badge-outline {
+      background: transparent;
+      border: 1px solid var(--color-primary-300);
+      color: var(--color-primary-600);
+    }
+
+    /* ============================================================
+       COMPONENT STYLES — Property Card
+    ============================================================ */
+    .property-card {
+      background: var(--color-neutral-0);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: var(--shadow-card);
+      transition: transform .2s, box-shadow .2s;
+      border: 1px solid var(--color-neutral-200);
+    }
+    .property-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-lg);
+    }
+    .property-card-image {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 16/9;
+      background: var(--color-neutral-200);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      color: var(--color-neutral-400);
+    }
+    .property-card-badges {
+      position: absolute;
+      top: var(--space-2);
+      left: var(--space-2);
+      display: flex;
+      gap: var(--space-1);
+    }
+    .property-card-body { padding: var(--space-4); }
+    .property-card-price {
+      font-size: var(--font-size-xl);
+      font-weight: var(--font-weight-bold);
+      color: var(--color-neutral-900);
+      margin-bottom: var(--space-1);
+    }
+    .property-card-price span {
+      font-size: var(--font-size-sm);
+      font-weight: var(--font-weight-normal);
+      color: var(--color-neutral-500);
+    }
+    .property-card-name {
+      font-size: var(--font-size-sm);
+      color: var(--color-neutral-700);
+      margin-bottom: var(--space-2);
+      font-weight: var(--font-weight-medium);
+    }
+    .property-card-meta {
+      font-size: var(--font-size-xs);
+      color: var(--color-neutral-500);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-1);
+    }
+    .property-card-fee {
+      margin-top: var(--space-3);
+      padding-top: var(--space-3);
+      border-top: 1px solid var(--color-neutral-100);
+      font-size: var(--font-size-xs);
+      color: var(--color-green);
+      font-weight: var(--font-weight-semibold);
+    }
+    .property-card-shiki-rei {
+      display: flex;
+      gap: var(--space-2);
+      align-items: center;
+      font-size: var(--font-size-xs);
+      margin-top: var(--space-2);
+    }
+    .shiki-label {
+      color: var(--color-coral);
+      font-weight: var(--font-weight-semibold);
+    }
+    .shiki-muryo {
+      color: var(--color-coral);
+    }
+    .commission-tag {
+      background: var(--color-neutral-100);
+      color: var(--color-neutral-600);
+      padding: 2px 8px;
+      border-radius: var(--radius-sm);
+      font-size: 11px;
+    }
+
+    /* ============================================================
+       COMPONENT STYLES — Info Banner (おとり物件なし)
+    ============================================================ */
+    .info-banner {
+      background: var(--color-info-bg);
+      color: var(--color-info-text);
+      padding: var(--space-3) var(--space-6);
+      text-align: center;
+      font-size: var(--font-size-sm);
+      border-radius: var(--radius-sm);
+    }
+    .info-banner strong { font-weight: var(--font-weight-bold); }
+
+    /* ============================================================
+       COMPONENT STYLES — Alert Box (申込済み警告)
+    ============================================================ */
+    .alert-box {
+      background: var(--color-coral-bg);
+      border: 1px solid var(--color-coral-border);
+      border-radius: var(--radius-base);
+      padding: var(--space-4);
+      font-size: var(--font-size-sm);
+      color: var(--color-neutral-700);
+      line-height: var(--line-height-relaxed);
+    }
+
+    /* ============================================================
+       COMPONENT STYLES — Step Indicator (ステッパー)
+    ============================================================ */
+    .stepper {
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+    }
+    .step {
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+      font-size: var(--font-size-sm);
+    }
+    .step-num {
+      width: 24px;
+      height: 24px;
+      border-radius: var(--radius-full);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: var(--font-size-xs);
+      font-weight: var(--font-weight-bold);
+      flex-shrink: 0;
+    }
+    .step.is-active .step-num { background: var(--color-primary-600); color: #fff; }
+    .step.is-active .step-label { color: var(--color-primary-600); font-weight: var(--font-weight-semibold); }
+    .step:not(.is-active) .step-num { background: var(--color-neutral-200); color: var(--color-neutral-500); }
+    .step:not(.is-active) .step-label { color: var(--color-neutral-400); }
+    .step-line { flex: 1; height: 1px; background: var(--color-neutral-300); min-width: 32px; }
+
+    /* ============================================================
+       COMPONENT STYLES — Search Bar
+    ============================================================ */
+    .search-bar {
+      background: var(--color-neutral-0);
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow-lg);
+      padding: var(--space-4) var(--space-6);
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+      border: 1px solid var(--color-neutral-200);
+    }
+    .search-input {
+      flex: 1;
+      border: none;
+      outline: none;
+      font-family: var(--font-family-base);
+      font-size: var(--font-size-base);
+      color: var(--color-neutral-800);
+      background: transparent;
+    }
+    .search-input::placeholder { color: var(--color-neutral-400); }
+    .search-divider {
+      width: 1px;
+      height: 24px;
+      background: var(--color-neutral-200);
+    }
+
+    /* ============================================================
+       COMPONENT STYLES — Input / Form
+    ============================================================ */
+    .form-group { margin-bottom: var(--space-4); }
+    .form-label {
+      display: block;
+      font-size: var(--font-size-sm);
+      font-weight: var(--font-weight-medium);
+      color: var(--color-neutral-700);
+      margin-bottom: var(--space-2);
+    }
+    .form-input {
+      width: 100%;
+      padding: 10px 14px;
+      border: 1.5px solid var(--color-neutral-300);
+      border-radius: var(--radius-base);
+      font-family: var(--font-family-base);
+      font-size: var(--font-size-base);
+      color: var(--color-neutral-800);
+      background: var(--color-neutral-0);
+      transition: border-color .15s, box-shadow .15s;
+      outline: none;
+    }
+    .form-input:focus {
+      border-color: var(--color-primary-400);
+      box-shadow: 0 0 0 3px rgba(59,130,246,.15);
+    }
+    .form-input::placeholder { color: var(--color-neutral-400); }
+    .form-input.is-error { border-color: var(--color-error); }
+    .form-hint { font-size: var(--font-size-xs); color: var(--color-neutral-500); margin-top: var(--space-1); }
+    .form-error { font-size: var(--font-size-xs); color: var(--color-error); margin-top: var(--space-1); }
+
+    /* Select */
+    .form-select {
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='%2394a3b8'%3E%3Cpath d='M5.23 7.21a.75.75 0 011.06.02L10 11.17l3.71-3.94a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 12px center;
+      background-size: 16px;
+      padding-right: 36px;
+    }
+
+    /* ============================================================
+       COMPONENT STYLES — Tabs
+    ============================================================ */
+    .tabs { display: flex; gap: 0; border-bottom: 2px solid var(--color-neutral-200); }
+    .tab-item {
+      padding: var(--space-3) var(--space-5);
+      font-size: var(--font-size-sm);
+      font-weight: var(--font-weight-medium);
+      color: var(--color-neutral-500);
+      cursor: pointer;
+      border-bottom: 2px solid transparent;
+      margin-bottom: -2px;
+      transition: color .15s, border-color .15s;
+      background: none;
+      border-top: none;
+      border-left: none;
+      border-right: none;
+      font-family: var(--font-family-base);
+    }
+    .tab-item.is-active {
+      color: var(--color-primary-600);
+      border-bottom-color: var(--color-primary-600);
+    }
+    .tab-item:hover:not(.is-active) { color: var(--color-neutral-700); }
+
+    /* Pill tabs */
+    .tabs-pill { display: flex; gap: var(--space-2); border-bottom: none; flex-wrap: wrap; }
+    .tab-pill {
+      padding: 6px 16px;
+      font-size: var(--font-size-sm);
+      font-weight: var(--font-weight-medium);
+      color: var(--color-neutral-600);
+      cursor: pointer;
+      border-radius: var(--radius-full);
+      background: var(--color-neutral-100);
+      border: none;
+      font-family: var(--font-family-base);
+      transition: background .15s, color .15s;
+    }
+    .tab-pill.is-active {
+      background: var(--gradient-primary);
+      color: #fff;
+    }
+    .tab-pill:hover:not(.is-active) { background: var(--color-neutral-200); }
+
+    /* ============================================================
+       COMPONENT STYLES — Ranking Item
+    ============================================================ */
+    .ranking-item {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+      padding: var(--space-3) var(--space-4);
+      border-radius: var(--radius-base);
+      background: var(--color-neutral-0);
+      border: 1px solid var(--color-neutral-200);
+      transition: box-shadow .15s;
+    }
+    .ranking-item:hover { box-shadow: var(--shadow-md); }
+    .ranking-number {
+      width: 28px;
+      height: 28px;
+      border-radius: var(--radius-full);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: var(--font-size-sm);
+      font-weight: var(--font-weight-bold);
+      flex-shrink: 0;
+    }
+    .rank-1 { background: #f59e0b; color: #fff; }
+    .rank-2 { background: #94a3b8; color: #fff; }
+    .rank-3 { background: #b45309; color: #fff; }
+    .rank-n { background: var(--color-neutral-100); color: var(--color-neutral-600); }
+    .ranking-name { font-size: var(--font-size-sm); color: var(--color-neutral-800); flex: 1; }
+    .ranking-count { font-size: var(--font-size-xs); color: var(--color-neutral-400); }
+
+    /* ============================================================
+       COMPONENT STYLES — Category Card
+    ============================================================ */
+    .category-card {
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      position: relative;
+      aspect-ratio: 4/3;
+      background: var(--color-neutral-200);
+      display: flex;
+      align-items: flex-end;
+      padding: var(--space-4);
+      transition: transform .2s;
+      cursor: pointer;
+    }
+    .category-card:hover { transform: scale(1.02); }
+    .category-card::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(0,0,0,.6) 0%, transparent 60%);
+    }
+    .category-card-label {
+      position: relative;
+      z-index: 1;
+      font-size: var(--font-size-base);
+      font-weight: var(--font-weight-bold);
+      color: #fff;
+    }
+    .category-card-emoji { font-size: 2rem; text-align: center; color: var(--color-neutral-500); display: block; margin: auto; }
+
+    /* ============================================================
+       COMPONENT STYLES — Hero
+    ============================================================ */
+    .hero {
+      background: var(--gradient-primary);
+      padding: var(--space-16) var(--space-8);
+      border-radius: var(--radius-xl);
+      text-align: center;
+      color: #fff;
+    }
+    .hero-eyebrow {
+      font-size: var(--font-size-sm);
+      font-weight: var(--font-weight-medium);
+      opacity: .85;
+      margin-bottom: var(--space-3);
+      letter-spacing: .05em;
+    }
+    .hero-title {
+      font-size: var(--font-size-4xl);
+      font-weight: var(--font-weight-bold);
+      line-height: var(--line-height-tight);
+      margin-bottom: var(--space-4);
+    }
+    .hero-desc {
+      font-size: var(--font-size-lg);
+      opacity: .9;
+      margin-bottom: var(--space-8);
+      max-width: 480px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    /* ============================================================
+       COMPONENT STYLES — App Banner
+    ============================================================ */
+    .app-banner {
+      background: var(--color-neutral-900);
+      border-radius: var(--radius-xl);
+      padding: var(--space-8) var(--space-10);
+      display: flex;
+      align-items: center;
+      gap: var(--space-8);
+      color: #fff;
+    }
+    .app-banner-text { flex: 1; }
+    .app-banner-title {
+      font-size: var(--font-size-2xl);
+      font-weight: var(--font-weight-bold);
+      margin-bottom: var(--space-2);
+    }
+    .app-banner-desc { font-size: var(--font-size-sm); color: var(--color-neutral-400); }
+    .app-banner-stores { display: flex; gap: var(--space-3); margin-top: var(--space-4); }
+    .store-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-2);
+      padding: 10px 18px;
+      background: #fff;
+      color: var(--color-neutral-900);
+      border-radius: var(--radius-base);
+      font-size: var(--font-size-sm);
+      font-weight: var(--font-weight-semibold);
+      transition: opacity .15s;
+    }
+    .store-btn:hover { opacity: .85; }
+    .app-banner-qr {
+      width: 80px;
+      height: 80px;
+      background: var(--color-neutral-700);
+      border-radius: var(--radius-base);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: var(--font-size-xs);
+      color: var(--color-neutral-500);
+    }
+
+    /* ============================================================
+       COMPONENT STYLES — Feature Chip
+    ============================================================ */
+    .feature-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-2);
+      padding: var(--space-2) var(--space-4);
+      background: var(--color-primary-50);
+      border: 1px solid var(--color-primary-200);
+      border-radius: var(--radius-full);
+      font-size: var(--font-size-sm);
+      color: var(--color-primary-700);
+      font-weight: var(--font-weight-medium);
+    }
+    .feature-chip-icon { color: var(--color-primary-500); }
+
+    /* ============================================================
+       GRID HELPER
+    ============================================================ */
+    .grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--space-4); }
+    .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-4); }
+    .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--space-4); }
+    .flex-wrap { display: flex; flex-wrap: wrap; gap: var(--space-3); }
+
+    /* Shadows display */
+    .shadow-demo {
+      background: var(--color-neutral-0);
+      border-radius: var(--radius-base);
+      padding: var(--space-4);
+      text-align: center;
+      font-size: var(--font-size-xs);
+      color: var(--color-neutral-500);
+    }
+
+    @media (max-width: 768px) {
+      .ds-sidebar { display: none; }
+      .ds-main { margin-left: 0; padding: var(--space-6) var(--space-4); }
+      .ds-nav-links { display: none; }
+      .grid-3, .grid-4 { grid-template-columns: repeat(2, 1fr); }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="ds-nav">
+  <span class="ds-nav-logo">Airdoor Design System</span>
+  <span class="ds-nav-badge">v1.0</span>
+  <ul class="ds-nav-links">
+    <li><a href="#colors">Colors</a></li>
+    <li><a href="#typography">Typography</a></li>
+    <li><a href="#spacing">Spacing</a></li>
+    <li><a href="#components">Components</a></li>
+  </ul>
+</nav>
+
+<!-- SIDEBAR -->
+<aside class="ds-sidebar">
+  <div class="ds-sidebar-section">
+    <div class="ds-sidebar-title">Foundations</div>
+    <a class="ds-sidebar-link" href="#colors">カラー</a>
+    <a class="ds-sidebar-link" href="#typography">タイポグラフィ</a>
+    <a class="ds-sidebar-link" href="#spacing">スペーシング</a>
+    <a class="ds-sidebar-link" href="#shadows">シャドウ・角丸</a>
+  </div>
+  <div class="ds-sidebar-section">
+    <div class="ds-sidebar-title">Components</div>
+    <a class="ds-sidebar-link" href="#buttons">ボタン</a>
+    <a class="ds-sidebar-link" href="#badges">バッジ・タグ</a>
+    <a class="ds-sidebar-link" href="#forms">フォーム</a>
+    <a class="ds-sidebar-link" href="#tabs">タブ</a>
+    <a class="ds-sidebar-link" href="#search">検索バー</a>
+    <a class="ds-sidebar-link" href="#stepper">ステッパー</a>
+    <a class="ds-sidebar-link" href="#property-card">物件カード</a>
+    <a class="ds-sidebar-link" href="#alert">アラート・バナー</a>
+    <a class="ds-sidebar-link" href="#ranking">ランキング</a>
+    <a class="ds-sidebar-link" href="#category">カテゴリカード</a>
+    <a class="ds-sidebar-link" href="#hero">ヒーロー</a>
+    <a class="ds-sidebar-link" href="#app-banner">アプリバナー</a>
+  </div>
+  <div class="ds-sidebar-section">
+    <div class="ds-sidebar-title">Patterns</div>
+    <a class="ds-sidebar-link" href="#layout">レイアウト</a>
+  </div>
+</aside>
+
+<!-- MAIN -->
+<main class="ds-main">
+
+  <!-- HERO INTRO -->
+  <div style="margin-bottom: var(--space-12);">
+    <h1 style="font-size: var(--font-size-4xl); font-weight: var(--font-weight-bold); color: var(--color-neutral-900); margin-bottom: var(--space-3);">
+      Airdoor<br>デザインシステム
+    </h1>
+    <p style="font-size: var(--font-size-lg); color: var(--color-neutral-500); max-width: 560px; line-height: var(--line-height-relaxed);">
+      エアドア（airdoor.jp）のビジュアル言語を定義するデザインリファレンス。<br>
+      デザイナーはこのドキュメントを参考に、一貫したUIを設計してください。
+    </p>
+  </div>
+
+  <!-- ======================================================
+       COLORS
+  ====================================================== -->
+  <section class="ds-section" id="colors">
+    <div class="ds-section-header">
+      <h2 class="ds-section-title">カラー</h2>
+      <p class="ds-section-desc">ブランドカラーはブルー〜インディゴのグラデーション。白・ニュートラルグレーを基調とした明るいUI。</p>
+    </div>
+
+    <!-- Primary -->
+    <div class="ds-subsection">
+      <h3 class="ds-subsection-title">Primary Blue（ボタン・リンク・アクティブ状態）</h3>
+      <div class="ds-color-grid">
+        <div class="ds-swatch">
+          <div class="ds-swatch-color" style="background:#EBF5FF; border:1px solid #ddd;"></div>
+          <div class="ds-swatch-info"><div class="ds-swatch-name">50</div><div class="ds-swatch-hex">#EBF5FF</div></div>
+        </div>
+        <div class="ds-swatch">
+          <div class="ds-swatch-color" style="background:#DAEEFF"></div>
+          <div class="ds-swatch-info"><div class="ds-swatch-name">100</div><div class="ds-swatch-hex">#DAEEFF</div></div>
+        </div>
+        <div class="ds-swatch">
+          <div class="ds-swatch-color" style="background:#B3DAFE"></div>
+          <div class="ds-swatch-info"><div class="ds-swatch-name">200</div><div class="ds-swatch-hex">#B3DAFE</div></div>
+        </div>
+        <div class="ds-swatch">
+          <div class="ds-swatch-color" style="background:#7EC0FD"></div>
+          <div class="ds-swatch-info"><div class="ds-swatch-name">300</div><div class="ds-swatch-hex">#7EC0FD</div></div>
+        </div>
+        <div class="ds-swatch">
+          <div class="ds-swatch-color" style="background:#4AA4F8"></div>
+          <div class="ds-swatch-info"><div class="ds-swatch-name">400</div><div class="ds-swatch-hex">#4AA4F8</div></div>
+        </div>
+        <div class="ds-swatch">
+          <div class="ds-swatch-color" style="background:#2384E0"></div>
+          <div class="ds-swatch-info"><div class="ds-swatch-name">500</div><div class="ds-swatch-hex">#2384E0</div></div>
+        </div>
+        <div class="ds-swatch">
+          <div class="ds-swatch-color" style="background:#1D6CC8"></div>
+          <div class="ds-swatch-info"><div class="ds-swatch-name">600 ★</div><div class="ds-swatch-hex">#1D6CC8</div></div>
+        </div>
+        <div class="ds-swatch">
+          <div class="ds-swatch-color" style="background:#1558A8"></div>
+          <div class="ds-swatch-info"><div class="ds-swatch-name">700</div><div class="ds-swatch-hex">#1558A8</div></div>
+        </div>
+        <div class="ds-swatch">
+          <div class="ds-swatch-color" style="background:#0E3F80"></div>
+          <div class="ds-swatch-info"><div class="ds-swatch-name">800</div><div class="ds-swatch-hex">#0E3F80</div></div>
+        </div>
+        <div class="ds-swatch">
+          <div class="ds-swatch-color" style="background:#092B5C"></div>
+          <div class="ds-swatch-info"><div class="ds-swatch-name">900</div><div class="ds-swatch-hex">#092B5C</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Brand Specific Colors -->
+    <div class="ds-subsection">
+      <h3 class="ds-subsection-title">ブランド固有カラー</h3>
+      <div class="ds-color-grid">
+        <div class="ds-swatch">
+          <div class="ds-swatch-color" style="background:#1AAFE8"></div>
+          <div class="ds-swatch-info"><div class="ds-swatch-name">Brand Blue</div><div class="ds-swatch-hex">#1AAFE8</div></div>
+        </div>
+        <div class="ds-swatch">
+          <div class="ds-swatch-color" style="background:#F5A500"></div>
+          <div class="ds-swatch-info"><div class="ds-swatch-name">CTA Orange ★</div><div class="ds-swatch-hex">#F5A500</div></div>
+        </div>
+        <div class="ds-swatch">
+          <div class="ds-swatch-color" style="background:#D98E00"></div>
+          <div class="ds-swatch-info"><div class="ds-swatch-name">CTA Dark</div><div class="ds-swatch-hex">#D98E00</div></div>
+        </div>
+        <div class="ds-swatch">
+          <div class="ds-swatch-color" style="background:#F06060"></div>
+          <div class="ds-swatch-info"><div class="ds-swatch-name">Coral ★</div><div class="ds-swatch-hex">#F06060</div></div>
+        </div>
+        <div class="ds-swatch">
+          <div class="ds-swatch-color" style="background:#3DAA6E"></div>
+          <div class="ds-swatch-info"><div class="ds-swatch-name">Green ★</div><div class="ds-swatch-hex">#3DAA6E</div></div>
+        </div>
+        <div class="ds-swatch">
+          <div class="ds-swatch-color" style="background:#1A3564"></div>
+          <div class="ds-swatch-info"><div class="ds-swatch-name">Navy Badge</div><div class="ds-swatch-hex">#1A3564</div></div>
+        </div>
+        <div class="ds-swatch">
+          <div class="ds-swatch-color" style="background:#EAF5FF; border:1px solid #ddd;"></div>
+          <div class="ds-swatch-info"><div class="ds-swatch-name">Info BG</div><div class="ds-swatch-hex">#EAF5FF</div></div>
+        </div>
+        <div class="ds-swatch">
+          <div class="ds-swatch-color" style="background:#FFF0F0; border:1px solid #ddd;"></div>
+          <div class="ds-swatch-info"><div class="ds-swatch-name">Alert BG</div><div class="ds-swatch-hex">#FFF0F0</div></div>
+        </div>
+      </div>
+      <div style="margin-top:var(--space-4); padding: var(--space-3) var(--space-4); background:var(--color-neutral-100); border-radius:var(--radius-base); font-size:var(--font-size-xs); color:var(--color-neutral-500);">
+        ★ = 高頻度使用カラー　｜　Brand Blue はロゴ・アイコンのみ。テキスト/ボタンには Primary Blue (#1D6CC8) を使用。
+      </div>
+    </div>
+
+    <!-- Neutral -->
+    <div class="ds-subsection">
+      <h3 class="ds-subsection-title">Neutral (Gray)</h3>
+      <div class="ds-color-grid">
+        <div class="ds-swatch">
+          <div class="ds-swatch-color" style="background:#f8fafc; border: 1px solid #e2e8f0;"></div>
+          <div class="ds-swatch-info"><div class="ds-swatch-name">50</div><div class="ds-swatch-hex">#f8fafc</div></div>
+        </div>
+        <div class="ds-swatch">
+          <div class="ds-swatch-color" style="background:#f1f5f9"></div>
+          <div class="ds-swatch-info"><div class="ds-swatch-name">100 ★</div><div class="ds-swatch-hex">#f1f5f9</div></div>
+        </div>
+        <div class="ds-swatch">
+          <div class="ds-swatch-color" style="background:#e2e8f0"></div>
+          <div class="ds-swatch-info"><div class="ds-swatch-name">200</div><div class="ds-swatch-hex">#e2e8f0</div></div>
+        </div>
+        <div class="ds-swatch">
+          <div class="ds-swatch-color" style="background:#cbd5e1"></div>
+          <div class="ds-swatch-info"><div class="ds-swatch-name">300</div><div class="ds-swatch-hex">#cbd5e1</div></div>
+        </div>
+        <div class="ds-swatch">
+          <div class="ds-swatch-color" style="background:#94a3b8"></div>
+          <div class="ds-swatch-info"><div class="ds-swatch-name">400</div><div class="ds-swatch-hex">#94a3b8</div></div>
+        </div>
+        <div class="ds-swatch">
+          <div class="ds-swatch-color" style="background:#64748b"></div>
+          <div class="ds-swatch-info"><div class="ds-swatch-name">500</div><div class="ds-swatch-hex">#64748b</div></div>
+        </div>
+        <div class="ds-swatch">
+          <div class="ds-swatch-color" style="background:#475569"></div>
+          <div class="ds-swatch-info"><div class="ds-swatch-name">600</div><div class="ds-swatch-hex">#475569</div></div>
+        </div>
+        <div class="ds-swatch">
+          <div class="ds-swatch-color" style="background:#334155"></div>
+          <div class="ds-swatch-info"><div class="ds-swatch-name">700</div><div class="ds-swatch-hex">#334155</div></div>
+        </div>
+        <div class="ds-swatch">
+          <div class="ds-swatch-color" style="background:#1e293b"></div>
+          <div class="ds-swatch-info"><div class="ds-swatch-name">800 ★</div><div class="ds-swatch-hex">#1e293b</div></div>
+        </div>
+        <div class="ds-swatch">
+          <div class="ds-swatch-color" style="background:#0f172a"></div>
+          <div class="ds-swatch-info"><div class="ds-swatch-name">900</div><div class="ds-swatch-hex">#0f172a</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Semantic -->
+    <div class="ds-subsection">
+      <h3 class="ds-subsection-title">セマンティックカラー</h3>
+      <div class="ds-color-grid">
+        <div class="ds-swatch">
+          <div class="ds-swatch-color" style="background:#22c55e"></div>
+          <div class="ds-swatch-info"><div class="ds-swatch-name">Success</div><div class="ds-swatch-hex">#22c55e</div></div>
+        </div>
+        <div class="ds-swatch">
+          <div class="ds-swatch-color" style="background:#f59e0b"></div>
+          <div class="ds-swatch-info"><div class="ds-swatch-name">Warning</div><div class="ds-swatch-hex">#f59e0b</div></div>
+        </div>
+        <div class="ds-swatch">
+          <div class="ds-swatch-color" style="background:#ef4444"></div>
+          <div class="ds-swatch-info"><div class="ds-swatch-name">Error</div><div class="ds-swatch-hex">#ef4444</div></div>
+        </div>
+        <div class="ds-swatch">
+          <div class="ds-swatch-color" style="background:#f97316"></div>
+          <div class="ds-swatch-info"><div class="ds-swatch-name">新着バッジ</div><div class="ds-swatch-hex">#f97316</div></div>
+        </div>
+        <div class="ds-swatch">
+          <div class="ds-swatch-color" style="background:#10b981"></div>
+          <div class="ds-swatch-info"><div class="ds-swatch-name">仲介無料</div><div class="ds-swatch-hex">#10b981</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================================================
+       TYPOGRAPHY
+  ====================================================== -->
+  <section class="ds-section" id="typography">
+    <div class="ds-section-header">
+      <h2 class="ds-section-title">タイポグラフィ</h2>
+      <p class="ds-section-desc">フォントは日本語優先のゴシック体。サイズスケールは rem ベース。</p>
+    </div>
+
+    <div class="ds-subsection">
+      <h3 class="ds-subsection-title">フォントファミリー</h3>
+      <div class="ds-canvas">
+        <p style="font-size: var(--font-size-2xl); margin-bottom: var(--space-2);">
+          あいうえお ABCDE 12345
+        </p>
+        <p class="ds-token-label">"Hiragino Kaku Gothic ProN", "Hiragino Sans", "Noto Sans JP", "Yu Gothic", sans-serif</p>
+      </div>
+    </div>
+
+    <div class="ds-subsection">
+      <h3 class="ds-subsection-title">タイプスケール</h3>
+      <div class="ds-canvas">
+        <div class="ds-type-row">
+          <div class="ds-type-meta">5xl / 48px / Bold</div>
+          <div class="ds-type-sample" style="font-size:3rem; font-weight:700; line-height:1.25;">仲介手数料0円</div>
+        </div>
+        <div class="ds-type-row">
+          <div class="ds-type-meta">4xl / 36px / Bold</div>
+          <div class="ds-type-sample" style="font-size:2.25rem; font-weight:700; line-height:1.25;">仲介手数料0円</div>
+        </div>
+        <div class="ds-type-row">
+          <div class="ds-type-meta">3xl / 30px / Bold</div>
+          <div class="ds-type-sample" style="font-size:1.875rem; font-weight:700; line-height:1.25;">仲介手数料0円</div>
+        </div>
+        <div class="ds-type-row">
+          <div class="ds-type-meta">2xl / 24px / Semibold</div>
+          <div class="ds-type-sample" style="font-size:1.5rem; font-weight:600;">エリアから部屋を探す</div>
+        </div>
+        <div class="ds-type-row">
+          <div class="ds-type-meta">xl / 20px / Semibold</div>
+          <div class="ds-type-sample" style="font-size:1.25rem; font-weight:600;">東京の人気エリア</div>
+        </div>
+        <div class="ds-type-row">
+          <div class="ds-type-meta">lg / 18px / Medium</div>
+          <div class="ds-type-sample" style="font-size:1.125rem; font-weight:500;">新宿・渋谷・銀座・恵比寿</div>
+        </div>
+        <div class="ds-type-row">
+          <div class="ds-type-meta">base / 16px / Normal</div>
+          <div class="ds-type-sample" style="font-size:1rem;">物件を探す際の主要な本文テキスト。読みやすさを重視したサイズです。</div>
+        </div>
+        <div class="ds-type-row">
+          <div class="ds-type-meta">sm / 14px / Normal</div>
+          <div class="ds-type-sample" style="font-size:.875rem; color: #64748b;">築年数・階数・面積などのメタ情報テキスト</div>
+        </div>
+        <div class="ds-type-row">
+          <div class="ds-type-meta">xs / 12px / Normal</div>
+          <div class="ds-type-sample" style="font-size:.75rem; color: #94a3b8;">ラベル・補足テキスト・キャプション</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="ds-subsection">
+      <h3 class="ds-subsection-title">グラデーションテキスト</h3>
+      <div class="ds-canvas">
+        <p style="font-size: var(--font-size-4xl); font-weight: var(--font-weight-bold); background: var(--gradient-text); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; display: inline-block;">
+          仲介手数料0円
+        </p>
+        <div class="ds-code">background: linear-gradient(135deg, #0ea5e9, #6366f1);
+-webkit-background-clip: text;
+-webkit-text-fill-color: transparent;
+background-clip: text;</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================================================
+       SPACING
+  ====================================================== -->
+  <section class="ds-section" id="spacing">
+    <div class="ds-section-header">
+      <h2 class="ds-section-title">スペーシング</h2>
+      <p class="ds-section-desc">4px ベースのスケール。コンポーネント内は space-2〜4、セクション間は space-8〜16 を推奨。</p>
+    </div>
+    <div class="ds-canvas">
+      <div class="ds-spacing-row"><div class="ds-spacing-meta">--space-1 / 4px</div><div class="ds-spacing-bar" style="width: 4px;"></div></div>
+      <div class="ds-spacing-row"><div class="ds-spacing-meta">--space-2 / 8px</div><div class="ds-spacing-bar" style="width: 8px;"></div></div>
+      <div class="ds-spacing-row"><div class="ds-spacing-meta">--space-3 / 12px</div><div class="ds-spacing-bar" style="width: 12px;"></div></div>
+      <div class="ds-spacing-row"><div class="ds-spacing-meta">--space-4 / 16px</div><div class="ds-spacing-bar" style="width: 16px;"></div></div>
+      <div class="ds-spacing-row"><div class="ds-spacing-meta">--space-5 / 20px</div><div class="ds-spacing-bar" style="width: 20px;"></div></div>
+      <div class="ds-spacing-row"><div class="ds-spacing-meta">--space-6 / 24px</div><div class="ds-spacing-bar" style="width: 24px;"></div></div>
+      <div class="ds-spacing-row"><div class="ds-spacing-meta">--space-8 / 32px</div><div class="ds-spacing-bar" style="width: 32px;"></div></div>
+      <div class="ds-spacing-row"><div class="ds-spacing-meta">--space-10 / 40px</div><div class="ds-spacing-bar" style="width: 40px;"></div></div>
+      <div class="ds-spacing-row"><div class="ds-spacing-meta">--space-12 / 48px</div><div class="ds-spacing-bar" style="width: 48px;"></div></div>
+      <div class="ds-spacing-row"><div class="ds-spacing-meta">--space-16 / 64px</div><div class="ds-spacing-bar" style="width: 64px;"></div></div>
+      <div class="ds-spacing-row"><div class="ds-spacing-meta">--space-20 / 80px</div><div class="ds-spacing-bar" style="width: 80px;"></div></div>
+    </div>
+  </section>
+
+  <!-- ======================================================
+       SHADOWS & RADIUS
+  ====================================================== -->
+  <section class="ds-section" id="shadows">
+    <div class="ds-section-header">
+      <h2 class="ds-section-title">シャドウ・角丸</h2>
+    </div>
+
+    <div class="ds-subsection">
+      <h3 class="ds-subsection-title">シャドウ</h3>
+      <div class="grid-4">
+        <div class="shadow-demo" style="box-shadow: var(--shadow-sm);">shadow-sm</div>
+        <div class="shadow-demo" style="box-shadow: var(--shadow-base);">shadow-base</div>
+        <div class="shadow-demo" style="box-shadow: var(--shadow-md);">shadow-md</div>
+        <div class="shadow-demo" style="box-shadow: var(--shadow-lg);">shadow-lg</div>
+        <div class="shadow-demo" style="box-shadow: var(--shadow-card); grid-column: span 4;">shadow-card（物件カード用 / ブルー系）</div>
+      </div>
+    </div>
+
+    <div class="ds-subsection">
+      <h3 class="ds-subsection-title">ボーダーラジウス</h3>
+      <div class="flex-wrap">
+        <div style="background: var(--color-primary-100); color: var(--color-primary-700); padding: 16px 24px; border-radius: var(--radius-sm); font-size: var(--font-size-xs);">radius-sm<br>4px</div>
+        <div style="background: var(--color-primary-100); color: var(--color-primary-700); padding: 16px 24px; border-radius: var(--radius-base); font-size: var(--font-size-xs);">radius-base<br>8px</div>
+        <div style="background: var(--color-primary-100); color: var(--color-primary-700); padding: 16px 24px; border-radius: var(--radius-md); font-size: var(--font-size-xs);">radius-md<br>12px</div>
+        <div style="background: var(--color-primary-100); color: var(--color-primary-700); padding: 16px 24px; border-radius: var(--radius-lg); font-size: var(--font-size-xs);">radius-lg<br>16px</div>
+        <div style="background: var(--color-primary-100); color: var(--color-primary-700); padding: 16px 24px; border-radius: var(--radius-xl); font-size: var(--font-size-xs);">radius-xl<br>24px</div>
+        <div style="background: var(--color-primary-100); color: var(--color-primary-700); padding: 16px 24px; border-radius: var(--radius-full); font-size: var(--font-size-xs);">radius-full<br>9999px</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================================================
+       BUTTONS
+  ====================================================== -->
+  <section class="ds-section" id="buttons">
+    <div class="ds-section-header">
+      <h2 class="ds-section-title">ボタン</h2>
+      <p class="ds-section-desc">すべてのボタンは pill 形状（border-radius: 9999px）。Primary はグラデーション、Outline はボーダーのみ。</p>
+    </div>
+
+    <div class="ds-subsection">
+      <h3 class="ds-subsection-title">Primary Blue（情報系CTA）</h3>
+      <p style="font-size:var(--font-size-xs); color:var(--color-neutral-500); margin-bottom:var(--space-3);">「初期費用概算の内訳をみる」「キャンセル待ちで申込したい」など</p>
+      <div class="ds-canvas">
+        <div class="btn-group">
+          <button class="btn btn-primary btn-lg btn-block" style="border-radius: var(--radius-base); max-width:360px;">初期費用概算の内訳をみる</button>
+        </div>
+        <div class="btn-group" style="margin-top: var(--space-3);">
+          <button class="btn btn-primary btn-md" style="border-radius: var(--radius-base);">キャンセル待ちで申込したい</button>
+          <button class="btn btn-outline btn-md">詳しくみる</button>
+          <button class="btn btn-outline-gray btn-md">路線・駅から探す</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="ds-subsection">
+      <h3 class="ds-subsection-title">CTA Orange（メイン行動ボタン）</h3>
+      <p style="font-size:var(--font-size-xs); color:var(--color-neutral-500); margin-bottom:var(--space-3);">「見学できるか相談したい」「実際に見学したい【無料】」など最重要CTA</p>
+      <div class="ds-canvas">
+        <div style="display:flex; flex-direction:column; gap:var(--space-3); max-width: 360px;">
+          <button class="btn btn-cta btn-lg btn-block" style="border-radius:var(--radius-base);">見学できるか相談したい</button>
+          <button class="btn btn-cta btn-lg btn-block" style="border-radius:var(--radius-base);">実際に見学したい【無料】</button>
+          <button class="btn btn-cta-plain btn-lg btn-block" style="border-radius:var(--radius-base);">キャンセル待ちで申込したい</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="ds-subsection">
+      <h3 class="ds-subsection-title">状態・サイズ</h3>
+      <div class="ds-canvas">
+        <div class="btn-group">
+          <button class="btn btn-primary btn-sm" style="border-radius:var(--radius-base);">Small</button>
+          <button class="btn btn-primary btn-md" style="border-radius:var(--radius-base);">Medium</button>
+          <button class="btn btn-primary btn-lg" style="border-radius:var(--radius-base);">Large</button>
+          <button class="btn btn-primary btn-md" style="border-radius:var(--radius-base);" disabled>Disabled</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================================================
+       BADGES
+  ====================================================== -->
+  <section class="ds-section" id="badges">
+    <div class="ds-section-header">
+      <h2 class="ds-section-title">バッジ・タグ</h2>
+      <p class="ds-section-desc">物件情報や状態を示す小さなラベル。pill 形状を基本とする。</p>
+    </div>
+    <div class="ds-canvas">
+      <div style="display:flex; flex-direction:column; gap:var(--space-5);">
+        <!-- 敷・礼・仲ラベル -->
+        <div>
+          <div style="font-size:var(--font-size-xs); color:var(--color-neutral-400); margin-bottom:var(--space-2);">敷金・礼金ラベル（物件カード内）</div>
+          <div style="display:flex; align-items:center; gap:var(--space-2); flex-wrap:wrap;">
+            <span class="badge badge-shiki">敷</span><span class="badge-muryo" style="font-size:var(--font-size-xs);">無料</span>
+            <span class="badge badge-shiki">礼</span><span class="badge-muryo" style="font-size:var(--font-size-xs);">無料</span>
+            <span class="commission-tag">仲 1.1ヶ月</span>
+          </div>
+        </div>
+        <!-- 申込・募集状態 -->
+        <div>
+          <div style="font-size:var(--font-size-xs); color:var(--color-neutral-400); margin-bottom:var(--space-2);">申込・募集状態バッジ</div>
+          <div class="flex-wrap">
+            <span class="badge badge-recruiting">募集中</span>
+            <span class="badge badge-applied">申込あり</span>
+            <span class="badge badge-movein">✓ 即入居可</span>
+          </div>
+        </div>
+        <!-- 特集バッジ -->
+        <div>
+          <div style="font-size:var(--font-size-xs); color:var(--color-neutral-400); margin-bottom:var(--space-2);">特集・プロモーションバッジ</div>
+          <div class="flex-wrap">
+            <span class="badge badge-tokku">初期トク ★★★</span>
+            <span class="badge badge-card">初期費用クレカ決済可</span>
+            <span class="badge badge-commission">仲介手数料 14.85万円（税込）</span>
+          </div>
+        </div>
+        <!-- 物件属性 -->
+        <div>
+          <div style="font-size:var(--font-size-xs); color:var(--color-neutral-400); margin-bottom:var(--space-2);">物件属性タグ</div>
+          <div class="flex-wrap">
+            <span class="badge badge-neutral">ペット可</span>
+            <span class="badge badge-neutral">駐車場あり</span>
+            <span class="badge badge-neutral">デザイナーズ</span>
+            <span class="badge badge-neutral">タワー</span>
+            <span class="badge badge-neutral">築浅</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================================================
+       FORMS
+  ====================================================== -->
+  <section class="ds-section" id="forms">
+    <div class="ds-section-header">
+      <h2 class="ds-section-title">フォーム</h2>
+      <p class="ds-section-desc">フォーカス時はブルーのボーダー＋グロウ効果。エラー時はレッドボーダー。</p>
+    </div>
+    <div class="ds-canvas" style="max-width: 480px;">
+      <div class="form-group">
+        <label class="form-label">エリア・駅名</label>
+        <input class="form-input" type="text" placeholder="例：新宿、渋谷、池袋" />
+        <div class="form-hint">市区町村名・駅名・沿線名で検索できます</div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">賃料上限</label>
+        <select class="form-input form-select">
+          <option>指定なし</option>
+          <option>5万円</option>
+          <option>8万円</option>
+          <option>10万円</option>
+          <option>15万円</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">エラー状態</label>
+        <input class="form-input is-error" type="text" value="不正な値" />
+        <div class="form-error">有効なエリア名を入力してください</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================================================
+       TABS
+  ====================================================== -->
+  <section class="ds-section" id="tabs">
+    <div class="ds-section-header">
+      <h2 class="ds-section-title">タブ</h2>
+    </div>
+
+    <div class="ds-subsection">
+      <h3 class="ds-subsection-title">アンダーラインタブ</h3>
+      <div class="ds-canvas">
+        <div class="tabs">
+          <button class="tab-item is-active">新着順</button>
+          <button class="tab-item">家賃安い順</button>
+          <button class="tab-item">専有面積</button>
+          <button class="tab-item">築年数</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="ds-subsection">
+      <h3 class="ds-subsection-title">ピルタブ（カテゴリ切替）</h3>
+      <div class="ds-canvas">
+        <div class="tabs-pill">
+          <button class="tab-pill is-active">すべて</button>
+          <button class="tab-pill">1K・1DK</button>
+          <button class="tab-pill">1LDK</button>
+          <button class="tab-pill">2LDK</button>
+          <button class="tab-pill">3LDK以上</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================================================
+       STEPPER
+  ====================================================== -->
+  <section class="ds-section" id="stepper">
+    <div class="ds-section-header">
+      <h2 class="ds-section-title">ステッパー（見学予約フロー）</h2>
+      <p class="ds-section-desc">見学予約ページ上部に表示される進捗インジケーター。アクティブはプライマリブルー。</p>
+    </div>
+    <div class="ds-canvas">
+      <div class="stepper">
+        <div class="step is-active">
+          <div class="step-num">1</div>
+          <div class="step-label">入力</div>
+        </div>
+        <div class="step-line"></div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <div class="step-label">確認</div>
+        </div>
+        <div class="step-line"></div>
+        <div class="step">
+          <div class="step-num">3</div>
+          <div class="step-label">完了</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================================================
+       SEARCH BAR
+  ====================================================== -->
+  <section class="ds-section" id="search">
+    <div class="ds-section-header">
+      <h2 class="ds-section-title">検索バー</h2>
+      <p class="ds-section-desc">ヒーローセクションの中央に配置。pill形状のカード型デザイン。</p>
+    </div>
+    <div class="ds-canvas ds-canvas--gray">
+      <div class="search-bar">
+        <svg width="20" height="20" fill="none" stroke="#94a3b8" stroke-width="2" viewBox="0 0 24 24">
+          <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+        </svg>
+        <input class="search-input" type="text" placeholder="エリア・駅名・路線で検索" />
+        <div class="search-divider"></div>
+        <button class="btn btn-primary btn-sm">検索</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================================================
+       PROPERTY CARD
+  ====================================================== -->
+  <section class="ds-section" id="property-card">
+    <div class="ds-section-header">
+      <h2 class="ds-section-title">物件カード</h2>
+      <p class="ds-section-desc">一覧画面で使用するカードコンポーネント。ホバー時に浮き上がるアニメーション。</p>
+    </div>
+    <div class="ds-canvas ds-canvas--gray">
+      <div class="grid-3" style="max-width: 900px;">
+        <!-- Card 1 -->
+        <div class="property-card">
+          <div class="property-card-image" style="background:#e8e8e8; font-size:3rem;">🏠</div>
+          <div class="property-card-body">
+            <div class="property-card-price">135,000<span>円　管理費 5,000円</span></div>
+            <div class="property-card-shiki-rei">
+              <span class="shiki-label">敷</span><span class="shiki-muryo">無料</span>
+              <span class="shiki-label">礼</span><span class="shiki-muryo">無料</span>
+              <span class="commission-tag">仲 1.1ヶ月</span>
+            </div>
+            <div style="margin-top: var(--space-2);">
+              <span class="badge badge-tokku" style="font-size:11px; padding: 3px 8px;">初期トク ★★★</span>
+            </div>
+            <div class="property-card-meta" style="margin-top:var(--space-3);">
+              <span>5LDK / 101.84m² / 南東</span>
+              <span>JR武蔵野線 市川大野駅 徒歩24分</span>
+              <span>居住中 / <span style="color:var(--color-primary-600);">即入居可</span></span>
+              <span style="color:var(--color-green); display:flex; align-items:center; gap:4px;">
+                <span style="width:7px;height:7px;background:var(--color-green);border-radius:50%;display:inline-block;"></span>2時間前更新
+              </span>
+            </div>
+            <div style="margin-top:var(--space-3);">
+              <button class="btn btn-cta-plain btn-md btn-block" style="border-radius:var(--radius-base);">実際に見学したい【無料】</button>
+            </div>
+          </div>
+        </div>
+        <!-- Card 2 -->
+        <div class="property-card">
+          <div class="property-card-image" style="background:#e0e8f0; font-size:3rem;">🏢</div>
+          <div class="property-card-body">
+            <div class="property-card-price">85,000<span>円　管理費 3,000円</span></div>
+            <div class="property-card-shiki-rei">
+              <span class="shiki-label">敷</span><span class="shiki-muryo">無料</span>
+              <span class="shiki-label">礼</span><span class="shiki-muryo">無料</span>
+              <span class="commission-tag">仲 無料</span>
+            </div>
+            <div class="property-card-meta" style="margin-top:var(--space-3);">
+              <span>1LDK / 38.5m² / 北東</span>
+              <span>山手線 渋谷駅 徒歩7分</span>
+              <span>空室 / <span style="color:var(--color-primary-600);">即入居可</span></span>
+              <span style="color:var(--color-green); display:flex; align-items:center; gap:4px;">
+                <span style="width:7px;height:7px;background:var(--color-green);border-radius:50%;display:inline-block;"></span>30分前更新
+              </span>
+            </div>
+            <div style="margin-top:var(--space-3);">
+              <button class="btn btn-cta btn-md btn-block" style="border-radius:var(--radius-base);">見学できるか相談したい</button>
+            </div>
+          </div>
+        </div>
+        <!-- Card 3（申込あり） -->
+        <div class="property-card">
+          <div class="property-card-image" style="background:#e8e0e8; font-size:3rem;">🏙️</div>
+          <div class="property-card-body">
+            <div class="property-card-price">120,000<span>円　管理費 5,000円</span></div>
+            <div class="property-card-shiki-rei">
+              <span class="shiki-label">敷</span><span class="shiki-muryo">1ヶ月</span>
+              <span class="shiki-label">礼</span><span class="shiki-muryo">無料</span>
+              <span class="commission-tag">仲 1ヶ月</span>
+            </div>
+            <div class="property-card-meta" style="margin-top:var(--space-3);">
+              <span>2LDK / 58.0m² / 南</span>
+              <span>山手線 恵比寿駅 徒歩5分</span>
+              <span style="display:flex; gap:8px; align-items:center;">
+                <span class="badge badge-applied" style="padding:2px 8px; font-size:11px;">申込あり</span>
+                <span class="badge badge-movein" style="font-size:11px;">✓ 即入居可</span>
+              </span>
+            </div>
+            <div style="margin-top:var(--space-3);">
+              <button class="btn btn-cta btn-md btn-block" style="border-radius:var(--radius-base);">見学できるか相談したい</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================================================
+       ALERT / BANNER
+  ====================================================== -->
+  <section class="ds-section" id="alert">
+    <div class="ds-section-header">
+      <h2 class="ds-section-title">アラート・バナー</h2>
+    </div>
+
+    <div class="ds-subsection">
+      <h3 class="ds-subsection-title">インフォバナー（おとり物件なし）</h3>
+      <div class="ds-canvas">
+        <div class="info-banner">
+          エアドアなら <strong>おとり物件なしで安心のお部屋探し</strong>
+        </div>
+      </div>
+    </div>
+
+    <div class="ds-subsection">
+      <h3 class="ds-subsection-title">警告アラート（申込済み物件）</h3>
+      <div class="ds-canvas" style="max-width: 480px;">
+        <div class="alert-box">
+          この物件には、すでに申込が入っています。<br>
+          キャンセル待ちが可能な場合もございますので、<br>
+          ご興味のある方は、まずはお問い合わせください。
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================================================
+       RANKING
+  ====================================================== -->
+  <section class="ds-section" id="ranking">
+    <div class="ds-section-header">
+      <h2 class="ds-section-title">ランキング</h2>
+      <p class="ds-section-desc">人気エリア・路線のランキング表示。TOPページのメインコンテンツ。</p>
+    </div>
+    <div class="ds-canvas" style="max-width: 400px;">
+      <div style="display: flex; flex-direction: column; gap: var(--space-2);">
+        <div class="ranking-item">
+          <div class="ranking-number rank-1">1</div>
+          <div class="ranking-name">新宿区</div>
+          <div class="ranking-count">2,341件</div>
+        </div>
+        <div class="ranking-item">
+          <div class="ranking-number rank-2">2</div>
+          <div class="ranking-name">渋谷区</div>
+          <div class="ranking-count">1,892件</div>
+        </div>
+        <div class="ranking-item">
+          <div class="ranking-number rank-3">3</div>
+          <div class="ranking-name">港区</div>
+          <div class="ranking-count">1,654件</div>
+        </div>
+        <div class="ranking-item">
+          <div class="ranking-number rank-n">4</div>
+          <div class="ranking-name">目黒区</div>
+          <div class="ranking-count">1,203件</div>
+        </div>
+        <div class="ranking-item">
+          <div class="ranking-number rank-n">5</div>
+          <div class="ranking-name">世田谷区</div>
+          <div class="ranking-count">987件</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================================================
+       CATEGORY CARD
+  ====================================================== -->
+  <section class="ds-section" id="category">
+    <div class="ds-section-header">
+      <h2 class="ds-section-title">カテゴリカード</h2>
+      <p class="ds-section-desc">間取り・条件別カテゴリ。画像上にグラデーションオーバーレイ＋テキスト。</p>
+    </div>
+    <div class="ds-canvas ds-canvas--gray">
+      <div class="grid-4">
+        <div class="category-card" style="background: #dbeafe;">
+          <span class="category-card-emoji">🛋️</span>
+          <div class="category-card-label">1K・1DK</div>
+        </div>
+        <div class="category-card" style="background: #dcfce7;">
+          <span class="category-card-emoji">🏠</span>
+          <div class="category-card-label">1LDK</div>
+        </div>
+        <div class="category-card" style="background: #fef9c3;">
+          <span class="category-card-emoji">🛏️</span>
+          <div class="category-card-label">2LDK</div>
+        </div>
+        <div class="category-card" style="background: #fce7f3;">
+          <span class="category-card-emoji">🏡</span>
+          <div class="category-card-label">3LDK以上</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================================================
+       HERO
+  ====================================================== -->
+  <section class="ds-section" id="hero">
+    <div class="ds-section-header">
+      <h2 class="ds-section-title">ヒーローセクション</h2>
+      <p class="ds-section-desc">TOPページのファーストビュー。グラデーション背景に白テキスト＋検索バー。</p>
+    </div>
+    <div class="ds-canvas">
+      <div class="hero">
+        <div class="hero-eyebrow">仲介手数料0円の物件を探そう</div>
+        <h1 class="hero-title">理想の部屋が<br>きっと見つかる</h1>
+        <p class="hero-desc">
+          全国の仲介手数料無料・半額の物件を一括検索。
+          プッシュ通知で新着物件をいち早くキャッチ。
+        </p>
+        <div style="max-width: 560px; margin: 0 auto;">
+          <div class="search-bar">
+            <svg width="20" height="20" fill="none" stroke="#94a3b8" stroke-width="2" viewBox="0 0 24 24">
+              <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+            </svg>
+            <input class="search-input" type="text" placeholder="エリア・駅名・路線で検索" />
+            <button class="btn btn-primary btn-sm">検索</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================================================
+       APP BANNER
+  ====================================================== -->
+  <section class="ds-section" id="app-banner">
+    <div class="ds-section-header">
+      <h2 class="ds-section-title">アプリバナー</h2>
+      <p class="ds-section-desc">アプリDL訴求セクション。ダーク背景にQRコード＋ストアボタン。</p>
+    </div>
+    <div class="ds-canvas">
+      <div class="app-banner">
+        <div class="app-banner-text">
+          <div class="app-banner-title">アプリで<br>もっと快適に探そう</div>
+          <div class="app-banner-desc">新着物件をプッシュ通知でお知らせ。<br>お気に入りを保存していつでも確認。</div>
+          <div class="app-banner-stores">
+            <a href="#" class="store-btn">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+              App Store
+            </a>
+            <a href="#" class="store-btn">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M3.18 23.76c.31.17.66.22 1.02.14L13.64 13 10 9.36 3.18 23.76zM20.5 10.72l-2.62-1.5-3.25 3.25 3.25 3.25 2.65-1.51c.76-.43.76-1.49-.03-1.99zM2.08 1.54C2.03 1.7 2 1.88 2 2.09v19.84c0 .21.03.39.08.54L13 12 2.08 1.54zM13.64 13L4.2.1C3.84.02 3.49.07 3.18.24L13.64 11 17.5 7.14 13.64 13z"/></svg>
+              Google Play
+            </a>
+          </div>
+        </div>
+        <div class="app-banner-qr">QR</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================================================
+       LAYOUT
+  ====================================================== -->
+  <section class="ds-section" id="layout">
+    <div class="ds-section-header">
+      <h2 class="ds-section-title">レイアウト・グリッド</h2>
+      <p class="ds-section-desc">最大幅 1200px、左右パディング 24px。スマホ優先でブレークポイントを設定。</p>
+    </div>
+    <div class="ds-canvas">
+      <table style="width:100%; border-collapse: collapse; font-size: var(--font-size-sm);">
+        <thead>
+          <tr style="background: var(--color-neutral-100);">
+            <th style="padding: 10px 16px; text-align:left; font-weight: var(--font-weight-semibold); color: var(--color-neutral-700);">ブレークポイント</th>
+            <th style="padding: 10px 16px; text-align:left;">幅</th>
+            <th style="padding: 10px 16px; text-align:left;">カラム数</th>
+            <th style="padding: 10px 16px; text-align:left;">用途</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr style="border-bottom: 1px solid var(--color-neutral-100);">
+            <td style="padding: 10px 16px; font-family: monospace; color: var(--color-primary-600);">sp</td>
+            <td style="padding: 10px 16px;">〜 767px</td>
+            <td style="padding: 10px 16px;">1〜2カラム</td>
+            <td style="padding: 10px 16px; color: var(--color-neutral-500);">スマートフォン</td>
+          </tr>
+          <tr style="border-bottom: 1px solid var(--color-neutral-100);">
+            <td style="padding: 10px 16px; font-family: monospace; color: var(--color-primary-600);">tablet</td>
+            <td style="padding: 10px 16px;">768px 〜 1023px</td>
+            <td style="padding: 10px 16px;">2〜3カラム</td>
+            <td style="padding: 10px 16px; color: var(--color-neutral-500);">タブレット</td>
+          </tr>
+          <tr>
+            <td style="padding: 10px 16px; font-family: monospace; color: var(--color-primary-600);">pc</td>
+            <td style="padding: 10px 16px;">1024px 〜</td>
+            <td style="padding: 10px 16px;">3〜4カラム</td>
+            <td style="padding: 10px 16px; color: var(--color-neutral-500);">デスクトップ</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div style="margin-top: var(--space-6);">
+        <div class="ds-subsection-title" style="font-size: var(--font-size-sm); margin-bottom: var(--space-3);">コンテナ</div>
+        <div class="ds-code">/* Container */
+max-width: 1200px;
+margin: 0 auto;
+padding: 0 24px;
+
+/* Section spacing */
+padding-top: var(--space-16);    /* 64px */
+padding-bottom: var(--space-16); /* 64px */
+
+/* Card grid: PC */
+grid-template-columns: repeat(3, 1fr);
+gap: 24px;
+
+/* Card grid: SP */
+grid-template-columns: 1fr;
+gap: 16px;</div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+</body>
+</html>
