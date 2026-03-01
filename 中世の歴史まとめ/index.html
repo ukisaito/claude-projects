@@ -5,370 +5,436 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>中世の歴史まとめノート</title>
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
 
     body {
       font-family: "Hiragino Mincho ProN", "游明朝", Georgia, serif;
       background: #f5f0e8;
       color: #2c1f0e;
-      min-height: 100vh;
     }
 
     header {
       background: #2c1f0e;
       color: #f5f0e8;
       text-align: center;
-      padding: 40px 24px;
+      padding: 36px 24px;
     }
+    header h1 { font-size: 1.8rem; letter-spacing: 0.2em; margin-bottom: 6px; }
+    header p   { font-size: 0.85rem; opacity: 0.6; }
 
-    header h1 {
-      font-size: 1.8rem;
-      letter-spacing: 0.2em;
-      margin-bottom: 6px;
-    }
-
-    header p {
-      font-size: 0.85rem;
-      opacity: 0.6;
-      letter-spacing: 0.1em;
-    }
-
-    /* グリッド全体 */
-    .grid-wrapper {
+    .col-headers {
       display: grid;
-      grid-template-columns: 80px 1fr 1fr 1fr 1fr;
-      min-width: 900px;
-      overflow-x: auto;
-    }
-
-    /* 年号列ヘッダー */
-    .col-header {
+      grid-template-columns: 72px 1fr 1fr 1fr 1fr;
+      min-width: 860px;
       position: sticky;
       top: 0;
-      z-index: 10;
-      padding: 16px 12px;
-      text-align: center;
-      font-size: 0.75rem;
-      letter-spacing: 0.15em;
-      font-weight: bold;
+      z-index: 20;
       border-bottom: 2px solid #2c1f0e;
     }
+    .col-h {
+      padding: 11px 8px;
+      text-align: center;
+      font-size: 0.73rem;
+      letter-spacing: 0.12em;
+      font-weight: bold;
+    }
+    .col-h.axis { background: #2c1f0e; color: #c8a96e; }
+    .col-h.eu   { background: #dce8f5; color: #1a4a7a; }
+    .col-h.is   { background: #fce8d0; color: #7a3a1a; }
+    .col-h.jp   { background: #e0f0e0; color: #1a5a2a; }
+    .col-h.re   { background: #f0e0f5; color: #5a1a7a; }
 
-    .col-header.year-col {
-      background: #2c1f0e;
-      color: #c8a96e;
+    /* top = (year − 400) × 2 px */
+    .tl-outer { overflow-x: auto; }
+    .tl-body {
+      display: grid;
+      grid-template-columns: 72px 1fr 1fr 1fr 1fr;
+      min-width: 860px;
+      height: 2300px;
     }
 
-    .col-header.europe   { background: #dce8f5; color: #1a4a7a; border-bottom-color: #1a4a7a; }
-    .col-header.islam    { background: #fce8d0; color: #7a3a1a; border-bottom-color: #7a3a1a; }
-    .col-header.japan    { background: #e0f0e0; color: #1a5a2a; border-bottom-color: #1a5a2a; }
-    .col-header.religion { background: #f0e0f5; color: #5a1a7a; border-bottom-color: #5a1a7a; }
-
-    /* 年号セル */
-    .year-cell {
+    .year-axis {
+      position: relative;
       background: #2c1f0e;
-      color: #c8a96e;
+      border-right: 2px solid #c8a96e;
+    }
+    .cy {
+      position: absolute;
+      right: 0;
       display: flex;
-      align-items: flex-start;
-      justify-content: center;
-      padding: 20px 8px;
-      font-size: 0.85rem;
-      font-weight: bold;
-      letter-spacing: 0.05em;
-      border-bottom: 1px solid #4a3520;
+      align-items: center;
+      gap: 4px;
+      transform: translateY(-50%);
+    }
+    .cy span {
+      color: #c8a96e;
+      font-size: 0.68rem;
+      padding-right: 6px;
+      letter-spacing: 0.03em;
+    }
+    .cy::after {
+      content: "";
+      display: block;
+      width: 8px;
+      height: 1px;
+      background: #c8a96e;
     }
 
-    /* イベントセル */
-    .cell {
-      padding: 16px 14px;
-      border-bottom: 1px solid #e0d5c0;
-      border-right: 1px solid #e0d5c0;
-      vertical-align: top;
-      min-height: 80px;
+    .rc {
+      position: relative;
+      border-right: 1px solid #d0c8bc;
+      background-image: repeating-linear-gradient(
+        to bottom,
+        transparent 0px,
+        transparent 199px,
+        #d0c8bc 199px,
+        #d0c8bc 200px
+      );
     }
+    .rc.eu { background-color: #f4f8ff; }
+    .rc.is { background-color: #fffaf4; }
+    .rc.jp { background-color: #f4fbf4; }
+    .rc.re { background-color: #faf4ff; }
 
-    .cell.europe   { background: #f8fbff; }
-    .cell.islam    { background: #fffbf7; }
-    .cell.japan    { background: #f7fbf7; }
-    .cell.religion { background: #fbf7ff; }
-    .cell.empty    { background: #faf8f4; }
-
-    .event-card {
+    .ec {
+      position: absolute;
+      left: 6px; right: 6px;
+      border-radius: 3px;
+      padding: 7px 9px;
       background: white;
-      border-radius: 4px;
-      padding: 12px 14px;
-      margin-bottom: 10px;
       border-left: 3px solid;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.09);
     }
+    .rc.eu .ec { border-left-color: #4a8abe; }
+    .rc.is .ec { border-left-color: #be6a2a; }
+    .rc.jp .ec { border-left-color: #2a8a4a; }
+    .rc.re .ec { border-left-color: #8a2abe; }
 
-    .event-card.europe   { border-left-color: #4a8abe; }
-    .event-card.islam    { border-left-color: #be6a2a; }
-    .event-card.japan    { border-left-color: #2a8a4a; }
-    .event-card.religion { border-left-color: #8a2abe; }
-
-    .event-year {
-      font-size: 0.75rem;
-      color: #9a8060;
-      margin-bottom: 4px;
-    }
-
-    .event-title {
-      font-size: 0.9rem;
-      font-weight: bold;
-      margin-bottom: 6px;
-      line-height: 1.4;
-    }
-
-    .event-desc {
-      font-size: 0.78rem;
-      line-height: 1.7;
-      color: #5c4a30;
-    }
+    .ey { font-size: 0.63rem; color: #9a8060; margin-bottom: 2px; }
+    .et { font-size: 0.78rem; font-weight: bold; line-height: 1.3; }
+    .ed { font-size: 0.68rem; color: #5c4a30; line-height: 1.6; margin-top: 4px; }
+    .ed b { color: #2c1f0e; font-weight: bold; }
 
     footer {
-      text-align: center;
-      padding: 28px;
-      font-size: 0.8rem;
-      color: #9a8060;
+      text-align: center; padding: 28px;
+      font-size: 0.8rem; color: #9a8060;
       border-top: 1px solid #e0d5c0;
     }
   </style>
 </head>
 <body>
 
-  <header>
-    <h1>中世の歴史まとめノート</h1>
-    <p>5世紀 〜 15世紀</p>
-  </header>
+<header>
+  <h1>中世の歴史まとめノート</h1>
+  <p>5世紀 〜 15世紀　—　世界同時代史</p>
+</header>
 
-  <div style="overflow-x: auto;">
-    <div class="grid-wrapper">
+<div class="tl-outer">
 
-      <!-- ヘッダー行 -->
-      <div class="col-header year-col">年号</div>
-      <div class="col-header europe">西ヨーロッパ</div>
-      <div class="col-header islam">イスラーム</div>
-      <div class="col-header japan">日本</div>
-      <div class="col-header religion">宗教・文化</div>
-
-      <!-- 476年 -->
-      <div class="year-cell">476年</div>
-      <div class="cell europe">
-        <div class="event-card europe">
-          <div class="event-year">476年</div>
-          <div class="event-title">西ローマ帝国の滅亡</div>
-          <div class="event-desc">ゲルマン人の傭兵隊長オドアケルが皇帝を廃位。中世ヨーロッパの幕開け。</div>
-        </div>
-      </div>
-      <div class="cell empty"></div>
-      <div class="cell empty"></div>
-      <div class="cell empty"></div>
-
-      <!-- 622年 -->
-      <div class="year-cell">622年</div>
-      <div class="cell empty"></div>
-      <div class="cell islam">
-        <div class="event-card islam">
-          <div class="event-year">622年</div>
-          <div class="event-title">ムハンマドのヒジュラ</div>
-          <div class="event-desc">メッカからメディナへ移住。イスラーム暦元年とされ、ウンマが形成される。</div>
-        </div>
-      </div>
-      <div class="cell empty"></div>
-      <div class="cell empty"></div>
-
-      <!-- 645年 -->
-      <div class="year-cell">645年</div>
-      <div class="cell empty"></div>
-      <div class="cell empty"></div>
-      <div class="cell japan">
-        <div class="event-card japan">
-          <div class="event-year">645年</div>
-          <div class="event-title">大化の改新</div>
-          <div class="event-desc">中大兄皇子らが蘇我氏を打倒し、律令国家の建設へ。天皇中心の中央集権体制へ移行。</div>
-        </div>
-      </div>
-      <div class="cell empty"></div>
-
-      <!-- 768〜814年 -->
-      <div class="year-cell">768〜814年</div>
-      <div class="cell europe">
-        <div class="event-card europe">
-          <div class="event-year">768〜814年</div>
-          <div class="event-title">カール大帝の治世</div>
-          <div class="event-desc">西ヨーロッパをほぼ統一。800年に西ローマ皇帝として戴冠。「ヨーロッパの父」と呼ばれる。</div>
-        </div>
-      </div>
-      <div class="cell empty"></div>
-      <div class="cell empty"></div>
-      <div class="cell empty"></div>
-
-      <!-- 794年 -->
-      <div class="year-cell">794年</div>
-      <div class="cell empty"></div>
-      <div class="cell empty"></div>
-      <div class="cell japan">
-        <div class="event-card japan">
-          <div class="event-year">794年</div>
-          <div class="event-title">平安京遷都</div>
-          <div class="event-desc">桓武天皇が平安京へ遷都。約400年にわたる平安時代が始まり、貴族文化が開花。</div>
-        </div>
-      </div>
-      <div class="cell empty"></div>
-
-      <!-- 1066年 -->
-      <div class="year-cell">1066年</div>
-      <div class="cell europe">
-        <div class="event-card europe">
-          <div class="event-year">1066年</div>
-          <div class="event-title">ノルマン征服</div>
-          <div class="event-desc">ウィリアム1世がヘイスティングズの戦いでイングランドを征服。封建制度が定着。</div>
-        </div>
-      </div>
-      <div class="cell empty"></div>
-      <div class="cell empty"></div>
-      <div class="cell empty"></div>
-
-      <!-- 1096年 -->
-      <div class="year-cell">1096年</div>
-      <div class="cell empty"></div>
-      <div class="cell empty"></div>
-      <div class="cell empty"></div>
-      <div class="cell religion">
-        <div class="event-card religion">
-          <div class="event-year">1096〜1099年</div>
-          <div class="event-title">第1回十字軍</div>
-          <div class="event-desc">教皇ウルバヌス2世の呼びかけで聖地エルサレム奪還へ遠征。1099年に占領。</div>
-        </div>
-      </div>
-
-      <!-- 1185年 -->
-      <div class="year-cell">1185年</div>
-      <div class="cell empty"></div>
-      <div class="cell empty"></div>
-      <div class="cell japan">
-        <div class="event-card japan">
-          <div class="event-year">1185年</div>
-          <div class="event-title">鎌倉幕府の成立</div>
-          <div class="event-desc">源頼朝が壇ノ浦の戦いで平氏を滅ぼし武家政権を樹立。武士の時代が始まる。</div>
-        </div>
-      </div>
-      <div class="cell empty"></div>
-
-      <!-- 1215年 -->
-      <div class="year-cell">1215年</div>
-      <div class="cell europe">
-        <div class="event-card europe">
-          <div class="event-year">1215年</div>
-          <div class="event-title">マグナ・カルタ署名</div>
-          <div class="event-desc">イングランド王ジョンが署名。王権の制限と法の支配を明文化。近代民主主義の原点。</div>
-        </div>
-      </div>
-      <div class="cell empty"></div>
-      <div class="cell empty"></div>
-      <div class="cell empty"></div>
-
-      <!-- 1258年 -->
-      <div class="year-cell">1258年</div>
-      <div class="cell empty"></div>
-      <div class="cell islam">
-        <div class="event-card islam">
-          <div class="event-year">1258年</div>
-          <div class="event-title">バグダード陥落</div>
-          <div class="event-desc">モンゴル帝国がアッバース朝の都を破壊。イスラーム世界最大の文化都市が壊滅的打撃を受けた。</div>
-        </div>
-      </div>
-      <div class="cell empty"></div>
-      <div class="cell empty"></div>
-
-      <!-- 1336年 -->
-      <div class="year-cell">1336年</div>
-      <div class="cell empty"></div>
-      <div class="cell empty"></div>
-      <div class="cell japan">
-        <div class="event-card japan">
-          <div class="event-year">1336年</div>
-          <div class="event-title">室町幕府の成立</div>
-          <div class="event-desc">足利尊氏が京都に幕府を開く。南北朝の動乱を経て室町時代が始まる。</div>
-        </div>
-      </div>
-      <div class="cell empty"></div>
-
-      <!-- 1337年 -->
-      <div class="year-cell">1337年</div>
-      <div class="cell europe">
-        <div class="event-card europe">
-          <div class="event-year">1337年</div>
-          <div class="event-title">百年戦争の開始</div>
-          <div class="event-desc">フランス王位継承をめぐりイングランドとフランスが対立。116年間の断続的な戦争へ。</div>
-        </div>
-      </div>
-      <div class="cell empty"></div>
-      <div class="cell empty"></div>
-      <div class="cell empty"></div>
-
-      <!-- 1347年 -->
-      <div class="year-cell">1347年</div>
-      <div class="cell europe">
-        <div class="event-card europe">
-          <div class="event-year">1347〜1351年</div>
-          <div class="event-title">黒死病の大流行</div>
-          <div class="event-desc">ヨーロッパ全土に蔓延し人口の約3分の1が死亡。封建制度の崩壊を加速させた。</div>
-        </div>
-      </div>
-      <div class="cell empty"></div>
-      <div class="cell empty"></div>
-      <div class="cell empty"></div>
-
-      <!-- 1429年 -->
-      <div class="year-cell">1429年</div>
-      <div class="cell empty"></div>
-      <div class="cell empty"></div>
-      <div class="cell empty"></div>
-      <div class="cell religion">
-        <div class="event-card religion">
-          <div class="event-year">1429年</div>
-          <div class="event-title">ジャンヌ・ダルクの活躍</div>
-          <div class="event-desc">農民の少女がフランス軍を率いオルレアンを解放。百年戦争の転換点となった。</div>
-        </div>
-      </div>
-
-      <!-- 1450年代 -->
-      <div class="year-cell">1450年代</div>
-      <div class="cell empty"></div>
-      <div class="cell empty"></div>
-      <div class="cell empty"></div>
-      <div class="cell religion">
-        <div class="event-card religion">
-          <div class="event-year">1450年代</div>
-          <div class="event-title">グーテンベルクの活版印刷</div>
-          <div class="event-desc">書物の大量生産が可能に。知識の普及とルネサンス・宗教改革を加速させた。</div>
-        </div>
-      </div>
-
-      <!-- 1453年 -->
-      <div class="year-cell">1453年</div>
-      <div class="cell europe">
-        <div class="event-card europe">
-          <div class="event-year">1453年</div>
-          <div class="event-title">東ローマ帝国の滅亡・百年戦争終結</div>
-          <div class="event-desc">オスマン帝国がコンスタンティノープルを陥落。同年、百年戦争もフランスの勝利で終結。中世の終わりを告げる年。</div>
-        </div>
-      </div>
-      <div class="cell empty"></div>
-      <div class="cell empty"></div>
-      <div class="cell empty"></div>
-
-    </div>
+  <div class="col-headers">
+    <div class="col-h axis">年代</div>
+    <div class="col-h eu">西ヨーロッパ</div>
+    <div class="col-h is">イスラーム</div>
+    <div class="col-h jp">日本</div>
+    <div class="col-h re">宗教・文化</div>
   </div>
 
-  <footer>
-    中世の歴史まとめノート — 5世紀〜15世紀
-  </footer>
+  <!-- top = (year − 400) × 2 px -->
+  <div class="tl-body">
+
+    <div class="year-axis">
+      <div class="cy" style="top:    0px"><span>400</span></div>
+      <div class="cy" style="top:  200px"><span>500</span></div>
+      <div class="cy" style="top:  400px"><span>600</span></div>
+      <div class="cy" style="top:  600px"><span>700</span></div>
+      <div class="cy" style="top:  800px"><span>800</span></div>
+      <div class="cy" style="top: 1000px"><span>900</span></div>
+      <div class="cy" style="top: 1200px"><span>1000</span></div>
+      <div class="cy" style="top: 1400px"><span>1100</span></div>
+      <div class="cy" style="top: 1600px"><span>1200</span></div>
+      <div class="cy" style="top: 1800px"><span>1300</span></div>
+      <div class="cy" style="top: 2000px"><span>1400</span></div>
+      <div class="cy" style="top: 2200px"><span>1500</span></div>
+    </div>
+
+    <!-- ── 西ヨーロッパ ── -->
+    <div class="rc eu">
+
+      <div class="ec" style="top: 152px">
+        <div class="ey">476年</div>
+        <div class="et">西ローマ帝国の滅亡</div>
+        <div class="ed">長年の外敵侵入・内乱・経済崩壊でぼろぼろになっていたローマを、ゲルマン人の傭兵隊長がついに倒した。<b>→ 以後ヨーロッパに強い統一国家がなくなり、各地の王や貴族が土地を支配する「封建時代」が始まる。</b></div>
+      </div>
+
+      <div class="ec" style="top: 394px">
+        <div class="ey">597年</div>
+        <div class="et">カンタベリーへのキリスト教布教</div>
+        <div class="ed">教皇グレゴリウス1世が「北の異教徒を改宗させよ」と宣教師を派遣した。<b>→ イングランドがキリスト教化され、ローマ教会の影響力がヨーロッパ全土に広がっていく流れが加速。</b></div>
+      </div>
+
+      <div class="ec" style="top: 664px">
+        <div class="ey">732年</div>
+        <div class="et">トゥール・ポワティエの戦い</div>
+        <div class="ed">イスラーム勢力がスペインを越えてフランスにまで攻め込んできた。カール・マルテルがこれを撃退。<b>→ もしここで負けていたら西ヨーロッパがイスラーム化していたかもしれない、歴史の分岐点。</b></div>
+      </div>
+
+      <div class="ec" style="top: 800px">
+        <div class="ey">800年</div>
+        <div class="et">カール大帝の戴冠</div>
+        <div class="ed">フランク王国を大きく広げ、教皇を外敵から守ったカールに、ローマ教皇が皇帝の冠を贈った。<b>→ 「教皇と皇帝が協力して世界を治める」という中世ヨーロッパの政治体制の原型ができる。</b></div>
+      </div>
+
+      <div class="ec" style="top: 1124px">
+        <div class="ey">962年</div>
+        <div class="et">神聖ローマ帝国の成立</div>
+        <div class="ed">カール大帝の帝国は孫の代に三分割されて弱体化。オットー1世が再び強力な王権をつくり上げた。<b>→ 「神聖ローマ帝国」が成立するが、後に皇帝と教皇が激しく対立し続けることになる。</b></div>
+      </div>
+
+      <div class="ec" style="top: 1332px">
+        <div class="ey">1066年</div>
+        <div class="et">ノルマン征服</div>
+        <div class="ed">イングランド王が後継ぎなしに死亡。ノルマンディー公ウィリアムが「自分が後継者だ」と主張し侵攻、勝利した。<b>→ 英語にフランス語が大量混入するなど、イングランドの文化・政治が根本から変わった。</b></div>
+      </div>
+
+      <div class="ec" style="top: 1630px">
+        <div class="ey">1215年</div>
+        <div class="et">マグナ・カルタの署名</div>
+        <div class="ed">イングランド王ジョンが不当な税を取り続けたため、怒った貴族たちが反乱を起こし文書に署名させた。<b>→「王でも法律に従わなければならない」という考え方が生まれ、議会制民主主義の出発点になる。</b></div>
+      </div>
+
+      <div class="ec" style="top: 1874px">
+        <div class="ey">1337年</div>
+        <div class="et">百年戦争の開始</div>
+        <div class="ed">フランス王が跡継ぎなしに死去。イングランド王が「自分にもフランス王位の権利がある」と主張し開戦。<b>→ 116年の戦争を経て、フランスに「自分たちの国」という国民意識が生まれていく。</b></div>
+      </div>
+
+      <div class="ec" style="top: 1970px">
+        <div class="ey">1347〜1351年</div>
+        <div class="et">黒死病（ペスト）の大流行</div>
+        <div class="ed">シルクロードを通じてアジアから伝わったペストが爆発的に拡大し、ヨーロッパ人口の約3分の1が死亡。<b>→ 農民が激減して農民の地位が上昇し、封建制度が内側から崩れ始めた。社会の大転換点。</b></div>
+      </div>
+
+      <div class="ec" style="top: 2058px">
+        <div class="ey">1429〜1453年</div>
+        <div class="et">ジャンヌ・ダルク〜百年戦争終結</div>
+        <div class="ed">イングランドに追い詰められたフランスに「神の声を聞いた」と訴える農村の少女が現れ軍を率いた。<b>→ フランス軍が士気を取り戻して逆転勝利。戦争の終結とともにフランスが国民国家として意識が固まる。</b></div>
+      </div>
+
+    </div>
+
+    <!-- ── イスラーム ── -->
+    <div class="rc is">
+
+      <div class="ec" style="top: 444px">
+        <div class="ey">622年</div>
+        <div class="et">ムハンマドのヒジュラ（聖遷）</div>
+        <div class="ed">ムハンマドがメッカの有力者に迫害されたため、信者とともにメディナへ移住した。<b>→ ここからイスラーム共同体（ウンマ）が本格的に形成され、のちの大帝国拡大の原点となる。</b></div>
+      </div>
+
+      <div class="ec" style="top: 622px">
+        <div class="ey">711年</div>
+        <div class="et">イベリア半島の征服</div>
+        <div class="ed">アラビア半島から北アフリカまで急拡大したウマイヤ朝が、ジブラルタル海峡を越えてスペインを征服。<b>→ イスラーム文化がスペインに根付き、ギリシャ哲学・数学・医学がヨーロッパへ伝わる窓口に。</b></div>
+      </div>
+
+      <div class="ec" style="top: 724px">
+        <div class="ey">762年</div>
+        <div class="et">バグダードの建設</div>
+        <div class="ed">アッバース朝が帝国の中心として円形の計画都市を建設。<b>→ 人口100万人超の世界最大の都市に成長。学者・商人・芸術家が世界中から集まる文明の中心地へ。</b></div>
+      </div>
+
+      <div class="ec" style="top: 860px">
+        <div class="ey">830年頃</div>
+        <div class="et">知恵の館（バイト・アル・ヒクマ）</div>
+        <div class="ed">カリフが「学問こそ神への道」として設立した翻訳・研究機関。世界中から書物を集めた。<b>→ ギリシャの哲学・数学・天文学がアラビア語に翻訳されて保存され、後にヨーロッパに逆輸入される。</b></div>
+      </div>
+
+      <div class="ec" style="top: 1018px">
+        <div class="ey">909年</div>
+        <div class="et">ファーティマ朝の成立</div>
+        <div class="ed">スンニ派のアッバース朝に対抗するシーア派が独立王朝を建て、のちにカイロを建設した。<b>→ イスラーム世界がスンニ・シーアに分裂。現在まで続く宗派対立の原型がここで形成された。</b></div>
+      </div>
+
+      <div class="ec" style="top: 1274px">
+        <div class="ey">1037年</div>
+        <div class="et">セルジューク帝国の成立</div>
+        <div class="ed">中央アジアのトルコ系遊牧民がイスラームに改宗して急速に勢力を拡大し大帝国を建てた。<b>→ 聖地エルサレムを支配下に。キリスト教巡礼者を妨害したことが十字軍が起きる直接のきっかけに。</b></div>
+      </div>
+
+      <div class="ec" style="top: 1574px">
+        <div class="ey">1187年</div>
+        <div class="et">サラーフッディーン、エルサレム奪還</div>
+        <div class="ed">第1回十字軍から約90年間キリスト教国が支配していたエルサレムを、アイユーブ朝のサラディンが奪還。<b>→ ヨーロッパ全体に衝撃が走り第3回十字軍が始まる。英国王リチャード1世とサラディンの名勝負へ。</b></div>
+      </div>
+
+      <div class="ec" style="top: 1716px">
+        <div class="ey">1258年</div>
+        <div class="et">バグダード陥落</div>
+        <div class="ed">モンゴル帝国が怒涛の勢いで西進し、抵抗を続けるバグダードを徹底的に破壊・略奪した。<b>→ アッバース朝500年の歴史が終わる。図書館・運河も破壊されイスラーム文明に壊滅的な打撃。</b></div>
+      </div>
+
+      <div class="ec" style="top: 1798px">
+        <div class="ey">1299年</div>
+        <div class="et">オスマン帝国の成立</div>
+        <div class="ed">モンゴルの侵攻で混乱したアナトリア（現トルコ）で、オスマン1世が小さな王朝を立ち上げた。<b>→ その後200年で地中海世界最大の帝国へ。東ローマ帝国を滅ぼし三大陸にまたがる強国に成長。</b></div>
+      </div>
+
+      <div class="ec" style="top: 2106px">
+        <div class="ey">1453年</div>
+        <div class="et">コンスタンティノープル陥落</div>
+        <div class="ed">孤立無援になっていた東ローマ帝国が、オスマン帝国の巨大な大砲攻撃についに陥落。<b>→ 1000年続いた東ローマ帝国が終わる。多くの学者がイタリアに逃れ、ルネサンスをさらに加速させた。</b></div>
+      </div>
+
+    </div>
+
+    <!-- ── 日本 ── -->
+    <div class="rc jp">
+
+      <div class="ec" style="top: 386px">
+        <div class="ey">593年</div>
+        <div class="et">聖徳太子の摂政</div>
+        <div class="ed">当時は有力豪族が力を持ち、天皇の権威が弱かった。強い国家をつくる必要があった。<b>→ 十七条憲法・冠位十二階を制定し仏教を導入。この改革が後の大化の改新へつながっていく。</b></div>
+      </div>
+
+      <div class="ec" style="top: 490px">
+        <div class="ey">645年</div>
+        <div class="et">大化の改新</div>
+        <div class="ed">蘇我氏が天皇家をしのぐほどの権力を握ったため、中大兄皇子らがクーデターを起こした。<b>→ 唐（中国）の律令制を手本に中央集権化を推進。日本が「国家」として整備されていく。</b></div>
+      </div>
+
+      <div class="ec" style="top: 620px">
+        <div class="ey">710年</div>
+        <div class="et">平城京遷都（奈良時代へ）</div>
+        <div class="ed">国家として成長した日本が、唐の都・長安を手本にした計画都市を奈良に建設した。<b>→ 万葉集・古事記・日本書紀がこの時代に編纂。仏教文化（東大寺・正倉院）が栄える。</b></div>
+      </div>
+
+      <div class="ec" style="top: 788px">
+        <div class="ey">794年</div>
+        <div class="et">平安京遷都</div>
+        <div class="ed">奈良では仏教勢力が政治に介入しすぎたため、天皇が新しい都に移ることで距離をおこうとした。<b>→ 400年に及ぶ平安時代が始まり、仮名文字・和歌・物語など独自の貴族文化が花開く。</b></div>
+      </div>
+
+      <div class="ec" style="top: 916px">
+        <div class="ey">858年</div>
+        <div class="et">藤原氏の摂関政治</div>
+        <div class="ed">藤原氏は娘を天皇に嫁がせ、生まれた子を天皇にする戦略で外戚として実権を握った。<b>→ 幼い天皇のときは「摂政」、成人後は「関白」として政務を独占。政治の実権が皇族から貴族へ。</b></div>
+      </div>
+
+      <div class="ec" style="top: 1190px">
+        <div class="ey">995〜1027年</div>
+        <div class="et">藤原道長の全盛期</div>
+        <div class="ed">4人の娘を天皇・皇太子の后にするという婚姻政略で摂関政治の頂点に立った。<b>→「この世をば 我が世とぞ思ふ」と詠んだほどの栄華。しかし息子の頼通の代から急速に衰退へ。</b></div>
+      </div>
+
+      <div class="ec" style="top: 1372px">
+        <div class="ey">1086年</div>
+        <div class="et">院政の開始</div>
+        <div class="ed">天皇が成人すると藤原氏が力を及ぼしにくくなる。そこで白河天皇は退位して「上皇」となり自ら政治を握った。<b>→ 藤原氏の権力が衰え、代わりに武士（平氏・源氏）が力をつけて朝廷内で台頭していく。</b></div>
+      </div>
+
+      <div class="ec" style="top: 1570px">
+        <div class="ey">1185年</div>
+        <div class="et">鎌倉幕府の成立</div>
+        <div class="ed">源平の争乱で源頼朝が勝利。朝廷のある京都から離れた鎌倉に独自の政権を樹立した。<b>→「将軍と御家人」の主従関係を基盤にした武家政権が誕生。以後約700年、武士が日本を支配する時代へ。</b></div>
+      </div>
+
+      <div class="ec" style="top: 1748px">
+        <div class="ey">1274・1281年</div>
+        <div class="et">元寇（文永・弘安の役）</div>
+        <div class="ed">モンゴル皇帝フビライが日本に服属を要求。断られたため二度にわたり大軍を送った。<b>→ 幕府は防衛に成功したが、御家人への報酬が出せず不満が高まり鎌倉幕府衰退のきっかけになる。</b></div>
+      </div>
+
+      <div class="ec" style="top: 1872px">
+        <div class="ey">1336年</div>
+        <div class="et">室町幕府の成立</div>
+        <div class="ed">鎌倉幕府を倒した後の天皇親政（建武の新政）が武士に不評で、足利尊氏が反旗を翻した。<b>→ 南朝・北朝に分かれた約60年の内乱（南北朝時代）を経て、足利氏の室町幕府が安定へ。</b></div>
+      </div>
+
+      <div class="ec" style="top: 1984px">
+        <div class="ey">1392年</div>
+        <div class="et">南北朝の合一</div>
+        <div class="ed">二つの朝廷が60年間争い続け双方が疲弊。足利義満が外交・圧力を使って統一を実現。<b>→ 義満の時代が室町幕府の最盛期。日明貿易・金閣建設など文化が花開くが、統制は長続きしない。</b></div>
+      </div>
+
+      <div class="ec" style="top: 2134px">
+        <div class="ey">1467年</div>
+        <div class="et">応仁の乱</div>
+        <div class="ed">将軍家と有力大名家の後継ぎ争いが重なり、大名が東西に分かれて京都で大規模な内乱が勃発。<b>→ 京都が焼け野原に。「実力のある者が勝つ」下剋上の戦国時代が始まる。</b></div>
+      </div>
+
+    </div>
+
+    <!-- ── 宗教・文化 ── -->
+    <div class="rc re">
+
+      <div class="ec" style="top: 258px">
+        <div class="ey">529年</div>
+        <div class="et">ベネディクト修道会の創設</div>
+        <div class="ed">西ローマ帝国崩壊後の混乱した社会で「神のそばで静かに生きたい」と考える人々が修道院に集まった。<b>→ 修道院が写本・農業・医療・教育の中心地となり、古典文化を守り伝える役割を担った。</b></div>
+      </div>
+
+      <div class="ec" style="top: 528px">
+        <div class="ey">664年</div>
+        <div class="et">ウィットビー会議</div>
+        <div class="ed">イングランドではケルト式とローマ式の二つの慣習が混在し、復活祭の日付さえ違っていた。<b>→ ローマ式に統一され、イングランドがローマ教会の体系に完全に組み込まれ教皇の影響力が強まる。</b></div>
+      </div>
+
+      <div class="ec" style="top: 800px">
+        <div class="ey">800年頃</div>
+        <div class="et">カロリング・ルネサンス</div>
+        <div class="ed">カール大帝が「読み書きできる聖職者・官僚が必要だ」と各地に学校を作り学問を奨励した。<b>→ 古代ギリシャ・ローマの文化が修道院で復興。これが後のルネサンスへつながる文化の下地に。</b></div>
+      </div>
+
+      <div class="ec" style="top: 1020px">
+        <div class="ey">910年</div>
+        <div class="et">クリュニー修道院の改革運動</div>
+        <div class="ed">各地の修道院が腐敗し「聖職の売買（シモニア）」も横行していた。クリュニー修道院が改革を主導。<b>→ 教皇の権威が強まり、「誰が聖職者を任命するか」をめぐる皇帝との激しい叙任権闘争へ発展。</b></div>
+      </div>
+
+      <div class="ec" style="top: 1308px">
+        <div class="ey">1054年</div>
+        <div class="et">東西教会の大分裂</div>
+        <div class="ed">ローマ（西）とコンスタンティノープル（東）の教会が、教義・権力をめぐる長年の対立の末に正式決裂。<b>→ カトリック（西）と正教会（東）に分かれる。現在のキリスト教二大勢力の原点。</b></div>
+      </div>
+
+      <div class="ec" style="top: 1526px">
+        <div class="ey">1163年</div>
+        <div class="et">ノートルダム大聖堂の着工</div>
+        <div class="ed">都市が豊かになり「巨大な教会を建てることが都市の誇り」という時代になっていた。<b>→ 高い天井・ステンドグラス・尖ったアーチが特徴のゴシック建築がヨーロッパ各地に広まる。</b></div>
+      </div>
+
+      <div class="ec" style="top: 1618px">
+        <div class="ey">1209年</div>
+        <div class="et">フランシスコ修道会の創設</div>
+        <div class="ed">裕福な商家の息子フランチェスコが「すべてを捨てて貧しく生きる」ことを選び仲間を集めた。<b>→ 清貧を誓う托鉢修道士が街を歩いて庶民に説教。教会に来ない人々へ届く新しい布教スタイルが広まる。</b></div>
+      </div>
+
+      <div class="ec" style="top: 1730px">
+        <div class="ey">1265〜1321年</div>
+        <div class="et">ダンテ『神曲』</div>
+        <div class="ed">詩人ダンテが政争で故郷フィレンツェを追われ、放浪しながら地獄・煉獄・天国を旅する大作を書いた。<b>→ ラテン語でなくイタリア語（庶民の言葉）で書かれた初の大文学。「民衆が文学を楽しむ時代」の扉を開く。</b></div>
+      </div>
+
+      <div class="ec" style="top: 1956px">
+        <div class="ey">1378年</div>
+        <div class="et">西方教会大分裂（大シスマ）</div>
+        <div class="ed">教皇庁がフランスに移された混乱の後、ローマとアビニョンに別々の教皇が並立してしまった。<b>→「本物の教皇はどちら？」と教会への信頼が崩れ始める。約150年後の宗教改革への遠因に。</b></div>
+      </div>
+
+      <div class="ec" style="top: 2048px">
+        <div class="ey">1415〜1450年代</div>
+        <div class="et">コンスタンツ公会議〜グーテンベルク聖書</div>
+        <div class="ed">全ヨーロッパの聖職者が集まり大分裂をようやく収拾。その後グーテンベルクが活版印刷を発明した。<b>→ 聖書が大量印刷されて識字層に広まり「自分で聖書を読める」ことが宗教改革を後押し。中世が終わっていく。</b></div>
+      </div>
+
+    </div>
+
+  </div>
+</div>
+
+<footer>
+  中世の歴史まとめノート — 5世紀〜15世紀
+</footer>
 
 </body>
 </html>
