@@ -1,0 +1,1228 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>うき × えり インタビュー</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Helvetica Neue', Arial, 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', sans-serif;
+      background: #f2ede8;
+      min-height: 100vh;
+    }
+
+    header {
+      background: #fff;
+      padding: 28px 24px 20px;
+      text-align: center;
+      border-bottom: 1px solid #e4ddd6;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 1px 8px rgba(0,0,0,0.06);
+    }
+
+    header h1 {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: #2e2a26;
+      letter-spacing: 0.08em;
+    }
+
+    header p {
+      font-size: 0.75rem;
+      color: #b0a89e;
+      margin-top: 6px;
+      letter-spacing: 0.05em;
+    }
+
+    .legend {
+      display: flex;
+      justify-content: center;
+      gap: 24px;
+      margin-top: 12px;
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.78rem;
+      color: #7a6e66;
+    }
+
+    .legend-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+    }
+
+    .dot-eri { background: #d4845a; }
+    .dot-yuki { background: #6a9e8c; }
+
+    .chat-container {
+      max-width: 700px;
+      margin: 0 auto;
+      padding: 36px 20px 60px;
+    }
+
+    .section-divider {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 36px 0 20px;
+    }
+
+    .section-divider::before,
+    .section-divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: #d6cfc7;
+    }
+
+    .section-divider span {
+      font-size: 0.72rem;
+      color: #b0a89e;
+      letter-spacing: 0.12em;
+      white-space: nowrap;
+      padding: 4px 10px;
+      border: 1px solid #d6cfc7;
+      border-radius: 20px;
+      background: #f2ede8;
+    }
+
+    .message {
+      display: flex;
+      margin-bottom: 10px;
+      align-items: flex-end;
+      gap: 8px;
+    }
+
+    .message.eri { flex-direction: row-reverse; }
+    .message.yuki { flex-direction: row; }
+
+    .avatar {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.72rem;
+      font-weight: 700;
+      flex-shrink: 0;
+      letter-spacing: 0;
+    }
+
+    .eri .avatar {
+      background: #d4845a;
+      color: #fff;
+    }
+
+    .yuki .avatar {
+      background: #6a9e8c;
+      color: #fff;
+    }
+
+    .msg-wrapper {
+      display: flex;
+      flex-direction: column;
+      max-width: 74%;
+    }
+
+    .message.eri .msg-wrapper { align-items: flex-end; }
+    .message.yuki .msg-wrapper { align-items: flex-start; }
+
+    .name {
+      font-size: 0.68rem;
+      color: #b0a89e;
+      margin-bottom: 3px;
+      padding: 0 5px;
+    }
+
+    .bubble {
+      padding: 11px 15px;
+      border-radius: 18px;
+      line-height: 1.75;
+      font-size: 0.9rem;
+      color: #2e2a26;
+      word-break: break-all;
+    }
+
+    .eri .bubble {
+      background: #d4845a;
+      color: #fff;
+      border-bottom-right-radius: 4px;
+    }
+
+    .yuki .bubble {
+      background: #ffffff;
+      border-bottom-left-radius: 4px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+    }
+
+    .laugh {
+      font-size: 0.82rem;
+      opacity: 0.85;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>うき × えり インタビュー</h1>
+  <p>親子の対話 — うきまる</p>
+  <div class="legend">
+    <div class="legend-item"><div class="legend-dot dot-eri"></div>うき（インタビュアー）</div>
+    <div class="legend-item"><div class="legend-dot dot-yuki"></div>えり（お母さん）</div>
+  </div>
+</header>
+
+<div class="chat-container">
+
+  <!-- ========== オープニング ========== -->
+  <div class="section-divider"><span>オープニング</span></div>
+
+  <div class="message eri">
+    <div class="avatar">うき</div>
+    <div class="msg-wrapper">
+      <div class="name">うき</div>
+      <div class="bubble">OK？じゃあ始めます。</div>
+    </div>
+  </div>
+
+  <div class="message yuki">
+    <div class="avatar">えり</div>
+    <div class="msg-wrapper">
+      <div class="name">えり</div>
+      <div class="bubble">はい、お願いします。緊張してますね。</div>
+    </div>
+  </div>
+
+  <div class="message eri">
+    <div class="avatar">うき</div>
+    <div class="msg-wrapper">
+      <div class="name">うき</div>
+      <div class="bubble">なんでこれをやりたいかっていうと——私は人の話を聞くのが好きで、身近な人の話を、雑談じゃなくて、この項目について聞くみたいなのをやってみたいっていうのがずっとあって。試みとしてやってみたいみたいな感じで。</div>
+    </div>
+  </div>
+
+  <div class="message eri">
+    <div class="avatar">うき</div>
+    <div class="msg-wrapper">
+      <div class="name">うき</div>
+      <div class="bubble">で、なんでかっていうと、自分が死んだ時に「あの話してなかったな」っていうので後悔しそうっていう思いがなんかあって。人の話聞かせてもらって、聞いたなっていうのを1個したいっていうのがある。ちょっと実験的な部分もあるし、自分も客観的に見てみたい。その実験にお付き合いいただく第一弾として、氷を割りながら、編集さんにお願いします。</div>
+    </div>
+  </div>
+
+  <div class="message yuki">
+    <div class="avatar">えり</div>
+    <div class="msg-wrapper">
+      <div class="name">えり</div>
+      <div class="bubble">お願いします！</div>
+    </div>
+  </div>
+
+  <!-- ========== 好きな色 ========== -->
+  <div class="section-divider"><span>好きな色</span></div>
+
+  <div class="message eri">
+    <div class="avatar">うき</div>
+    <div class="msg-wrapper">
+      <div class="name">うき</div>
+      <div class="bubble">じゃあシンプルな質問から行くね。好きな色は何ですか？</div>
+    </div>
+  </div>
+
+  <div class="message yuki">
+    <div class="avatar">えり</div>
+    <div class="msg-wrapper">
+      <div class="name">えり</div>
+      <div class="bubble">もともとオレンジがすごく好きで、最近はちょっと黄色が好き。</div>
+    </div>
+  </div>
+
+  <div class="message eri">
+    <div class="avatar">うき</div>
+    <div class="msg-wrapper">
+      <div class="name">うき</div>
+      <div class="bubble">黄色なんだ。なんで？</div>
+    </div>
+  </div>
+
+  <div class="message yuki">
+    <div class="avatar">えり</div>
+    <div class="msg-wrapper">
+      <div class="name">えり</div>
+      <div class="bubble">なんでかはわからないけど、昔はなんか「女の子はピンク・男の子はブルー系」みたいなのがあって、ピンクって可愛いと思うけど自分はキャラじゃない？みたいに思ってて。だからずっとピンクは避けて通ってきた。で、色が欲しいってなった時に、明確な理由がなく、なんか黄色が好き。</div>
+    </div>
+  </div>
+
+  <div class="message eri">
+    <div class="avatar">うき</div>
+    <div class="msg-wrapper">
+      <div class="name">うき</div>
+      <div class="bubble">普通に好きなんだね。なんかあるよね、変わりゆく色って。じゃあオレンジがこれまで好きだったけど今黄色も気になってますっていう感じ？</div>
+    </div>
+  </div>
+
+  <div class="message yuki">
+    <div class="avatar">えり</div>
+    <div class="msg-wrapper">
+      <div class="name">えり</div>
+      <div class="bubble">オレンジも好きだけど黄色も好き。</div>
+    </div>
+  </div>
+
+  <div class="message eri">
+    <div class="avatar">うき</div>
+    <div class="msg-wrapper">
+      <div class="name">うき</div>
+      <div class="bubble">えーそれ知らなかった。</div>
+    </div>
+  </div>
+
+  <!-- ========== 好きな曲 ========== -->
+  <div class="section-divider"><span>好きな曲</span></div>
+
+  <div class="message eri">
+    <div class="avatar">うき</div>
+    <div class="msg-wrapper">
+      <div class="name">うき</div>
+      <div class="bubble">じゃあ好きな曲は？</div>
+    </div>
+  </div>
+
+  <div class="message yuki">
+    <div class="avatar">えり</div>
+    <div class="msg-wrapper">
+      <div class="name">えり</div>
+      <div class="bubble">最近はミセスの曲がやっぱり好き。</div>
+    </div>
+  </div>
+
+  <div class="message eri">
+    <div class="avatar">うき</div>
+    <div class="msg-wrapper">
+      <div class="name">うき</div>
+      <div class="bubble">ねー。知らない間にお母さんがすごいミセスを好きになってる！あの可愛い人を好きになってるんだよ。</div>
+    </div>
+  </div>
+
+  <div class="message yuki">
+    <div class="avatar">えり</div>
+    <div class="msg-wrapper">
+      <div class="name">えり</div>
+      <div class="bubble">一つの番組で知って、すごいやっぱり人のお人柄がすごく良くて、歌声も美しく、演技も素晴らしく——すごいなって。</div>
+    </div>
+  </div>
+
+  <div class="message eri">
+    <div class="avatar">うき</div>
+    <div class="msg-wrapper">
+      <div class="name">うき</div>
+      <div class="bubble">じゃあ曲も好きだけど、その人たちが好きで。ちなみに誰が一番好きなの？</div>
+    </div>
+  </div>
+
+  <div class="message yuki">
+    <div class="avatar">えり</div>
+    <div class="msg-wrapper">
+      <div class="name">えり</div>
+      <div class="bubble">藤澤さん？あと大森さんも好き……ちょっと選べないから。みんな三人ともアーティストとしてすごいなって。藤澤さんはなんか可愛いなみたいな感じ。</div>
+    </div>
+  </div>
+
+  <div class="message eri">
+    <div class="avatar">うき</div>
+    <div class="msg-wrapper">
+      <div class="name">うき</div>
+      <div class="bubble">違う部分が好きなんだね。アレクサで何を聴いてることが多い？</div>
+    </div>
+  </div>
+
+  <div class="message yuki">
+    <div class="avatar">えり</div>
+    <div class="msg-wrapper">
+      <div class="name">えり</div>
+      <div class="bubble">元々好きなのはビートルズとかRCサクセションとか昭和の歌もすごく好きだけど、最近はアレクサで結構ミセスとかかけてて、それに紐づいていろいろかけてくれるから。</div>
+    </div>
+  </div>
+
+  <div class="message eri">
+    <div class="avatar">うき</div>
+    <div class="msg-wrapper">
+      <div class="name">うき</div>
+      <div class="bubble">へーそうやって使ってんだね。</div>
+    </div>
+  </div>
+
+  <!-- ========== 好きな映画・思い出 ========== -->
+  <div class="section-divider"><span>好きな映画・思い出</span></div>
+
+  <div class="message eri">
+    <div class="avatar">うき</div>
+    <div class="msg-wrapper">
+      <div class="name">うき</div>
+      <div class="bubble">じゃあ好きな映画は？</div>
+    </div>
+  </div>
+
+  <div class="message yuki">
+    <div class="avatar">えり</div>
+    <div class="msg-wrapper">
+      <div class="name">えり</div>
+      <div class="bubble">映画あんまり見てないけど……最近見たっていうとやっぱりお母ちゃんの映画かな。</div>
+    </div>
+  </div>
+
+  <div class="message eri">
+    <div class="avatar">うき</div>
+    <div class="msg-wrapper">
+      <div class="name">うき</div>
+      <div class="bubble">お母さん映画あんまり見ないよね。私もその影響でか、家で映画っていうのがあるとしたら、風邪引いた時にビデオ屋さんでお父さんが借りてきたアメリカのアクション系みたいなやつ見てたよね。</div>
+    </div>
+  </div>
+
+  <div class="message yuki">
+    <div class="avatar">えり</div>
+    <div class="msg-wrapper">
+      <div class="name">えり</div>
+      <div class="bubble">そうそう。アクションがすごい好きで。お母さんが高熱出した時もアクション映画を借りてきて「これ見よう」って。なんか余計熱が上がりそうみたいな（笑）</div>
+    </div>
+  </div>
+
+  <div class="message eri">
+    <div class="avatar">うき</div>
+    <div class="msg-wrapper">
+      <div class="name">うき</div>
+      <div class="bubble">ほんとお父さんぽいね。そういうとこ。あそこにあったよね、ガス屋さんの前にビデオ屋さん。</div>
+    </div>
+  </div>
+
+  <div class="message yuki">
+    <div class="avatar">えり</div>
+    <div class="msg-wrapper">
+      <div class="name">えり</div>
+      <div class="bubble">小室さんの前にあったね。個人のお店だった。</div>
+    </div>
+  </div>
+
+  <div class="message eri">
+    <div class="avatar">うき</div>
+    <div class="msg-wrapper">
+      <div class="name">うき</div>
+      <div class="bubble">えーそうなんだ。懐かしいね。今の話で思い出す。今日駅から歩いてきたんだけど、振り返った時の空の抜け方とか全然違う。なんか戻ってきたっていうよりは違う街にいるみたいな感じ。マンション増えたよね。</div>
+    </div>
+  </div>
+
+  <div class="message yuki">
+    <div class="avatar">えり</div>
+    <div class="msg-wrapper">
+      <div class="name">えり</div>
+      <div class="bubble">増えたね。そう考えると二十何年ですごい進化したよね、世の中が。</div>
+    </div>
+  </div>
+
+  <!-- ========== 大好物と苦手なもの ========== -->
+  <div class="section-divider"><span>大好物と苦手なもの</span></div>
+
+  <div class="message eri">
+    <div class="avatar">うき</div>
+    <div class="msg-wrapper">
+      <div class="name">うき</div>
+      <div class="bubble">じゃあ次。大好物と苦手なもの。物事でもいいよ。</div>
+    </div>
+  </div>
+
+  <div class="message yuki">
+    <div class="avatar">えり</div>
+    <div class="msg-wrapper">
+      <div class="name">えり</div>
+      <div class="bubble">物事だったら……やっぱ仕事好きかな。</div>
+    </div>
+  </div>
+
+  <div class="message eri">
+    <div class="avatar">うき</div>
+    <div class="msg-wrapper">
+      <div class="name">うき</div>
+      <div class="bubble">ここで入ってくるとは思わなかった！でもそうなんだね。</div>
+    </div>
+  </div>
+
+  <div class="message yuki">
+    <div class="avatar">えり</div>
+    <div class="msg-wrapper">
+      <div class="name">えり</div>
+      <div class="bubble">うん。やっぱ原点というか、本当に生きていくベースみたいな。精神統一みたいなのも仕事だし、感情のコントロールしてくれるのも仕事だなって思って。初孫が生まれてすごく嬉しすぎることも、ちょっと待って落ち着いてみたいなのも仕事だし。日常に戻してくれるのがやっぱ仕事だなって。好きなことをやってるみたいな意味では多分、好物。</div>
+    </div>
+  </div>
+
+  <div class="message eri">
+    <div class="avatar">うき</div>
+    <div class="msg-wrapper">
+      <div class="name">うき</div>
+      <div class="bubble">まあ、お母さんを語る上で仕事は絶対あるよね。</div>
+    </div>
+  </div>
+
+  <div class="message yuki">
+    <div class="avatar">えり</div>
+    <div class="msg-wrapper">
+      <div class="name">えり</div>
+      <div class="bubble">そうねー。なんかそれしかやってこなかったというか。仕事がない人生をやったことがないからわからないみたいな。そっちが未知の世界みたいな。もうなんか息を普通にするように仕事も日常的にしてないと安定が図れないみたいな。</div>
+    </div>
+  </div>
+
+  <div class="message eri">
+    <div class="avatar">うき</div>
+    <div class="msg-wrapper">
+      <div class="name">うき</div>
+      <div class="bubble">珍回答。全然いい。じゃあ苦手なことは？</div>
+    </div>
+  </div>
+
+  <div class="message yuki">
+    <div class="avatar">えり</div>
+    <div class="msg-wrapper">
+      <div class="name">えり</div>
+      <div class="bubble">スマホ関係とか……PayPayを始めるとかそういうことがもうまず苦手意識があって、自分イコール自分できないものみたいになっちゃって。やってみるみたいなチャレンジが億劫みたいな。そういうところに時間かけてると、やらなきゃいけないことがいっぱいあるのに余計プレッシャーが押し寄せてくるみたいな感じになって、うわぁってなる。</div>
+    </div>
+  </div>
+
+  <div class="message eri">
+    <div class="avatar">うき</div>
+    <div class="msg-wrapper">
+      <div class="name">うき</div>
+      <div class="bubble">ヘルプデスク受けてんの（笑）え、でもどうやって解消してきたの？</div>
+    </div>
+  </div>
+
+  <div class="message yuki">
+    <div class="avatar">えり</div>
+    <div class="msg-wrapper">
+      <div class="name">えり</div>
+      <div class="bubble">解消はまずもう近づかない。仕事的なことでどうしても解決できない時は、ごり押しで聞くみたいな。もう教えないっていう空気感でもごり押しで聞いて解決みたいな。筋通ってなくない？みたいな感じで。「それなんですけど」って二回でも三回でも言うみたいな。</div>
+    </div>
+  </div>
+
+  <div class="message eri">
+    <div class="avatar">うき</div>
+    <div class="msg-wrapper">
+      <div class="name">うき</div>
+      <div class="bubble">怖い。そうやって解決してきたんだもん。真似したい。私結構できないかもそれ。</div>
+    </div>
+  </div>
+
+  <div class="message yuki">
+    <div class="avatar">えり</div>
+    <div class="msg-wrapper">
+      <div class="name">えり</div>
+      <div class="bubble">そう？逆に自分の知識の中で解決できることだったら、やっぱり教えてあげたい。聞かれたら提供したいみたいな感じ。だから逆になんで教えてくれないの？って思うこともあるし。筋通ってなくない？みたいな。</div>
+    </div>
+  </div>
+
+  <!-- ========== 自分らしいと思う瞬間 ========== -->
+  <div class="section-divider"><span>自分らしいと思う瞬間</span></div>
+
+  <div class="message eri">
+    <div class="avatar">うき</div>
+    <div class="msg-wrapper">
+      <div class="name">うき</div>
+      <div class="bubble">じゃあ、何してる時が自分らしいと思う？</div>
+    </div>
+  </div>
+
+  <div class="message yuki">
+    <div class="avatar">えり</div>
+    <div class="msg-wrapper">
+      <div class="name">えり</div>
+      <div class="bubble">ちょっと楽しいって思えるのは、TVerを見ながら一人でご飯食べてる時が割と癒しの時間で。あとは最近片付けにまたハマってきてるから、気になったところが掃除できた時。自分らしい時……人に親切にできた時はちょっと嬉しいっていうか、そういう人間でありたくて、ちょっと自分らしくできたのかなみたいなのが心地いい。お役に立てたみたいな。</div>
+    </div>
+  </div>
+
+  <div class="message eri">
+    <div class="avatar">うき</div>
+    <div class="msg-wrapper">
+      <div class="name">うき</div>
+      <div class="bubble">やりたいって思ってることと、やれてることが一緒になる時ね。</div>
+    </div>
+  </div>
+
+  <!-- ========== どんな人間？ ========== -->
+  <div class="section-divider"><span>自分ってどんな人間？</span></div>
+
+  <div class="message eri">
+    <div class="avatar">うき</div>
+    <div class="msg-wrapper">
+      <div class="name">うき</div>
+      <div class="bubble">じゃあ、自分のことをどんな人だと思ってる？</div>
+    </div>
+  </div>
+
+  <div class="message yuki">
+    <div class="avatar">えり</div>
+    <div class="msg-wrapper">
+      <div class="name">えり</div>
+      <div class="bubble">決断が早すぎるのに、早すぎるからか後悔もすごくする。</div>
+    </div>
+  </div>
+
+  <div class="message eri">
+    <div class="avatar">うき</div>
+    <div class="msg-wrapper">
+      <div class="name">うき</div>
+      <div class="bubble">ちょっと待って面白いし、私もそれ言われたことある！「行動力が早すぎて空回ってる時あるよ」って。DNA的に……見本がこれだからそうなっちゃったのかもしれません（笑）</div>
+    </div>
+  </div>
+
+  <div class="message yuki">
+    <div class="avatar">えり</div>
+    <div class="msg-wrapper">
+      <div class="name">えり</div>
+      <div class="bubble">あ、じゃあすいません。プライベートでいうと、今日から変わりますって言っといて明日もう違うじゃんみたいな。もう悩みませんとか、今年だけですとか。真の決断じゃないんだと思う自分で。だから優柔不断というか、ブレブレで、すごく自分に甘いんだなって思うことがよくある。</div>
+    </div>
+  </div>
+
+  <div class="message eri">
+    <div class="avatar">うき</div>
+    <div class="msg-wrapper">
+      <div class="name">うき</div>
+      <div class="bubble">あーそうなんだ。それを甘いと捉えるんだね。私は思わないけど。じゃあ自分の好きなところと、良くないなって思ってるところ教えて。</div>
+    </div>
+  </div>
+
+  <div class="message yuki">
+    <div class="avatar">えり</div>
+    <div class="msg-wrapper">
+      <div class="name">えり</div>
+      <div class="bubble">好きなところは……自分が心地いいから、ちょっと断捨離とかするとか、そういうところが気に入ってる。良くないのはやっぱりさっきの無駄せっかちが良くないのと、めちゃくちゃどろどろ遡って悩むところ。</div>
+    </div>
+  </div>
+
+  <div class="message eri">
+    <div class="avatar">うき</div>
+    <div class="msg-wrapper">
+      <div class="name">うき</div>
+      <div class="bubble">私もそう。どろどろ昔のことを遡って呪うぐらいっていうのはお母さんの性格の1個だよね。その傾向があるなって気づいてから、どういう風に捉えてるの？</div>
+    </div>
+  </div>
+
+  <div class="message yuki">
+    <div class="avatar">えり</div>
+    <div class="msg-wrapper">
+      <div class="name">えり</div>
+      <div class="bubble">最近直すとかはないんだけど、ちょっとだけ自分を客観視できるようになったというか。じゃあこうするまで至らないけど、自分は今どういう精神状態に置かれてるかとか分析はするけど、でも「あ、ちょっと負のループ行っちゃってるよ」みたいな、こっちに戻ってきてみたいな。そういう時はやっぱり掃除。夢中になってできるし、スッキリするし、ちょっとそっちの世界に持っていけるから。</div>
+    </div>
+  </div>
+
+  <div class="message eri">
+    <div class="avatar">うき</div>
+    <div class="msg-wrapper">
+      <div class="name">うき</div>
+      <div class="bubble">掃除で立ち戻っていくんだね。</div>
+    </div>
+  </div>
+
+  <div class="message yuki">
+    <div class="avatar">えり</div>
+    <div class="msg-wrapper">
+      <div class="name">えり</div>
+      <div class="bubble">仕事みたいなもん。掃除で精神統一みたいな。きちんになるし、心もスッキリするし、もう一石二鳥。天才！みたいな（笑）</div>
+    </div>
+  </div>
+
+  <div class="message eri">
+    <div class="avatar">うき</div>
+    <div class="msg-wrapper">
+      <div class="name">うき</div>
+      <div class="bubble">モヤモヤしないで片付けまでできちゃってみたいな（笑）</div>
+    </div>
+  </div>
+
+  <!-- ========== 仕事を選んだ理由 ========== -->
+  <div class="section-divider"><span>仕事を選んだ理由</span></div>
+
+  <div class="message eri">
+    <div class="avatar">うき</div>
+    <div class="msg-wrapper">
+      <div class="name">うき</div>
+      <div class="bubble">じゃあ、なんでそもそもその仕事を選んだのか気になる。</div>
+    </div>
+  </div>
+
+  <div class="message yuki">
+    <div class="avatar">えり</div>
+    <div class="msg-wrapper">
+      <div class="name">えり</div>
+      <div class="bubble">そこが自分でもわかんなくて。数学の成績がすごく良かったわけでもないし、何か引いてできたわけでも当然ないし、ただ気がついたらこの職についてて。好きって苦じゃなく、もうなんか趣味って言い方が合ってるのかわかんないけど。休んでると仕事行きたくなるし、疲れたら休みたくなるしの繰り返しで今やってるけど、本当に理由じゃなく好き。</div>
+    </div>
+  </div>
+
+  <div class="message eri">
+    <div class="avatar">うき</div>
+    <div class="msg-wrapper">
+      <div class="name">うき</div>
+      <div class="bubble">いいね。それで専門学校行く前にもうその仕事してたってこと？</div>
+    </div>
+  </div>
+
+  <div class="message yuki">
+    <div class="avatar">えり</div>
+    <div class="msg-wrapper">
+      <div class="name">えり</div>
+      <div class="bubble">昼は会計事務所、夜はその学校に行ってた。高校で少し商業をやって、ちょっと身近だったからそっちの道に行ったぐらいな感じだと思う。分厚い求人情報誌で川崎の会計事務所に面接に行ったら、所長が久里浜の方にお住まいで、横須賀の話で盛り上がって、そのまますぐ来てみたいな感じで。</div>
+    </div>
+  </div>
+
+  <div class="message eri">
+    <div class="avatar">うき</div>
+    <div class="msg-wrapper">
+      <div class="name">うき</div>
+      <div class="bubble">いくつの時？</div>
+    </div>
+  </div>
+
+  <div class="message yuki">
+    <div class="avatar">えり</div>
+    <div class="msg-wrapper">
+      <div class="name">えり</div>
+      <div class="bubble">二十二ぐらいかな。</div>
+    </div>
+  </div>
+
+  <div class="message eri">
+    <div class="avatar">うき</div>
+    <div class="msg-wrapper">
+      <div class="name">うき</div>
+      <div class="bubble">どうだった？最初から楽しかった？</div>
+    </div>
+  </div>
+
+  <div class="message yuki">
+    <div class="avatar">えり</div>
+    <div class="msg-wrapper">
+      <div class="name">えり</div>
+      <div class="bubble">うん。みんなで仕事終わって飲みに行ったりとかして、繁忙期は終電も滑り込んで帰るとか、川崎から横須賀まで帰るとか。でも楽しかったね。若かったからなんか何でも楽しかったな。</div>
+    </div>
+  </div>
+
+  <div class="message eri">
+    <div class="avatar">うき</div>
+    <div class="msg-wrapper">
+      <div class="name">うき</div>
+      <div class="bubble">楽しんでたんだ。バブル弾ける直前ってこと？</div>
+    </div>
+  </div>
+
+  <div class="message yuki">
+    <div class="avatar">えり</div>
+    <div class="msg-wrapper">
+      <div class="name">えり</div>
+      <div class="bubble">そうだね。だから就職に困るみたいなイメージは多分なかったと思う。求人情報誌がこんなに分厚くて、なんかそこしか受けてないかもしれない。明日からみたいな、そんな感じだったかも。</div>
+    </div>
+  </div>
+
+  <div class="message eri">
+    <div class="avatar">うき</div>
+    <div class="msg-wrapper">
+      <div class="name">うき</div>
+      <div class="bubble">すんなりって感じだったんだね。いいな、聞いてよかった。</div>
+    </div>
+  </div>
+
+  <!-- ========== バブル時代・20代 ========== -->
+  <div class="section-divider"><span>バブル時代・20代</span></div>
+
+  <div class="message yuki">
+    <div class="avatar">えり</div>
+    <div class="msg-wrapper">
+      <div class="name">えり</div>
+      <div class="bubble">所長とみんなで飲みに行く時は、すごい広いクラブみたいなところで。みんなで楽しかったなあ。年配の方もいて、蒲田でいつも飲んでるところに連れてってくれたりとか。北海道から越してきた男性がいて彼女を北海道に待たせてるんだとかって、結構プライベートな話とかして。</div>
+    </div>
+  </div>
+
+  <div class="message eri">
+    <div class="avatar">うき</div>
+    <div class="msg-wrapper">
+      <div class="name">うき</div>
+      <div class="bubble">楽しそう。何人くらいの事務所なの？</div>
+    </div>
+  </div>
+
+  <div class="message yuki">
+    <div class="avatar">えり</div>
+    <div class="msg-wrapper">
+      <div class="name">えり</div>
+      <div class="bubble">六人とか七人で。女性は一人いて。その方はキーパンチャーっていう——みんながお客さんのところに行って集めてきたデータはその彼女が打つっていう。</div>
+    </div>
+  </div>
+
+  <div class="message eri">
+    <div class="avatar">うき</div>
+    <div class="msg-wrapper">
+      <div class="name">うき</div>
+      <div class="bubble">キーパンチャー！初めて聞く単語なんだけど。でもなんか昭和だなっていうのはわかった（笑）</div>
+    </div>
+  </div>
+
+  <div class="message yuki">
+    <div class="avatar">えり</div>
+    <div class="msg-wrapper">
+      <div class="name">えり</div>
+      <div class="bubble">今でいうとタイプライターみたいなね。巡回監査っていって、お客さんのところに回って行って、資料チェックしてみたいな。紙でデータを上げてくるみたいな。</div>
+    </div>
+  </div>
+
+  <div class="message eri">
+    <div class="avatar">うき</div>
+    <div class="msg-wrapper">
+      <div class="name">うき</div>
+      <div class="bubble">なんか白黒の映画が浮かんでる（笑）楽しかったのはやっぱりその空気感？</div>
+    </div>
+  </div>
+
+  <div class="message yuki">
+    <div class="avatar">えり</div>
+    <div class="msg-wrapper">
+      <div class="name">えり</div>
+      <div class="bubble">ギュッとした狭い事務所で、みんなやっぱり仲良かったっていうか。それも楽しかったし、飲みも楽しかったし、仕事も楽しかった。若かったからなんか何でも楽しかったな。</div>
+    </div>
+  </div>
+
+  <div class="message eri">
+    <div class="avatar">うき</div>
+    <div class="msg-wrapper">
+      <div class="name">うき</div>
+      <div class="bubble">でも結構かかるよね、横須賀から川崎まで。一人暮らし考えなかったの？</div>
+    </div>
+  </div>
+
+  <div class="message yuki">
+    <div class="avatar">えり</div>
+    <div class="msg-wrapper">
+      <div class="name">えり</div>
+      <div class="bubble">全然もうその発想がない感じかな。横須賀の実家に住んでたら1時間以上の通勤は当たり前だと思ってたから。あと父も亡くなったから、兄もいないし、母が一人になっちゃうから。妊娠中もずっと川崎に横須賀から通ってた。</div>
+    </div>
+  </div>
+
+  <div class="message eri">
+    <div class="avatar">うき</div>
+    <div class="msg-wrapper">
+      <div class="name">うき</div>
+      <div class="bubble">そっか。お母さんそういうのがあったのね。22歳で、母を自分が守らなきゃみたいなのがあったんだね。</div>
+    </div>
+  </div>
+
+  <div class="message yuki">
+    <div class="avatar">えり</div>
+    <div class="msg-wrapper">
+      <div class="name">えり</div>
+      <div class="bubble">うん。なんかもう自分は夫じゃないけど男？みたいな、そんな気持ちだったかも。</div>
+    </div>
+  </div>
+
+  <div class="message eri">
+    <div class="avatar">うき</div>
+    <div class="msg-wrapper">
+      <div class="name">うき</div>
+      <div class="bubble">かっこいいね、22歳で。</div>
+    </div>
+  </div>
+
+  <!-- ========== お父さんとの出会い ========== -->
+  <div class="section-divider"><span>お父さんとの出会い</span></div>
+
+  <div class="message eri">
+    <div class="avatar">うき</div>
+    <div class="msg-wrapper">
+      <div class="name">うき</div>
+      <div class="bubble">じゃあ、22の時お父さんと出会ったのはナンパで、名前はごまかして——</div>
+    </div>
+  </div>
+
+  <div class="message yuki">
+    <div class="avatar">えり</div>
+    <div class="msg-wrapper">
+      <div class="name">えり</div>
+      <div class="bubble">スズキです（笑）</div>
+    </div>
+  </div>
+
+  <div class="message eri">
+    <div class="avatar">うき</div>
+    <div class="msg-wrapper">
+      <div class="name">うき</div>
+      <div class="bubble">付き合ってどれくらいで結婚したの？</div>
+    </div>
+  </div>
+
+  <div class="message yuki">
+    <div class="avatar">えり</div>
+    <div class="msg-wrapper">
+      <div class="name">えり</div>
+      <div class="bubble">1年とか？そう、お父さんがデートの時いつも同じ格好してたらしいのね。それでなんか、そのことをお母さんが何も言わなかったことがすごく嬉しかったみたいで。着るものなんか本当に上っ面で、見てるとこそこじゃないからみたいな感じでポソッと言ったことがあって。</div>
+    </div>
+  </div>
+
+  <div class="message eri">
+    <div class="avatar">うき</div>
+    <div class="msg-wrapper">
+      <div class="name">うき</div>
+      <div class="bubble">なんか泣きそうなんだけど。気にしたことなかったとかじゃなくて、ちょっとなんかいいのかなって思ってたからこそ言ったよね。素敵だね。</div>
+    </div>
+  </div>
+
+  <div class="message eri">
+    <div class="avatar">うき</div>
+    <div class="msg-wrapper">
+      <div class="name">うき</div>
+      <div class="bubble">じゃあお父さんのここが信頼できたっていうエピソードある？</div>
+    </div>
+  </div>
+
+  <div class="message yuki">
+    <div class="avatar">えり</div>
+    <div class="msg-wrapper">
+      <div class="name">えり</div>
+      <div class="bubble">人の悪口はないし、人として尊敬できる。みんなに親切というか、選ばずそういうところをいつも感じてて。「江戸仕草」って知ってる？細いとこ通る時とか、すれ違えない時に傘をちょっとこう傾けて待ってるとか、ドアを開けて押さえてお先にどうぞみたいな。街を歩いててそういうのを感じて。俺が俺が我先にみたいなんじゃなくて、そういうところがいいなみたいな。</div>
+    </div>
+  </div>
+
+  <div class="message eri">
+    <div class="avatar">うき</div>
+    <div class="msg-wrapper">
+      <div class="name">うき</div>
+      <div class="bubble">お母さんって「江戸仕草」っていうのがおもろい（笑）その配慮があったとかでもいいのに。</div>
+    </div>
+  </div>
+
+  <div class="message yuki">
+    <div class="avatar">えり</div>
+    <div class="msg-wrapper">
+      <div class="name">えり</div>
+      <div class="bubble">ちょっとほら今日録音もしてるから、ちょっとそれっぽいことを（笑）</div>
+    </div>
+  </div>
+
+  <!-- ========== パートナーという存在 ========== -->
+  <div class="section-divider"><span>パートナーという存在</span></div>
+
+  <div class="message eri">
+    <div class="avatar">うき</div>
+    <div class="msg-wrapper">
+      <div class="name">うき</div>
+      <div class="bubble">パートナーってどんな存在？お父さんについて。</div>
+    </div>
+  </div>
+
+  <div class="message yuki">
+    <div class="avatar">えり</div>
+    <div class="msg-wrapper">
+      <div class="name">えり</div>
+      <div class="bubble">やっぱりいるっていう存在がもう安心。高め合えていいとかじゃなくて、いるっていう存在。近い将来お父さんが施設に入所するのかなみたいに思った時に、一人になりますってなった時に、やっぱりなんか多くは語らないお父さんだけど、今いるっていうのがすごい安心感なのかなって。</div>
+    </div>
+  </div>
+
+  <div class="message eri">
+    <div class="avatar">うき</div>
+    <div class="msg-wrapper">
+      <div class="name">うき</div>
+      <div class="bubble">わかる。すごいもうとか言いながら、そうやってやるのがちょうどいいみたいな。</div>
+    </div>
+  </div>
+
+  <!-- ========== 子育ての話 ========== -->
+  <div class="section-divider"><span>子育ての話</span></div>
+
+  <div class="message eri">
+    <div class="avatar">うき</div>
+    <div class="msg-wrapper">
+      <div class="name">うき</div>
+      <div class="bubble">自分はどんな親になると思ってた？</div>
+    </div>
+  </div>
+
+  <div class="message yuki">
+    <div class="avatar">えり</div>
+    <div class="msg-wrapper">
+      <div class="name">えり</div>
+      <div class="bubble">親になる前にどういう親になるって考えたことがなかったかもしれない。ただ漠然と、昭和の人間だから「次の免許の書き換えの時には名字変えてやる」みたいな。やっぱり結婚に憧れみたいなのをすごく持ってたと思う。</div>
+    </div>
+  </div>
+
+  <div class="message eri">
+    <div class="avatar">うき</div>
+    <div class="msg-wrapper">
+      <div class="name">うき</div>
+      <div class="bubble">私もそうなんだと思います（笑）じゃあ、私とタケにどうなってほしかったとか考えたりしてた？</div>
+    </div>
+  </div>
+
+  <div class="message yuki">
+    <div class="avatar">えり</div>
+    <div class="msg-wrapper">
+      <div class="name">えり</div>
+      <div class="bubble">タケルには「なってほしくない職業ある？」って聞かれた時に、それをしたら人が悲しむようなことはしないで、って言って。こうなってほしいっていうよりも、自分自身で好きなことを見つけてほしい。お父さんがたまに言う名言が「子供たちが決めたらそれに向かって応援しよう」って。</div>
+    </div>
+  </div>
+
+  <div class="message eri">
+    <div class="avatar">うき</div>
+    <div class="msg-wrapper">
+      <div class="name">うき</div>
+      <div class="bubble">それは言われたわ。うきがなんか言ってくれたのは、みんな結構友達は「親を超えろ」とか言われてて、すごいプレッシャーじゃないけど、うちはなんかありがとうって思ってた。</div>
+    </div>
+  </div>
+
+  <div class="message yuki">
+    <div class="avatar">えり</div>
+    <div class="msg-wrapper">
+      <div class="name">えり</div>
+      <div class="bubble">そう。あそこで嬉しかったのは、変にプレッシャーを与えられないでいられてる親なのかなみたいな。監督として、いかにリラックスして臨んでもらえるかが大事みたいな感じで。子供たちが決めた好きなことに進んでってほしい、背中を押してバックアップしますみたいな感じ。</div>
+    </div>
+  </div>
+
+  <div class="message eri">
+    <div class="avatar">うき</div>
+    <div class="msg-wrapper">
+      <div class="name">うき</div>
+      <div class="bubble">でも、じゃあお母さんの昭和な部分でいうと、私の将来の生活とかを心配しちゃって、安泰な結婚してほしいなみたいな思いはちょっとあったかも？</div>
+    </div>
+  </div>
+
+  <div class="message yuki">
+    <div class="avatar">えり</div>
+    <div class="msg-wrapper">
+      <div class="name">えり</div>
+      <div class="bubble">あったかも。でもいろいろわかってきて——親が望んでる環境が子供が幸せとはやっぱり限らない。もう別人格だから。それでいろいろやっぱり学んだ。理解しようと自分のレールに乗せようとしてたみたいなことだと思う。それは違う方向行ってるからそれは乗っからないでしょうね、みたいな。</div>
+    </div>
+  </div>
+
+  <div class="message eri">
+    <div class="avatar">うき</div>
+    <div class="msg-wrapper">
+      <div class="name">うき</div>
+      <div class="bubble">気をつけよう。子育てって面白そうだね。</div>
+    </div>
+  </div>
+
+  <div class="message yuki">
+    <div class="avatar">えり</div>
+    <div class="msg-wrapper">
+      <div class="name">えり</div>
+      <div class="bubble">面白い。</div>
+    </div>
+  </div>
+
+  <!-- ========== えり・タケルのこと ========== -->
+  <div class="section-divider"><span>えり・タケルのこと</span></div>
+
+  <div class="message eri">
+    <div class="avatar">うき</div>
+    <div class="msg-wrapper">
+      <div class="name">うき</div>
+      <div class="bubble">えー、じゃあ、私とタケってそれぞれどんな人間だと思ってる？</div>
+    </div>
+  </div>
+
+  <div class="message yuki">
+    <div class="avatar">えり</div>
+    <div class="msg-wrapper">
+      <div class="name">えり</div>
+      <div class="bubble">うきはコミュ力がすごい。うきと関われる人は幸せだなと思う。職場にうきがいてくれたら嬉しいし、かあちゃんだったとしても嬉しいし。なんか違う立場に近くにいてみたいみたいな感じ。あと優しいし大人しいけど、やっぱり芯がしっかりしていて考えも持っていて、男気溢れてるというか。しっかりしてるなあって。</div>
+    </div>
+  </div>
+
+  <div class="message eri">
+    <div class="avatar">うき</div>
+    <div class="msg-wrapper">
+      <div class="name">うき</div>
+      <div class="bubble">意外。でもお母さんがいつも言ってくれることな感じがするから。嬉しかった。タケルは？</div>
+    </div>
+  </div>
+
+  <div class="message yuki">
+    <div class="avatar">えり</div>
+    <div class="msg-wrapper">
+      <div class="name">えり</div>
+      <div class="bubble">タケルは真面目でビジョンが清々としてる。有言実行の人だよね。人として尊敬してて。「反面教師として育った」みたいに言われて、なんでたけるのお母さんなのにって周りに言われたことがあって、全然嫌味とかじゃなくて本当に褒め言葉として言ってくれて。</div>
+    </div>
+  </div>
+
+  <div class="message eri">
+    <div class="avatar">うき</div>
+    <div class="msg-wrapper">
+      <div class="name">うき</div>
+      <div class="bubble">なんか中高の時のタケって達観してたというか、どんどん年相応になってきてる気がするけど。ゆりちゃんがみんなにしてくれたんだろうね。ほんと幸せで良かったね。</div>
+    </div>
+  </div>
+
+  <div class="message yuki">
+    <div class="avatar">えり</div>
+    <div class="msg-wrapper">
+      <div class="name">えり</div>
+      <div class="bubble">そうだね。ゆりちゃんと似てる考え方持ってるのかなって。だったら嬉しいな。</div>
+    </div>
+  </div>
+
+  <!-- ========== 子育てで悩んだこと ========== -->
+  <div class="section-divider"><span>子育てで悩んだこと</span></div>
+
+  <div class="message eri">
+    <div class="avatar">うき</div>
+    <div class="msg-wrapper">
+      <div class="name">うき</div>
+      <div class="bubble">じゃあ子育てで悩んだことは？</div>
+    </div>
+  </div>
+
+  <div class="message yuki">
+    <div class="avatar">えり</div>
+    <div class="msg-wrapper">
+      <div class="name">えり</div>
+      <div class="bubble">悩んだ……あったかな。中学の時の心配とか。あとはまきゃんに行った時に仕事忙しくて、ちょっと体心配だなとか色々心配だった。今なんかすごい幸せそうで。</div>
+    </div>
+  </div>
+
+  <div class="message eri">
+    <div class="avatar">うき</div>
+    <div class="msg-wrapper">
+      <div class="name">うき</div>
+      <div class="bubble">ありがとう。あの時が一番人生でつらかったわ。まっきゃん。</div>
+    </div>
+  </div>
+
+  <div class="message yuki">
+    <div class="avatar">えり</div>
+    <div class="msg-wrapper">
+      <div class="name">えり</div>
+      <div class="bubble">頑張った。なんかうきが「もう限界で辞めたいんだけど」みたいな電話をくれた時に、「でもお金がいいからね」とか言っちゃったりとか、すごいつらかったのに嫌だっただろうなとか、後でちょっといろいろわかってあげられてなかったのがいけなかったなと思ったり。</div>
+    </div>
+  </div>
+
+  <div class="message eri">
+    <div class="avatar">うき</div>
+    <div class="msg-wrapper">
+      <div class="name">うき</div>
+      <div class="bubble">わかんないよね。頑張った。あとはやっぱり受験の時？</div>
+    </div>
+  </div>
+
+  <div class="message yuki">
+    <div class="avatar">えり</div>
+    <div class="msg-wrapper">
+      <div class="name">えり</div>
+      <div class="bubble">受験の失敗はやっぱその高校受験も大学もそうだけど、安全なところを受けといたら安心して次の受験も臨めるんじゃない？って言っても「行かないと思ってるところ、もったいないから受けたくない」みたいな。いやそれは……みたいになって。結局ことごとく落ちて、ずーっとハラハラして。タケルが明治に受かった時には給湯室でちょっと半分崩れたみたいな。</div>
+    </div>
+  </div>
+
+  <div class="message eri">
+    <div class="avatar">うき</div>
+    <div class="msg-wrapper">
+      <div class="name">うき</div>
+      <div class="bubble">そうか、そうだったんだね。よかったね。タケも。</div>
+    </div>
+  </div>
+
+  <div class="message yuki">
+    <div class="avatar">えり</div>
+    <div class="msg-wrapper">
+      <div class="name">えり</div>
+      <div class="bubble">ほんと。すっごいハラハラしてた。部活しながら朝練もあって、移動中も勉強してって、あそこはすごいと思う。</div>
+    </div>
+  </div>
+
+  <div class="message eri">
+    <div class="avatar">うき</div>
+    <div class="msg-wrapper">
+      <div class="name">うき</div>
+      <div class="bubble">無理よ。私まず部活しながら勉強って無理だから。すごいね。でもめっちゃ後には役立つ強い人間になっていくね。</div>
+    </div>
+  </div>
+
+  <!-- ========== お互いを語る ========== -->
+  <div class="section-divider"><span>似てる？似てない？</span></div>
+
+  <div class="message eri">
+    <div class="avatar">うき</div>
+    <div class="msg-wrapper">
+      <div class="name">うき</div>
+      <div class="bubble">私とお母さんって、似てる要素と違う要素で言ったら違うなって思う？</div>
+    </div>
+  </div>
+
+  <div class="message yuki">
+    <div class="avatar">えり</div>
+    <div class="msg-wrapper">
+      <div class="name">えり</div>
+      <div class="bubble">違うところももちろんいっぱいある。似てるところもある。似てるところは多分斎藤エリを見て育ったから似たのかな。でも母ちゃんというパートナーの影響もいっぱい受けて。で、うきの元々持ってる性格もあって、やっぱ違う方向というか、違う考え方。</div>
+    </div>
+  </div>
+
+  <div class="message eri">
+    <div class="avatar">うき</div>
+    <div class="msg-wrapper">
+      <div class="name">うき</div>
+      <div class="bubble">確かに友達とかもね。私とお母さんって大学の頃か何かの一瞬、理解しようとすることが間違ってるみたいに思ったってあったじゃん。</div>
+    </div>
+  </div>
+
+  <div class="message yuki">
+    <div class="avatar">えり</div>
+    <div class="msg-wrapper">
+      <div class="name">えり</div>
+      <div class="bubble">何がきっかけかわからないし、何をそう思ってたのかもよくわかんないんだけど、なんかその部分だけちょっと切り取って覚えてて。あ、理解しようと思うからうまくいかないわけだから、これは理解しないってことが正解なんだ、みたいな。だって違う個体なんだもん。親子だけど。自分の感覚にレール敷いて乗せようとしてるみたいなことだから、それは違う方向行ってるから乗っからないでしょうね、みたいな。</div>
+    </div>
+  </div>
+
+  <div class="message eri">
+    <div class="avatar">うき</div>
+    <div class="msg-wrapper">
+      <div class="name">うき</div>
+      <div class="bubble">気をつけよう。えー子育てって面白そうだね。今日共感してもらってよかった。</div>
+    </div>
+  </div>
+
+  <!-- ========== 締め ========== -->
+  <div class="section-divider"><span>締め</span></div>
+
+  <div class="message eri">
+    <div class="avatar">うき</div>
+    <div class="msg-wrapper">
+      <div class="name">うき</div>
+      <div class="bubble">今日の話で一番意外だったのは、「なってほしくない職業ある？」って聞くかどうかは置いといて、一回そういうのを聞くんだなみたいな。そういうタイプなんだなって。</div>
+    </div>
+  </div>
+
+  <div class="message yuki">
+    <div class="avatar">えり</div>
+    <div class="msg-wrapper">
+      <div class="name">えり</div>
+      <div class="bubble">なんかすごく印象に残って。全然参考にならなさそうじゃん、我々の親。本人も多分聞いたことも忘れてるかもしれない。でもなんかお母さんはすごく覚えてて。</div>
+    </div>
+  </div>
+
+  <div class="message eri">
+    <div class="avatar">うき</div>
+    <div class="msg-wrapper">
+      <div class="name">うき</div>
+      <div class="bubble">それ忘れないかも。そんなこと聞くの？みたいな。今日やってよかった。ありがとう。また第2弾もやる。タケ編もやりたいし、お父さん編もやりたいし、コラボもやりたいし。面白くないって思ってて私はすごい私得なんだけど、おもろい。</div>
+    </div>
+  </div>
+
+  <div class="message yuki">
+    <div class="avatar">えり</div>
+    <div class="msg-wrapper">
+      <div class="name">えり</div>
+      <div class="bubble">はい。ありがとう。</div>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>
