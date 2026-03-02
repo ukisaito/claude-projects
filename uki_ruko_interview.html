@@ -1,0 +1,1221 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>うき × るこ インタビュー</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Helvetica Neue', Arial, 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', sans-serif;
+      background: #f2ede8;
+      min-height: 100vh;
+    }
+
+    header {
+      background: #fff;
+      padding: 28px 24px 20px;
+      text-align: center;
+      border-bottom: 1px solid #e4ddd6;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 1px 8px rgba(0,0,0,0.06);
+    }
+
+    header h1 {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: #2e2a26;
+      letter-spacing: 0.08em;
+    }
+
+    header p {
+      font-size: 0.75rem;
+      color: #b0a89e;
+      margin-top: 6px;
+      letter-spacing: 0.05em;
+    }
+
+    .legend {
+      display: flex;
+      justify-content: center;
+      gap: 24px;
+      margin-top: 12px;
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.78rem;
+      color: #7a6e66;
+    }
+
+    .legend-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+    }
+
+    .dot-uki { background: #d4845a; }
+    .dot-ruko { background: #6a8cb0; }
+
+    .chat-container {
+      max-width: 700px;
+      margin: 0 auto;
+      padding: 36px 20px 60px;
+    }
+
+    .section-divider {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 36px 0 20px;
+    }
+
+    .section-divider::before,
+    .section-divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: #d6cfc7;
+    }
+
+    .section-divider span {
+      font-size: 0.72rem;
+      color: #b0a89e;
+      letter-spacing: 0.12em;
+      white-space: nowrap;
+      padding: 4px 10px;
+      border: 1px solid #d6cfc7;
+      border-radius: 20px;
+      background: #f2ede8;
+    }
+
+    .message {
+      display: flex;
+      margin-bottom: 10px;
+      align-items: flex-end;
+      gap: 8px;
+    }
+
+    .message.uki { flex-direction: row; }
+    .message.ruko { flex-direction: row-reverse; }
+
+    .avatar {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.72rem;
+      font-weight: 700;
+      flex-shrink: 0;
+      letter-spacing: 0;
+    }
+
+    .uki .avatar {
+      background: #d4845a;
+      color: #fff;
+    }
+
+    .ruko .avatar {
+      background: #6a8cb0;
+      color: #fff;
+    }
+
+    .msg-wrapper {
+      display: flex;
+      flex-direction: column;
+      max-width: 74%;
+    }
+
+    .message.uki .msg-wrapper { align-items: flex-start; }
+    .message.ruko .msg-wrapper { align-items: flex-end; }
+
+    .name {
+      font-size: 0.68rem;
+      color: #b0a89e;
+      margin-bottom: 3px;
+      padding: 0 5px;
+    }
+
+    .bubble {
+      padding: 11px 15px;
+      border-radius: 18px;
+      line-height: 1.75;
+      font-size: 0.9rem;
+      color: #2e2a26;
+      word-break: break-all;
+    }
+
+    .uki .bubble {
+      background: #d4845a;
+      color: #fff;
+      border-bottom-left-radius: 4px;
+    }
+
+    .ruko .bubble {
+      background: #ffffff;
+      border-bottom-right-radius: 4px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+    }
+
+    .laugh {
+      font-size: 0.82rem;
+      opacity: 0.85;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>うき × るこ インタビュー</h1>
+  <p>親友の対話 — うきまる</p>
+  <div class="legend">
+    <div class="legend-item"><div class="legend-dot dot-uki"></div>うき（インタビュアー）</div>
+    <div class="legend-item"><div class="legend-dot dot-ruko"></div>るこ</div>
+  </div>
+</header>
+
+<div class="chat-container">
+
+  <!-- ========== オープニング ========== -->
+  <div class="section-divider"><span>オープニング</span></div>
+
+  <div class="message ruko">
+    <div class="avatar">るこ</div>
+    <div class="msg-wrapper">
+      <div class="name">るこ</div>
+      <div class="bubble">ちょっとこのままいかないかな。じゃあ、ここにメモさせてもらって。食洗機の機能がある。すいません。<span class="laugh">（笑）</span></div>
+    </div>
+  </div>
+
+  <div class="message uki">
+    <div class="avatar">うき</div>
+    <div class="msg-wrapper">
+      <div class="name">うき</div>
+      <div class="bubble">ありがとうございます。</div>
+    </div>
+  </div>
+
+  <div class="message ruko">
+    <div class="avatar">るこ</div>
+    <div class="msg-wrapper">
+      <div class="name">るこ</div>
+      <div class="bubble">カラフルで、写真とかある。毎回撮るよ。</div>
+    </div>
+  </div>
+
+  <div class="message ruko">
+    <div class="avatar">るこ</div>
+    <div class="msg-wrapper">
+      <div class="name">るこ</div>
+      <div class="bubble">ありがたいね。そういう取ってくれる人がいると。きのこ、うまい。舞茸か。体にいいしね。</div>
+    </div>
+  </div>
+
+  <div class="message ruko">
+    <div class="avatar">るこ</div>
+    <div class="msg-wrapper">
+      <div class="name">るこ</div>
+      <div class="bubble">まいたけ、マッシュルーム、しめじも。おいしそう。秋ですね。もう冬になるけど。あっという間だよね。</div>
+    </div>
+  </div>
+
+  <div class="message ruko">
+    <div class="avatar">るこ</div>
+    <div class="msg-wrapper">
+      <div class="name">るこ</div>
+      <div class="bubble">夏が長かった。長いから急に1年終わる感じするよね。今年の夏の方がまだ良かった気がする。去年の方がやばかったな。</div>
+    </div>
+  </div>
+
+  <div class="message ruko">
+    <div class="avatar">るこ</div>
+    <div class="msg-wrapper">
+      <div class="name">るこ</div>
+      <div class="bubble">ゴルゴンゾーラか。ありがとうございます。じゃあ、インタビューの趣旨をお伝えします。お願いします。さっき言ったんだけどね。</div>
+    </div>
+  </div>
+
+  <div class="message uki">
+    <div class="avatar">うき</div>
+    <div class="msg-wrapper">
+      <div class="name">うき</div>
+      <div class="bubble">私は、身近な人の話を聞くのが大好きで、でも「これ聞き逃したなぁ」「あの質問しなかったな」みたいな後悔をしそうだから、ちょっとインタビューやってみたいっていう趣旨で。</div>
+    </div>
+  </div>
+
+  <div class="message uki">
+    <div class="avatar">うき</div>
+    <div class="msg-wrapper">
+      <div class="name">うき</div>
+      <div class="bubble">何かにしたいみたいなのは、今のところ考えてないんだけど。どういう感じになるか見てみたいかな、ぐらいな感じで。それももしそうするなら、どういうふうにするか、見てもらうから。</div>
+    </div>
+  </div>
+
+  <div class="message ruko">
+    <div class="avatar">るこ</div>
+    <div class="msg-wrapper">
+      <div class="name">るこ</div>
+      <div class="bubble">安心して取ってくる。ありがとうございます。</div>
+    </div>
+  </div>
+
+  <div class="message uki">
+    <div class="avatar">うき</div>
+    <div class="msg-wrapper">
+      <div class="name">うき</div>
+      <div class="bubble">じゃあ、名前はなんですか？</div>
+    </div>
+  </div>
+
+  <div class="message ruko">
+    <div class="avatar">るこ</div>
+    <div class="msg-wrapper">
+      <div class="name">るこ</div>
+      <div class="bubble">私は出口があること申します。緊急性を一時変わることにします。<span class="laugh">（笑）</span></div>
+    </div>
+  </div>
+
+  <!-- ========== 好きな色 ========== -->
+  <div class="section-divider"><span>好きな色</span></div>
+
+  <div class="message uki">
+    <div class="avatar">うき</div>
+    <div class="msg-wrapper">
+      <div class="name">うき</div>
+      <div class="bubble">好きな色は何ですか？</div>
+    </div>
+  </div>
+
+  <div class="message ruko">
+    <div class="avatar">るこ</div>
+    <div class="msg-wrapper">
+      <div class="name">るこ</div>
+      <div class="bubble">ピンクと水色で。</div>
+    </div>
+  </div>
+
+  <div class="message uki">
+    <div class="avatar">うき</div>
+    <div class="msg-wrapper">
+      <div class="name">うき</div>
+      <div class="bubble">え、知らなかった！でも、ピンクのイメージあったかも。ピンクと水色なんですね。昔からですか？それとも最近の？</div>
+    </div>
+  </div>
+
+  <div class="message ruko">
+    <div class="avatar">るこ</div>
+    <div class="msg-wrapper">
+      <div class="name">るこ</div>
+      <div class="bubble">紫、ピンク、で今は。変換3色の地続けな感じですね。紫がもともと好きで、子供の頃から。ペール紫とか、重さのある野紫。なんで好きになったのかは、生まれた時から好きだった気がする。</div>
+    </div>
+  </div>
+
+  <div class="message ruko">
+    <div class="avatar">るこ</div>
+    <div class="msg-wrapper">
+      <div class="name">るこ</div>
+      <div class="bubble">次に緑が好きになって、エメラルドグリーンが好きになって、その次に「今しか着れない色ってなんだろう」ってなったときにピンクになって。青はやっぱ気持ちが落ち着く気がするから好きで。</div>
+    </div>
+  </div>
+
+  <div class="message uki">
+    <div class="avatar">うき</div>
+    <div class="msg-wrapper">
+      <div class="name">うき</div>
+      <div class="bubble">嬉しい。これは「まとわかってたなぁ」っていうラインアップが来ました。</div>
+    </div>
+  </div>
+
+  <div class="message uki">
+    <div class="avatar">うき</div>
+    <div class="msg-wrapper">
+      <div class="name">うき</div>
+      <div class="bubble">この間、奈々ちゃんが娘に好きな色を聞いたら「26」と言われたって。<span class="laugh">（笑）</span> 小学生の完璧な欲張りの返答が可愛かった。「今日は20よ」みたいな。全部入ってるもんね。</div>
+    </div>
+  </div>
+
+  <!-- ========== 好きな曲と映画 ========== -->
+  <div class="section-divider"><span>好きな曲と映画</span></div>
+
+  <div class="message uki">
+    <div class="avatar">うき</div>
+    <div class="msg-wrapper">
+      <div class="name">うき</div>
+      <div class="bubble">好きな映画と曲を教えて。</div>
+    </div>
+  </div>
+
+  <div class="message ruko">
+    <div class="avatar">るこ</div>
+    <div class="msg-wrapper">
+      <div class="name">るこ</div>
+      <div class="bubble">曲はね、私の中で絞れない。いくつか挙げると、マンマ・ミーアのダンシング、モアナのメインテーマ、ウィキッドのポピュラー、あとバレエの眠れる森の美女のテーマ。チャイコフスキーが作った。ディズニーのあの眠れる森の美女でそのまま使われてるけどね。</div>
+    </div>
+  </div>
+
+  <div class="message ruko">
+    <div class="avatar">るこ</div>
+    <div class="msg-wrapper">
+      <div class="name">るこ</div>
+      <div class="bubble">ストーリー性のある作品の中で音楽が伴うものが好きで。ごめんなさい、映画音楽の話をしてました。</div>
+    </div>
+  </div>
+
+  <div class="message uki">
+    <div class="avatar">うき</div>
+    <div class="msg-wrapper">
+      <div class="name">うき</div>
+      <div class="bubble">音楽の好きな曲と映画の2つ質問してるんだけど、ごめんね。<span class="laugh">（笑）</span> クイーンのドントストップもあったよね。</div>
+    </div>
+  </div>
+
+  <div class="message ruko">
+    <div class="avatar">るこ</div>
+    <div class="msg-wrapper">
+      <div class="name">るこ</div>
+      <div class="bubble">映画を絞るのは本当に難しい。でも今、一番記憶が新しくて熱いのは……ウォンカかな？</div>
+    </div>
+  </div>
+
+  <div class="message uki">
+    <div class="avatar">うき</div>
+    <div class="msg-wrapper">
+      <div class="name">うき</div>
+      <div class="bubble">映画は絞るのが難しいよね。ちょっと待って、キッドキットなんです。<span class="laugh">（笑）</span></div>
+    </div>
+  </div>
+
+  <div class="message ruko">
+    <div class="avatar">るこ</div>
+    <div class="msg-wrapper">
+      <div class="name">るこ</div>
+      <div class="bubble">よかったよね。</div>
+    </div>
+  </div>
+
+  <div class="message uki">
+    <div class="avatar">うき</div>
+    <div class="msg-wrapper">
+      <div class="name">うき</div>
+      <div class="bubble">私の一番最初に衝撃を受けた映画は、タイタニック。小学校6年生ぐらいで授業で見たやつ。映画館で見たのは「平成たぬき大作戦」かな。4年生ぐらい？</div>
+    </div>
+  </div>
+
+  <div class="message ruko">
+    <div class="avatar">るこ</div>
+    <div class="msg-wrapper">
+      <div class="name">るこ</div>
+      <div class="bubble">映画館では絶対見てないから、私はやっぱり映画が遅いんだな。そう思って。記憶の中で最初に見たのは「平成の大合戦」です。</div>
+    </div>
+  </div>
+
+  <div class="message uki">
+    <div class="avatar">うき</div>
+    <div class="msg-wrapper">
+      <div class="name">うき</div>
+      <div class="bubble">でも、幼稚園のとき3歳で連れていってもらったことがあって。お父さんとお母さんが、母方の祖母の葬儀とか形見分けとか、時間ができちゃって、子どもは連れていくしかないってなって。三重県のルーツがあるので、三重県に。</div>
+    </div>
+  </div>
+
+  <div class="message ruko">
+    <div class="avatar">るこ</div>
+    <div class="msg-wrapper">
+      <div class="name">るこ</div>
+      <div class="bubble">やっぱ知らないことがいっぱいあって楽しいわ。</div>
+    </div>
+  </div>
+
+  <!-- ========== 大好物と苦手なもの ========== -->
+  <div class="section-divider"><span>大好物と苦手なもの</span></div>
+
+  <div class="message uki">
+    <div class="avatar">うき</div>
+    <div class="msg-wrapper">
+      <div class="name">うき</div>
+      <div class="bubble">食べ物の大好物と苦手なものはなんですか？</div>
+    </div>
+  </div>
+
+  <div class="message ruko">
+    <div class="avatar">るこ</div>
+    <div class="msg-wrapper">
+      <div class="name">るこ</div>
+      <div class="bubble">アップルパイが大好物です。</div>
+    </div>
+  </div>
+
+  <div class="message uki">
+    <div class="avatar">うき</div>
+    <div class="msg-wrapper">
+      <div class="name">うき</div>
+      <div class="bubble">好きなのは知ってたけど、大好物だとは！一番好きな食べ物なんだ。</div>
+    </div>
+  </div>
+
+  <div class="message ruko">
+    <div class="avatar">るこ</div>
+    <div class="msg-wrapper">
+      <div class="name">るこ</div>
+      <div class="bubble">シナモンが入っていて、カスタードも入っていない、生地がカリッとしてるやつ。しっとりのやつは嫌で。ガレット・デ・ロワよりも、もっとオーソドックスなやつ。</div>
+    </div>
+  </div>
+
+  <div class="message uki">
+    <div class="avatar">うき</div>
+    <div class="msg-wrapper">
+      <div class="name">うき</div>
+      <div class="bubble">知らなかった、そうなんだ。覚えとこ。じゃあ苦手なものは？</div>
+    </div>
+  </div>
+
+  <div class="message ruko">
+    <div class="avatar">るこ</div>
+    <div class="msg-wrapper">
+      <div class="name">るこ</div>
+      <div class="bubble">臭みのある肉で、音量キーと一緒に食べたトナカイの肉は、多分もう二度と食べないと思います。最上級に苦手。</div>
+    </div>
+  </div>
+
+  <div class="message uki">
+    <div class="avatar">うき</div>
+    <div class="msg-wrapper">
+      <div class="name">うき</div>
+      <div class="bubble">そうだね。あの時に「野趣あふれる味」って言葉、知ったもん。「野趣しかなかったよ」って。<span class="laugh">（笑）</span></div>
+    </div>
+  </div>
+
+  <div class="message ruko">
+    <div class="avatar">るこ</div>
+    <div class="msg-wrapper">
+      <div class="name">るこ</div>
+      <div class="bubble">食べたんよ、美味しくなかったよね。すじすじしてるし、どこを食べたらいいのかわからない骨付き肉だし、みたいな。ゲルみたいなところで食べているみたいで。</div>
+    </div>
+  </div>
+
+  <div class="message uki">
+    <div class="avatar">うき</div>
+    <div class="msg-wrapper">
+      <div class="name">うき</div>
+      <div class="bubble">北欧旅行でめっちゃ美味しかったものはなかったよね。イギリスより。むしろスーパーで買って部屋で食べたやつとかの方が気楽で美味しかった気がする。朝ご飯が一番私の中で美味しかったかも。</div>
+    </div>
+  </div>
+
+  <div class="message ruko">
+    <div class="avatar">るこ</div>
+    <div class="msg-wrapper">
+      <div class="name">るこ</div>
+      <div class="bubble">日本って美味しいものいっぱいあるんだなって思った。イギリスよりさらに美味しくないんですよ。<span class="laugh">（笑）</span></div>
+    </div>
+  </div>
+
+  <div class="message ruko">
+    <div class="avatar">るこ</div>
+    <div class="msg-wrapper">
+      <div class="name">るこ</div>
+      <div class="bubble">中庭みたいなところで食べたパン。写真が2人ともそこで撮ってるカード、どこかにある気がする。いい加減なところから、ひょんなところから出てきたら嬉しいな。</div>
+    </div>
+  </div>
+
+  <div class="message ruko">
+    <div class="avatar">るこ</div>
+    <div class="msg-wrapper">
+      <div class="name">るこ</div>
+      <div class="bubble">とりあえず私の多分最強にもう二度と食べたくない食べ物は、トナカイの肉だと思います。<span class="laugh">（笑）</span></div>
+    </div>
+  </div>
+
+  <!-- ========== 自分らしさ・どんな人？ ========== -->
+  <div class="section-divider"><span>自分らしさ・どんな人？</span></div>
+
+  <div class="message uki">
+    <div class="avatar">うき</div>
+    <div class="msg-wrapper">
+      <div class="name">うき</div>
+      <div class="bubble">何をしている時が一番自分らしいと思いますか？</div>
+    </div>
+  </div>
+
+  <div class="message uki">
+    <div class="avatar">うき</div>
+    <div class="msg-wrapper">
+      <div class="name">うき</div>
+      <div class="bubble">じゃあ、自分のことはどんな人だと思ってますか？</div>
+    </div>
+  </div>
+
+  <div class="message ruko">
+    <div class="avatar">るこ</div>
+    <div class="msg-wrapper">
+      <div class="name">るこ</div>
+      <div class="bubble">だらしない人、と思う。</div>
+    </div>
+  </div>
+
+  <div class="message uki">
+    <div class="avatar">うき</div>
+    <div class="msg-wrapper">
+      <div class="name">うき</div>
+      <div class="bubble">もうちょっと長く言うなら？</div>
+    </div>
+  </div>
+
+  <div class="message ruko">
+    <div class="avatar">るこ</div>
+    <div class="msg-wrapper">
+      <div class="name">るこ</div>
+      <div class="bubble">よくないなって思っているところから——やらない。やれないとかじゃなくてやらないところがダメ。</div>
+    </div>
+  </div>
+
+  <div class="message ruko">
+    <div class="avatar">るこ</div>
+    <div class="msg-wrapper">
+      <div class="name">るこ</div>
+      <div class="bubble">自分の好きなところは、美容に対して意欲的なところかな。あとはあらがう気持ち。第六感・直感とか、そういうのが結構鋭い。感じたことが当たる。目に見えないものが見えたりとか。それをいいところと捉えている。ものは使いようだなと思って。</div>
+    </div>
+  </div>
+
+  <div class="message uki">
+    <div class="avatar">うき</div>
+    <div class="msg-wrapper">
+      <div class="name">うき</div>
+      <div class="bubble">気に入ってるとこ、めっちゃいいね。みんなにはないからね。素敵！</div>
+    </div>
+  </div>
+
+  <div class="message ruko">
+    <div class="avatar">るこ</div>
+    <div class="msg-wrapper">
+      <div class="name">るこ</div>
+      <div class="bubble">うまいこと付き合っていきたいとも思う。アイデンティティとして、オリジナリティーとして捉えている。</div>
+    </div>
+  </div>
+
+  <!-- ========== よくやったこと ========== -->
+  <div class="section-divider"><span>よくやったこと</span></div>
+
+  <div class="message uki">
+    <div class="avatar">うき</div>
+    <div class="msg-wrapper">
+      <div class="name">うき</div>
+      <div class="bubble">今までのことで、よくやったって思うこと。35年間で一番とかじゃなくて。</div>
+    </div>
+  </div>
+
+  <div class="message ruko">
+    <div class="avatar">るこ</div>
+    <div class="msg-wrapper">
+      <div class="name">るこ</div>
+      <div class="bubble">翔太郎さんに出会ったこと。翔太郎さんの紹介状の入った封筒が4通来てた中から、一番最初に手に取ったのは私。あれはね、私は決めた。</div>
+    </div>
+  </div>
+
+  <div class="message ruko">
+    <div class="avatar">るこ</div>
+    <div class="msg-wrapper">
+      <div class="name">るこ</div>
+      <div class="bubble">あれが一番自分がやりきった、偉かったかどうかわかんないけど、達成感みたいな。</div>
+    </div>
+  </div>
+
+  <!-- ========== 人生の年表 ========== -->
+  <div class="section-divider"><span>人生の年表</span></div>
+
+  <div class="message uki">
+    <div class="avatar">うき</div>
+    <div class="msg-wrapper">
+      <div class="name">うき</div>
+      <div class="bubble">10代、20代、30代をくくるとどういう時代だった？10年区切りぐらいで、この時はこういう子だったとか、でもいいし。</div>
+    </div>
+  </div>
+
+  <div class="message ruko">
+    <div class="avatar">るこ</div>
+    <div class="msg-wrapper">
+      <div class="name">るこ</div>
+      <div class="bubble">1歳から10歳は、天真爛漫と絶望の両方。</div>
+    </div>
+  </div>
+
+  <div class="message uki">
+    <div class="avatar">うき</div>
+    <div class="msg-wrapper">
+      <div class="name">うき</div>
+      <div class="bubble">10歳から……すごいね。</div>
+    </div>
+  </div>
+
+  <div class="message ruko">
+    <div class="avatar">るこ</div>
+    <div class="msg-wrapper">
+      <div class="name">るこ</div>
+      <div class="bubble">10歳から20歳までは、猜疑心と葛藤。20代から30代が、ふわふわしている、地に足がついてない感じで。今30代から35までのところで——親離れして。</div>
+    </div>
+  </div>
+
+  <div class="message uki">
+    <div class="avatar">うき</div>
+    <div class="msg-wrapper">
+      <div class="name">うき</div>
+      <div class="bubble">結構今いいんじゃん。いい感じだよね。</div>
+    </div>
+  </div>
+
+  <div class="message uki">
+    <div class="avatar">うき</div>
+    <div class="msg-wrapper">
+      <div class="name">うき</div>
+      <div class="bubble">じゃあ、1個ずつ話してほしい。だらだらしゃべってほしい。幼稚園からでも、幼少期から。</div>
+    </div>
+  </div>
+
+  <div class="message ruko">
+    <div class="avatar">るこ</div>
+    <div class="msg-wrapper">
+      <div class="name">るこ</div>
+      <div class="bubble">幼稚園ぐらいまで、すごい体が弱くて、しょっちゅう入退院してたけど、父親は飲んで歩いてたから帰ってこなくて、母親が怒り狂いながら運動していた。幼稚園受験をするって言われてやって、落ちたわって思って。</div>
+    </div>
+  </div>
+
+  <div class="message ruko">
+    <div class="avatar">るこ</div>
+    <div class="msg-wrapper">
+      <div class="name">るこ</div>
+      <div class="bubble">小学校受験するって言われてまた落ちて、もういいわぁってなって。公立の小学校に入って、そんなに楽しくなくて。小学校はかなり家庭崩壊だったので。</div>
+    </div>
+  </div>
+
+  <div class="message uki">
+    <div class="avatar">うき</div>
+    <div class="msg-wrapper">
+      <div class="name">うき</div>
+      <div class="bubble">さっき言ってた「絶望な辺」が、そこだったんですね。</div>
+    </div>
+  </div>
+
+  <div class="message ruko">
+    <div class="avatar">るこ</div>
+    <div class="msg-wrapper">
+      <div class="name">るこ</div>
+      <div class="bubble">ちなみに4歳から幼稚園に入ったんだけど、その時点でもう学校に行けない状態になって。でも普段の生活からそうなってるから、とりあえず出席できるか？みたいな感じが幼稚から始まっていて。</div>
+    </div>
+  </div>
+
+  <div class="message ruko">
+    <div class="avatar">るこ</div>
+    <div class="msg-wrapper">
+      <div class="name">るこ</div>
+      <div class="bubble">そんなこんなで小学校に入って、いろいろあって、中学受験するってなって、中学受験も失敗して、気づいたら若者といたことないような中学に入ることになって。</div>
+    </div>
+  </div>
+
+  <div class="message ruko">
+    <div class="avatar">るこ</div>
+    <div class="msg-wrapper">
+      <div class="name">るこ</div>
+      <div class="bubble">中学3年通って、出せる高校は連れてってくれるから、そのまま高校に入って。大学はもう何するか分からないし、したいこともないし、とりあえず社会に出る気持ちもないから、時間の猶予が欲しいと思って。</div>
+    </div>
+  </div>
+
+  <div class="message ruko">
+    <div class="avatar">るこ</div>
+    <div class="msg-wrapper">
+      <div class="name">るこ</div>
+      <div class="bubble">親の姿を徹底的に反面教師にしていたから。「今出てもこんなことになりますので」という思いで、もらえるだけ大学を卒業したっていうところだけはつけておかないという思いで。</div>
+    </div>
+  </div>
+
+  <!-- ========== 大学・進路 ========== -->
+  <div class="section-divider"><span>大学・進路</span></div>
+
+  <div class="message uki">
+    <div class="avatar">うき</div>
+    <div class="msg-wrapper">
+      <div class="name">うき</div>
+      <div class="bubble">ちょっと、文系理系の選択の話を聞かせてほしいんだけど。</div>
+    </div>
+  </div>
+
+  <div class="message ruko">
+    <div class="avatar">るこ</div>
+    <div class="msg-wrapper">
+      <div class="name">るこ</div>
+      <div class="bubble">数学6点の人間ですから。道は1つしかなかったんですよ。意識は2つであるように見えるんだけど、見えてるかもしれないけど——選べません。<span class="laugh">（笑）</span></div>
+    </div>
+  </div>
+
+  <div class="message uki">
+    <div class="avatar">うき</div>
+    <div class="msg-wrapper">
+      <div class="name">うき</div>
+      <div class="bubble">日銀っていうのはさ、どういう流れでそこ行ったのが気になって。最終的に。</div>
+    </div>
+  </div>
+
+  <div class="message ruko">
+    <div class="avatar">るこ</div>
+    <div class="msg-wrapper">
+      <div class="name">るこ</div>
+      <div class="bubble">12月に新宿のオフィスタワーで、母親が当時新宿で働いていたので、ランチを食べていて。ガラコンマシンでディズニーリゾートのホテルのチケットを当ててきたんです。母親と私がもらって、一緒に行くことになって。</div>
+    </div>
+  </div>
+
+  <div class="message ruko">
+    <div class="avatar">るこ</div>
+    <div class="msg-wrapper">
+      <div class="name">るこ</div>
+      <div class="bubble">うちの母はディズニーが超絶嫌いなんです。キャラクターを取り上げて金儲けをしているみたいな。なかなかすべてに腹が立つみたいな。そういう意味であったんだけど。</div>
+    </div>
+  </div>
+
+  <div class="message ruko">
+    <div class="avatar">るこ</div>
+    <div class="msg-wrapper">
+      <div class="name">るこ</div>
+      <div class="bubble">でもパレードとか見て楽しそうにしてたから、そういうふうにする力があるものでいいなと思って。人を巻き込んで、その一瞬でもネガティブなものに対して持ってたはずなのに笑顔にできる素晴らしいなと思って。もっとお近づきになりたいなと思って。</div>
+    </div>
+  </div>
+
+  <div class="message ruko">
+    <div class="avatar">るこ</div>
+    <div class="msg-wrapper">
+      <div class="name">るこ</div>
+      <div class="bubble">でもプロダクトもそうで、それは置いておいて。夏休みのコンクールで俳句を作って、日大の中でみんな出してくださいみたいなので。1人3編出してくださいみたいなもので書いたやつが入って。で、さんのメガネの国語の先生に「伊藤先生に持っていったら、小児の9月で文学部入れるけどどうする？」と言われて。</div>
+    </div>
+  </div>
+
+  <div class="message ruko">
+    <div class="avatar">るこ</div>
+    <div class="msg-wrapper">
+      <div class="name">るこ</div>
+      <div class="bubble">すごいいいなって思ったんだけど、うちの母ちゃんが「二松学舎」という大学の国文系で。それのなれの果てがうちになってるから、同じ轍は絶対踏まないぞと思って、反骨精神で日大に行くって決めて。伊藤先生、ごめんなさいって言って。</div>
+    </div>
+  </div>
+
+  <div class="message ruko">
+    <div class="avatar">るこ</div>
+    <div class="msg-wrapper">
+      <div class="name">るこ</div>
+      <div class="bubble">12月の終わりまでじりじりする日々を過ごすことになりました。</div>
+    </div>
+  </div>
+
+  <div class="message uki">
+    <div class="avatar">うき</div>
+    <div class="msg-wrapper">
+      <div class="name">うき</div>
+      <div class="bubble">頑張ったね。東大の家庭教師とかついてたから。それでもいかにも何も勉強しなさって、もう箸にも棒にもかからないってなってたけど。</div>
+    </div>
+  </div>
+
+  <div class="message ruko">
+    <div class="avatar">るこ</div>
+    <div class="msg-wrapper">
+      <div class="name">るこ</div>
+      <div class="bubble">最終的には法学部とか全然選べるぐらいになってたんですよ。</div>
+    </div>
+  </div>
+
+  <div class="message uki">
+    <div class="avatar">うき</div>
+    <div class="msg-wrapper">
+      <div class="name">うき</div>
+      <div class="bubble">バカだったというよりは、面白いって思えたスイッチが入ったんじゃないかな。やったらできるんだって。</div>
+    </div>
+  </div>
+
+  <div class="message ruko">
+    <div class="avatar">るこ</div>
+    <div class="msg-wrapper">
+      <div class="name">るこ</div>
+      <div class="bubble">全然面白くなかったよ。でも、できるようになるにはバキバキに横にいてもらって、やらざるを得ない状況だってできるようになる。だから言ったじゃん、自分のダメなところはやらないところって。</div>
+    </div>
+  </div>
+
+  <!-- ========== 仕事の話 ========== -->
+  <div class="section-divider"><span>仕事の話</span></div>
+
+  <div class="message ruko">
+    <div class="avatar">るこ</div>
+    <div class="msg-wrapper">
+      <div class="name">るこ</div>
+      <div class="bubble">社会人になってこの社会人になる時点でわかってたけど、今の会社はブラックなんだから。社会勉強だと思って1年過ごして。それからアメックスは超絶楽しかったよね。本当に我が家の春ですよ。</div>
+    </div>
+  </div>
+
+  <div class="message uki">
+    <div class="avatar">うき</div>
+    <div class="msg-wrapper">
+      <div class="name">うき</div>
+      <div class="bubble">私も横で見ててわかる、アメックスめっちゃ楽し！でも大変そうでもあったり、いろんなとこ行ってたよ。大変なんだけど、いろんなとこ行くの好きだから。</div>
+    </div>
+  </div>
+
+  <div class="message ruko">
+    <div class="avatar">るこ</div>
+    <div class="msg-wrapper">
+      <div class="name">るこ</div>
+      <div class="bubble">本当に楽しかったら、もう。アメックスも私もそんなに営業成績良くなかったし、外資だからスパッと切られるしって思っていたところで、結婚できたから、そう翻訳して辞めることになって。クビって言われて。</div>
+    </div>
+  </div>
+
+  <div class="message uki">
+    <div class="avatar">うき</div>
+    <div class="msg-wrapper">
+      <div class="name">うき</div>
+      <div class="bubble">そんな感じで終わるんだ。<span class="laugh">（笑）</span></div>
+    </div>
+  </div>
+
+  <div class="message ruko">
+    <div class="avatar">るこ</div>
+    <div class="msg-wrapper">
+      <div class="name">るこ</div>
+      <div class="bubble">いや、もうそれは上司と腹を割って話したから。チームの中から切らなきゃいけないんだけど、悪いけど結婚するっていうのも分かってるから、切るねって。わかりました、なるほど、なって。双方合意の上で、ちゃんと退職。失業手当もちゃんともらって。</div>
+    </div>
+  </div>
+
+  <div class="message ruko">
+    <div class="avatar">るこ</div>
+    <div class="msg-wrapper">
+      <div class="name">るこ</div>
+      <div class="bubble">アメックスの先輩に言われたんだけど、「女の子が結婚するまでの腰かけに入るのがすごい難しい」って。失礼だなって思うのは、頑張ってやろうとしてる人とかにはムカつくなと思うから。でもすごい、本当にその通りだと思う体験。</div>
+    </div>
+  </div>
+
+  <div class="message uki">
+    <div class="avatar">うき</div>
+    <div class="msg-wrapper">
+      <div class="name">うき</div>
+      <div class="bubble">私もインターンで2週間で「お前を向いてないからやめた方がいいよ」みたいに言われた。マジでその通りだったから。こういうことでもあるよね、それ。多分、あの愛だし、わかってるんだろうね。やっぱりあの数見てるから。わざわざ言わなくていいことを言ってくれる。</div>
+    </div>
+  </div>
+
+  <div class="message ruko">
+    <div class="avatar">るこ</div>
+    <div class="msg-wrapper">
+      <div class="name">るこ</div>
+      <div class="bubble">その世界では考えられていることで。そんな感じでした。今が一番最高に楽しい。</div>
+    </div>
+  </div>
+
+  <div class="message uki">
+    <div class="avatar">うき</div>
+    <div class="msg-wrapper">
+      <div class="name">うき</div>
+      <div class="bubble">そっか。いい顔してると思うし。今が一番ボーナスタイムだよね。</div>
+    </div>
+  </div>
+
+  <div class="message ruko">
+    <div class="avatar">るこ</div>
+    <div class="msg-wrapper">
+      <div class="name">るこ</div>
+      <div class="bubble">最初の会社は本当に疲弊してきて、電話を取れなくなって。いまだに電話ちょっとかかってくるのが好きじゃないんだけど。それくらい疲弊してたと思います。家族会議って言ったら、じゃあやめましょうってすぐなって。</div>
+    </div>
+  </div>
+
+  <div class="message ruko">
+    <div class="avatar">るこ</div>
+    <div class="msg-wrapper">
+      <div class="name">るこ</div>
+      <div class="bubble">アメックスの時も、最後、ストレスで耳が聞こえなくなったりした。耳に割ときてくる。でも、とりあえずもっとアメックスの時は体が反応してうまくいかないぐらいだったけど。最初の会社は心を持っていかれる感じだったから、あれはもう本当に限界値でしたね。よく頑張りました。</div>
+    </div>
+  </div>
+
+  <div class="message uki">
+    <div class="avatar">うき</div>
+    <div class="msg-wrapper">
+      <div class="name">うき</div>
+      <div class="bubble">私と違うのは、あのちゃんとここは無理だっていうと、この見極めがうまい。どうしたらできたと思います？私はできなかったから。</div>
+    </div>
+  </div>
+
+  <div class="message ruko">
+    <div class="avatar">るこ</div>
+    <div class="msg-wrapper">
+      <div class="name">るこ</div>
+      <div class="bubble">なんでできたと思うので、私うんやらない人だから。この仕事はもうやらない。でやめても、これ以上悪くなることはない。そっか、じゃあどうしようかってなって。やらないが、そう。</div>
+    </div>
+  </div>
+
+  <!-- ========== 友達のこと ========== -->
+  <div class="section-divider"><span>友達のこと</span></div>
+
+  <div class="message uki">
+    <div class="avatar">うき</div>
+    <div class="msg-wrapper">
+      <div class="name">うき</div>
+      <div class="bubble">いかと仲良くなったのは、大学入ってからの2年目ぐらいから、本当に仲良くなり始めたらしいので。2代目の最高判断だったと思う。</div>
+    </div>
+  </div>
+
+  <div class="message ruko">
+    <div class="avatar">るこ</div>
+    <div class="msg-wrapper">
+      <div class="name">るこ</div>
+      <div class="bubble">多分私からよろしくみたいです。うわーみたいな。そこから本当にここまでやって。</div>
+    </div>
+  </div>
+
+  <div class="message uki">
+    <div class="avatar">うき</div>
+    <div class="msg-wrapper">
+      <div class="name">うき</div>
+      <div class="bubble">本当に憧れであり、偶像であり、マドンナであり。ずっとバチバチしてるのよ、私にとっては。本当に憧れ、追いかけていきたいと思うところがあって。</div>
+    </div>
+  </div>
+
+  <div class="message ruko">
+    <div class="avatar">るこ</div>
+    <div class="msg-wrapper">
+      <div class="name">るこ</div>
+      <div class="bubble">嬉しいわ。やれば良かったよ。今の方が素敵だけど、あれはあれでよかったと思うよ。いまだにあの時期に向きの原因は見ますよ。あなたの中に私は面影を見ますよ。</div>
+    </div>
+  </div>
+
+  <div class="message uki">
+    <div class="avatar">うき</div>
+    <div class="msg-wrapper">
+      <div class="name">うき</div>
+      <div class="bubble">最初どっか行っちゃったら困るじゃん。そういう恐怖があったよ。初めて近くにいて憧れる存在っていう感じだったから。本当にそういう友達だけど、キラキラした生き方の指針を見せてくれるから、離れたくないと思って。</div>
+    </div>
+  </div>
+
+  <div class="message uki">
+    <div class="avatar">うき</div>
+    <div class="msg-wrapper">
+      <div class="name">うき</div>
+      <div class="bubble">青山一丁目にランチだけでも行ったし。どれだけ距離が空くか見極めなきゃいけないと思って。</div>
+    </div>
+  </div>
+
+  <div class="message ruko">
+    <div class="avatar">るこ</div>
+    <div class="msg-wrapper">
+      <div class="name">るこ</div>
+      <div class="bubble">最初どっか行っちゃったら困るじゃん。そういう恐怖があったよね。キラキラした生き方の指針を見せてくれるところだから、離れたくないと思って、離れてほしくないと思ったし。</div>
+    </div>
+  </div>
+
+  <div class="message uki">
+    <div class="avatar">うき</div>
+    <div class="msg-wrapper">
+      <div class="name">うき</div>
+      <div class="bubble">ライバル心ありきの執着だから複雑だよね。でも本当に憧れ。</div>
+    </div>
+  </div>
+
+  <div class="message ruko">
+    <div class="avatar">るこ</div>
+    <div class="msg-wrapper">
+      <div class="name">るこ</div>
+      <div class="bubble">カオルコはやっぱり今の笑顔がとっておきですよ。</div>
+    </div>
+  </div>
+
+  <div class="message uki">
+    <div class="avatar">うき</div>
+    <div class="msg-wrapper">
+      <div class="name">うき</div>
+      <div class="bubble">ありがとう。自分のことが一番わかんないわけで。あの時のめっちゃ変わるってなったときに、ライバルが見えると……そういう友達でいてくれる時に、多分、私はなれたんだけどみたいなことがないから。顔の子が好きなのに。</div>
+    </div>
+  </div>
+
+  <div class="message ruko">
+    <div class="avatar">るこ</div>
+    <div class="msg-wrapper">
+      <div class="name">るこ</div>
+      <div class="bubble">ただ、敵じゃない。敵ではないのはわかると。敵ではないけれども、もうライバルとして追いかけます。</div>
+    </div>
+  </div>
+
+  <div class="message uki">
+    <div class="avatar">うき</div>
+    <div class="msg-wrapper">
+      <div class="name">うき</div>
+      <div class="bubble">でも私も、そこでキラキラはしていかないわけじゃないから。この子も忙しかったんじゃないか、大変だったのにもかかわらず。でも恋愛もこの辺で実力をつけながらも、いい人といい——自分の中でのいい人と出会いたい、みたいな気持ちが大事で。</div>
+    </div>
+  </div>
+
+  <div class="message ruko">
+    <div class="avatar">るこ</div>
+    <div class="msg-wrapper">
+      <div class="name">るこ</div>
+      <div class="bubble">お互い一緒に巡り合えてよかったです。本当に尊敬できるって大事。超大事。</div>
+    </div>
+  </div>
+
+  <!-- ========== パートナー・今の幸せ ========== -->
+  <div class="section-divider"><span>パートナー・今の幸せ</span></div>
+
+  <div class="message uki">
+    <div class="avatar">うき</div>
+    <div class="msg-wrapper">
+      <div class="name">うき</div>
+      <div class="bubble">そのヘポコンインタビューが、翔太郎さんから喜び——どこを尊敬してますか？って聞くインタビュー。</div>
+    </div>
+  </div>
+
+  <div class="message ruko">
+    <div class="avatar">るこ</div>
+    <div class="msg-wrapper">
+      <div class="name">るこ</div>
+      <div class="bubble">翔太郎さんめちゃくちゃ言葉にする人だから。今は疲れすぎてて忙しいから。でもとりあえず抱きつきに行くことは、10年レギュー。</div>
+    </div>
+  </div>
+
+  <div class="message uki">
+    <div class="avatar">うき</div>
+    <div class="msg-wrapper">
+      <div class="name">うき</div>
+      <div class="bubble">いいね。私そのね、ほんと好きよ。でも一緒でしょう。同じ感じでしょう。だって親友だと思ってるな。旦那さんやばかったら止める人間だなと思うわ。親の次ぐらいで。</div>
+    </div>
+  </div>
+
+  <div class="message ruko">
+    <div class="avatar">るこ</div>
+    <div class="msg-wrapper">
+      <div class="name">るこ</div>
+      <div class="bubble">そう。本当か？愛ちゃんが一番母ちゃんと一緒にルーキーが一番やっぱ頼りになるよね。そうやって見てくれるし。</div>
+    </div>
+  </div>
+
+  <div class="message ruko">
+    <div class="avatar">るこ</div>
+    <div class="msg-wrapper">
+      <div class="name">るこ</div>
+      <div class="bubble">尊敬できるって大事。超大事。絶対的に尊敬できる、揺るぎない何かがないと結婚できないから。別に稼ぎがすごいしとかじゃなくて。絶対尊敬できる人でいい。</div>
+    </div>
+  </div>
+
+  <div class="message uki">
+    <div class="avatar">うき</div>
+    <div class="msg-wrapper">
+      <div class="name">うき</div>
+      <div class="bubble">自分のことを反面教師にって言ってたよね。うちの親が尊敬し合ってないから。</div>
+    </div>
+  </div>
+
+  <div class="message ruko">
+    <div class="avatar">るこ</div>
+    <div class="msg-wrapper">
+      <div class="name">るこ</div>
+      <div class="bubble">そう。うちの母ちゃんからずっと愚痴を聞かされ続けて、大人になるとその方向だけを鵜呑みにするわけにはいかないけど。決定的にうちの夫婦に欠落しているのは、尊敬し合うというところです。</div>
+    </div>
+  </div>
+
+  <div class="message ruko">
+    <div class="avatar">るこ</div>
+    <div class="msg-wrapper">
+      <div class="name">るこ</div>
+      <div class="bubble">今まで見てきた中で一番理想的な家ですよ、今のうちが。子供が2人いて、旦那さんが働いてくれて、奥さんはぼやぼやいてて、それなりに家事はできて。病気も怪我もなくて。めちゃくちゃ幸せなんですよ。</div>
+    </div>
+  </div>
+
+  <div class="message uki">
+    <div class="avatar">うき</div>
+    <div class="msg-wrapper">
+      <div class="name">うき</div>
+      <div class="bubble">だからボーナスタイムなんだよ。</div>
+    </div>
+  </div>
+
+  <div class="message ruko">
+    <div class="avatar">るこ</div>
+    <div class="msg-wrapper">
+      <div class="name">るこ</div>
+      <div class="bubble">めちゃくちゃ幸せなのよ。私は幸せを分けている。ちょうだい。</div>
+    </div>
+  </div>
+
+  <div class="message uki">
+    <div class="avatar">うき</div>
+    <div class="msg-wrapper">
+      <div class="name">うき</div>
+      <div class="bubble">薫子だし、そんなの私もめっちゃ幸せになれる。</div>
+    </div>
+  </div>
+
+  <div class="message ruko">
+    <div class="avatar">るこ</div>
+    <div class="msg-wrapper">
+      <div class="name">るこ</div>
+      <div class="bubble">毎日お願いしていることがあって。「欲張りなのは承知しているんですが、私は3人目に健康な子供が欲しいです。そのために、どうか宝くじ1億円をください。以下の子供が生まれたかつきには、3人の子供を、今と同じく穏やかに育てていきたいんです。厚かましいお願いをしてますが、どうぞかなえてください」と毎日お願いしている。</div>
+    </div>
+  </div>
+
+  <div class="message uki">
+    <div class="avatar">うき</div>
+    <div class="msg-wrapper">
+      <div class="name">うき</div>
+      <div class="bubble">その願いを子供が欲しいに注ぐっていうのが、やっぱすごいね。嘘みたいだね。</div>
+    </div>
+  </div>
+
+  <div class="message ruko">
+    <div class="avatar">るこ</div>
+    <div class="msg-wrapper">
+      <div class="name">るこ</div>
+      <div class="bubble">ここまでしてくれたのは、翔太郎さんのおかげで間違いない！</div>
+    </div>
+  </div>
+
+  <div class="message uki">
+    <div class="avatar">うき</div>
+    <div class="msg-wrapper">
+      <div class="name">うき</div>
+      <div class="bubble">翔太郎さんと出会ったあとのカールこ、幸せそうだったんですね。</div>
+    </div>
+  </div>
+
+  <div class="message ruko">
+    <div class="avatar">るこ</div>
+    <div class="msg-wrapper">
+      <div class="name">るこ</div>
+      <div class="bubble">本当にそうなのよ。ボーナスタイムだから、いかにこう長く引き延ばせるか、だよね。ボーナスタイムは終わりは来ますから、必ずね。</div>
+    </div>
+  </div>
+
+  <div class="message uki">
+    <div class="avatar">うき</div>
+    <div class="msg-wrapper">
+      <div class="name">うき</div>
+      <div class="bubble">でも、さっきから変わるとか見てくれとか言ってたけど、ひねくれた感じは全くなかった。私に対して。</div>
+    </div>
+  </div>
+
+  <div class="message ruko">
+    <div class="avatar">るこ</div>
+    <div class="msg-wrapper">
+      <div class="name">るこ</div>
+      <div class="bubble">私に対する態度は、めっちゃ私の方が参加されて、薫るこの方が素直だった、って思ってたんで。素直がいいってことじゃないからね、ね。</div>
+    </div>
+  </div>
+
+  <div class="message uki">
+    <div class="avatar">うき</div>
+    <div class="msg-wrapper">
+      <div class="name">うき</div>
+      <div class="bubble">それもそうだが、あの間がいいね。どっちもこう行き過ぎは良くないと思う。本当に出会えてよかったです。</div>
+    </div>
+  </div>
+
+  <div class="message ruko">
+    <div class="avatar">るこ</div>
+    <div class="msg-wrapper">
+      <div class="name">るこ</div>
+      <div class="bubble">本当に。ありがとう。</div>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>
