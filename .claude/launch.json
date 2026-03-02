@@ -25,5 +25,17 @@
       "runtimeArgs": ["-m", "http.server", "3004", "--directory", "中世の歴史まとめ"],
       "port": 3004
     }
+    ,{
+      "name": "airdoor-ui-改善案",
+      "runtimeExecutable": "python3",
+      "runtimeArgs": ["-m", "http.server", "3005"],
+      "port": 3005
+    }
+    ,{
+      "name": "うきまる",
+      "runtimeExecutable": "python3",
+      "runtimeArgs": ["-m", "http.server", "3006"],
+      "port": 3006
+    }
   ]
 }

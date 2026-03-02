@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>うきまる</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Helvetica Neue', Arial, 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', sans-serif;
+      background: #f2ede8;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 20px;
+    }
+
+    .site-title {
+      font-size: 2rem;
+      font-weight: 800;
+      color: #2e2a26;
+      letter-spacing: 0.15em;
+      margin-bottom: 6px;
+    }
+
+    .site-sub {
+      font-size: 0.8rem;
+      color: #b0a89e;
+      letter-spacing: 0.1em;
+      margin-bottom: 56px;
+    }
+
+    .card {
+      display: block;
+      text-decoration: none;
+      background: #fff;
+      border-radius: 16px;
+      padding: 32px 36px;
+      width: 100%;
+      max-width: 420px;
+      box-shadow: 0 2px 16px rgba(0,0,0,0.07);
+      transition: transform 0.18s ease, box-shadow 0.18s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 6px 24px rgba(0,0,0,0.11);
+    }
+
+    .card-label {
+      font-size: 0.7rem;
+      color: #d4845a;
+      letter-spacing: 0.15em;
+      font-weight: 700;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+
+    .card-title {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: #2e2a26;
+      letter-spacing: 0.05em;
+      margin-bottom: 8px;
+    }
+
+    .card-desc {
+      font-size: 0.82rem;
+      color: #9a8f87;
+      line-height: 1.7;
+    }
+
+    .card-arrow {
+      margin-top: 20px;
+      font-size: 0.8rem;
+      color: #d4845a;
+      letter-spacing: 0.05em;
+    }
+  </style>
+</head>
+<body>
+
+  <h1 class="site-title">うきまる</h1>
+  <p class="site-sub">記録と対話のアーカイブ</p>
+
+  <a class="card" href="eri_yuki_interview.html">
+    <div class="card-label">Interview</div>
+    <div class="card-title">うき × えり インタビュー</div>
+    <div class="card-desc">親子の対話。好きなもの、仕事、子育て、人生について。</div>
+    <div class="card-arrow">読む →</div>
+  </a>
+
+</body>
+</html>
