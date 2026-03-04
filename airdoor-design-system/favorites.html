@@ -288,6 +288,274 @@
     }
 
     /* ============================================================
+       FILTER BAR
+    ============================================================ */
+    .filter-bar {
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+      flex-wrap: wrap;
+      padding: var(--space-3) 0;
+      border-bottom: 1px solid var(--color-neutral-100);
+      margin-bottom: var(--space-4);
+      position: relative;
+    }
+    .filter-bar-label {
+      font-size: var(--font-size-xs);
+      color: var(--color-neutral-500);
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .filter-chips {
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+      flex-wrap: wrap;
+      flex: 1;
+    }
+    .filter-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 4px 10px 4px 12px;
+      background: var(--color-primary-50);
+      border: 1.5px solid var(--color-primary-200);
+      border-radius: var(--radius-full);
+      font-size: var(--font-size-xs);
+      color: var(--color-primary-700);
+      font-weight: var(--font-weight-medium);
+      white-space: nowrap;
+    }
+    .filter-chip-remove {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: var(--color-primary-200);
+      color: var(--color-primary-700);
+      cursor: pointer;
+      flex-shrink: 0;
+      transition: background .15s;
+      border: none;
+      padding: 0;
+    }
+    .filter-chip-remove:hover { background: var(--color-primary-600); color: #fff; }
+    .btn-add-filter {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 5px 12px;
+      border: 1.5px dashed var(--color-primary-600);
+      border-radius: var(--radius-full);
+      font-size: var(--font-size-xs);
+      color: var(--color-primary-600);
+      background: #fff;
+      cursor: pointer;
+      transition: background .15s;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    .btn-add-filter:hover { background: var(--color-primary-50); }
+    .btn-reset-filter {
+      margin-left: auto;
+      font-size: var(--font-size-xs);
+      color: var(--color-neutral-400);
+      cursor: pointer;
+      background: none;
+      border: none;
+      padding: 4px 0;
+      flex-shrink: 0;
+      text-decoration: underline;
+    }
+    .btn-reset-filter:hover { color: var(--color-coral); }
+
+    /* ============================================================
+       FILTER PANEL (ドロップダウン)
+    ============================================================ */
+    .filter-panel-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 150;
+      background: rgba(0,0,0,.3);
+    }
+    .filter-panel-overlay.is-open { display: block; }
+    .filter-panel {
+      position: fixed;
+      top: 56px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 200;
+      background: #fff;
+      border: 1px solid var(--color-neutral-200);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-md);
+      width: 640px;
+      max-width: calc(100vw - 32px);
+      max-height: calc(100vh - 80px);
+      overflow-y: auto;
+      display: none;
+      flex-direction: column;
+    }
+    .filter-panel.is-open { display: flex; }
+    .filter-panel-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: var(--space-4) var(--space-5);
+      border-bottom: 1px solid var(--color-neutral-100);
+      position: sticky;
+      top: 0;
+      background: #fff;
+      z-index: 1;
+    }
+    .filter-panel-title {
+      font-size: var(--font-size-base);
+      font-weight: var(--font-weight-bold);
+      color: var(--color-neutral-800);
+    }
+    .filter-panel-close {
+      width: 32px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: var(--radius-full);
+      color: var(--color-neutral-500);
+      background: none;
+      border: none;
+      cursor: pointer;
+    }
+    .filter-panel-close:hover { background: var(--color-neutral-100); }
+    .filter-panel-body {
+      padding: var(--space-5);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-5);
+    }
+    .filter-section-title {
+      font-size: var(--font-size-sm);
+      font-weight: var(--font-weight-semibold);
+      color: var(--color-neutral-700);
+      margin-bottom: var(--space-3);
+    }
+    .filter-range-row {
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+    }
+    .filter-range-select {
+      flex: 1;
+      border: 1.5px solid var(--color-neutral-300);
+      border-radius: var(--radius-base);
+      padding: 7px 10px;
+      font-size: var(--font-size-sm);
+      color: var(--color-neutral-700);
+      background: #fff;
+      outline: none;
+      cursor: pointer;
+    }
+    .filter-range-select:focus { border-color: var(--color-primary-600); }
+    .filter-pill-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-2);
+    }
+    .filter-pill {
+      padding: 6px 14px;
+      border: 1.5px solid var(--color-neutral-200);
+      border-radius: var(--radius-full);
+      font-size: var(--font-size-xs);
+      color: var(--color-neutral-600);
+      background: #fff;
+      cursor: pointer;
+      transition: all .15s;
+    }
+    .filter-pill:hover { border-color: var(--color-primary-600); color: var(--color-primary-600); }
+    .filter-pill.is-active {
+      background: var(--color-primary-600);
+      border-color: var(--color-primary-600);
+      color: #fff;
+      font-weight: var(--font-weight-medium);
+    }
+    .filter-check-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-2);
+    }
+    .filter-check-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 12px;
+      border: 1.5px solid var(--color-neutral-200);
+      border-radius: var(--radius-base);
+      font-size: var(--font-size-xs);
+      color: var(--color-neutral-600);
+      background: #fff;
+      cursor: pointer;
+      transition: all .15s;
+    }
+    .filter-check-item input { display: none; }
+    .filter-check-item:has(input:checked) {
+      background: var(--color-primary-50);
+      border-color: var(--color-primary-600);
+      color: var(--color-primary-700);
+      font-weight: var(--font-weight-medium);
+    }
+    .filter-check-icon {
+      width: 14px;
+      height: 14px;
+      border-radius: 3px;
+      border: 1.5px solid var(--color-neutral-300);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      color: transparent;
+    }
+    .filter-check-item:has(input:checked) .filter-check-icon {
+      background: var(--color-primary-600);
+      border-color: var(--color-primary-600);
+      color: #fff;
+    }
+    .filter-panel-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: var(--space-4) var(--space-5);
+      border-top: 1px solid var(--color-neutral-100);
+      position: sticky;
+      bottom: 0;
+      background: #fff;
+    }
+    .btn-panel-reset {
+      font-size: var(--font-size-sm);
+      color: var(--color-neutral-500);
+      background: none;
+      border: none;
+      cursor: pointer;
+      text-decoration: underline;
+    }
+    .btn-panel-reset:hover { color: var(--color-coral); }
+    .btn-panel-apply {
+      padding: 10px 28px;
+      background: var(--color-primary-600);
+      color: #fff;
+      border: none;
+      border-radius: var(--radius-base);
+      font-size: var(--font-size-sm);
+      font-weight: var(--font-weight-bold);
+      cursor: pointer;
+      transition: background .15s;
+    }
+    .btn-panel-apply:hover { background: var(--color-primary-700); }
+
+    /* ============================================================
        TOOLBAR
     ============================================================ */
     .toolbar {
@@ -949,6 +1217,192 @@
     </button>
   </div>
 
+  <!-- フィルターバー -->
+  <div class="filter-bar" id="filterBar">
+    <span class="filter-bar-label">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="22,3 2,3 10,12.46 10,19 14,21 14,12.46"/></svg>
+      絞り込み
+    </span>
+    <div class="filter-chips" id="filterChips">
+      <!-- アクティブな条件チップがここに入る -->
+    </div>
+    <button class="btn-add-filter" id="btnAddFilter" onclick="openFilterPanel()">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+      条件を追加
+    </button>
+    <button class="btn-reset-filter" id="btnReset" style="display:none" onclick="resetAllFilters()">すべてリセット</button>
+  </div>
+
+  <!-- フィルターパネル オーバーレイ -->
+  <div class="filter-panel-overlay" id="filterOverlay" onclick="closeFilterPanel()"></div>
+
+  <!-- フィルターパネル本体 -->
+  <div class="filter-panel" id="filterPanel">
+    <div class="filter-panel-header">
+      <span class="filter-panel-title">条件を絞り込む</span>
+      <button class="filter-panel-close" onclick="closeFilterPanel()">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div class="filter-panel-body">
+
+      <!-- 賃料 -->
+      <div>
+        <div class="filter-section-title">賃料</div>
+        <div class="filter-range-row">
+          <select class="filter-range-select" id="rentMin">
+            <option value="">下限なし</option>
+            <option value="5">5万円〜</option>
+            <option value="7">7万円〜</option>
+            <option value="8">8万円〜</option>
+            <option value="10">10万円〜</option>
+            <option value="12">12万円〜</option>
+            <option value="15">15万円〜</option>
+            <option value="20">20万円〜</option>
+          </select>
+          <span style="color:var(--color-neutral-400);flex-shrink:0">〜</span>
+          <select class="filter-range-select" id="rentMax">
+            <option value="">上限なし</option>
+            <option value="7">〜7万円</option>
+            <option value="8">〜8万円</option>
+            <option value="10">〜10万円</option>
+            <option value="12">〜12万円</option>
+            <option value="15">〜15万円</option>
+            <option value="20">〜20万円</option>
+            <option value="30">〜30万円</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- 間取り -->
+      <div>
+        <div class="filter-section-title">間取り</div>
+        <div class="filter-pill-grid" id="madoriGroup">
+          <button class="filter-pill" data-group="madori" data-label="ワンルーム" onclick="togglePill(this)">ワンルーム</button>
+          <button class="filter-pill" data-group="madori" data-label="1K" onclick="togglePill(this)">1K</button>
+          <button class="filter-pill" data-group="madori" data-label="1DK" onclick="togglePill(this)">1DK</button>
+          <button class="filter-pill" data-group="madori" data-label="1LDK" onclick="togglePill(this)">1LDK</button>
+          <button class="filter-pill" data-group="madori" data-label="2K・2DK" onclick="togglePill(this)">2K・2DK</button>
+          <button class="filter-pill" data-group="madori" data-label="2LDK" onclick="togglePill(this)">2LDK</button>
+          <button class="filter-pill" data-group="madori" data-label="3LDK" onclick="togglePill(this)">3LDK</button>
+          <button class="filter-pill" data-group="madori" data-label="4LDK以上" onclick="togglePill(this)">4LDK以上</button>
+        </div>
+      </div>
+
+      <!-- 面積 -->
+      <div>
+        <div class="filter-section-title">面積</div>
+        <div class="filter-range-row">
+          <select class="filter-range-select" id="areaMin">
+            <option value="">下限なし</option>
+            <option value="20">20m²〜</option>
+            <option value="30">30m²〜</option>
+            <option value="40">40m²〜</option>
+            <option value="50">50m²〜</option>
+            <option value="60">60m²〜</option>
+            <option value="70">70m²〜</option>
+            <option value="80">80m²〜</option>
+          </select>
+          <span style="color:var(--color-neutral-400);flex-shrink:0">〜</span>
+          <select class="filter-range-select" id="areaMax">
+            <option value="">上限なし</option>
+            <option value="30">〜30m²</option>
+            <option value="40">〜40m²</option>
+            <option value="50">〜50m²</option>
+            <option value="60">〜60m²</option>
+            <option value="80">〜80m²</option>
+            <option value="100">〜100m²</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- 築年数 -->
+      <div>
+        <div class="filter-section-title">築年数</div>
+        <div class="filter-pill-grid" id="chikunenGroup">
+          <button class="filter-pill" data-group="chikunen" data-label="新築" onclick="togglePill(this)">新築</button>
+          <button class="filter-pill" data-group="chikunen" data-label="築5年以内" onclick="togglePill(this)">築5年以内</button>
+          <button class="filter-pill" data-group="chikunen" data-label="築10年以内" onclick="togglePill(this)">築10年以内</button>
+          <button class="filter-pill" data-group="chikunen" data-label="築20年以内" onclick="togglePill(this)">築20年以内</button>
+          <button class="filter-pill" data-group="chikunen" data-label="年数不問" onclick="togglePill(this)">年数不問</button>
+        </div>
+      </div>
+
+      <!-- 建物種別 -->
+      <div>
+        <div class="filter-section-title">建物種別</div>
+        <div class="filter-pill-grid" id="tatemonoGroup">
+          <button class="filter-pill" data-group="tatemono" data-label="マンション" onclick="togglePill(this)">マンション</button>
+          <button class="filter-pill" data-group="tatemono" data-label="アパート" onclick="togglePill(this)">アパート</button>
+          <button class="filter-pill" data-group="tatemono" data-label="一戸建て" onclick="togglePill(this)">一戸建て</button>
+          <button class="filter-pill" data-group="tatemono" data-label="テラスハウス" onclick="togglePill(this)">テラスハウス</button>
+        </div>
+      </div>
+
+      <!-- こだわり -->
+      <div>
+        <div class="filter-section-title">こだわり条件</div>
+        <div class="filter-check-grid">
+          <label class="filter-check-item">
+            <input type="checkbox" data-label="敷金なし" />
+            <span class="filter-check-icon"><svg width="9" height="9" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="2,6 5,9 10,3"/></svg></span>
+            敷金なし
+          </label>
+          <label class="filter-check-item">
+            <input type="checkbox" data-label="礼金なし" />
+            <span class="filter-check-icon"><svg width="9" height="9" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="2,6 5,9 10,3"/></svg></span>
+            礼金なし
+          </label>
+          <label class="filter-check-item">
+            <input type="checkbox" data-label="即入居可" />
+            <span class="filter-check-icon"><svg width="9" height="9" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="2,6 5,9 10,3"/></svg></span>
+            即入居可
+          </label>
+          <label class="filter-check-item">
+            <input type="checkbox" data-label="ペット可" />
+            <span class="filter-check-icon"><svg width="9" height="9" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="2,6 5,9 10,3"/></svg></span>
+            ペット可
+          </label>
+          <label class="filter-check-item">
+            <input type="checkbox" data-label="駐車場あり" />
+            <span class="filter-check-icon"><svg width="9" height="9" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="2,6 5,9 10,3"/></svg></span>
+            駐車場あり
+          </label>
+          <label class="filter-check-item">
+            <input type="checkbox" data-label="2人入居可" />
+            <span class="filter-check-icon"><svg width="9" height="9" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="2,6 5,9 10,3"/></svg></span>
+            2人入居可
+          </label>
+          <label class="filter-check-item">
+            <input type="checkbox" data-label="デザイナーズ" />
+            <span class="filter-check-icon"><svg width="9" height="9" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="2,6 5,9 10,3"/></svg></span>
+            デザイナーズ
+          </label>
+          <label class="filter-check-item">
+            <input type="checkbox" data-label="オートロック" />
+            <span class="filter-check-icon"><svg width="9" height="9" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="2,6 5,9 10,3"/></svg></span>
+            オートロック
+          </label>
+          <label class="filter-check-item">
+            <input type="checkbox" data-label="浴室乾燥機" />
+            <span class="filter-check-icon"><svg width="9" height="9" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="2,6 5,9 10,3"/></svg></span>
+            浴室乾燥機
+          </label>
+          <label class="filter-check-item">
+            <input type="checkbox" data-label="宅配ボックス" />
+            <span class="filter-check-icon"><svg width="9" height="9" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="2,6 5,9 10,3"/></svg></span>
+            宅配ボックス
+          </label>
+        </div>
+      </div>
+
+    </div>
+    <div class="filter-panel-footer">
+      <button class="btn-panel-reset" onclick="resetPanelFilters()">条件をリセット</button>
+      <button class="btn-panel-apply" onclick="applyFilters()">この条件で絞り込む</button>
+    </div>
+  </div>
+
   <!-- ツールバー -->
   <div class="toolbar">
     <div class="toolbar-left">
@@ -1410,6 +1864,102 @@
       removeFav(btn);
     });
   });
+
+  /* ============================================================
+     FILTER PANEL
+  ============================================================ */
+  // 現在適用中のフィルター状態
+  const activeFilters = {};
+
+  function openFilterPanel() {
+    document.getElementById('filterPanel').classList.add('is-open');
+    document.getElementById('filterOverlay').classList.add('is-open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeFilterPanel() {
+    document.getElementById('filterPanel').classList.remove('is-open');
+    document.getElementById('filterOverlay').classList.remove('is-open');
+    document.body.style.overflow = '';
+  }
+
+  function togglePill(btn) {
+    btn.classList.toggle('is-active');
+  }
+
+  function resetPanelFilters() {
+    // ピル全解除
+    document.querySelectorAll('.filter-pill').forEach(p => p.classList.remove('is-active'));
+    // チェック全解除
+    document.querySelectorAll('.filter-check-item input').forEach(cb => cb.checked = false);
+    // セレクトをリセット
+    ['rentMin','rentMax','areaMin','areaMax'].forEach(id => {
+      document.getElementById(id).selectedIndex = 0;
+    });
+  }
+
+  function applyFilters() {
+    const chips = [];
+
+    // 賃料
+    const rentMinVal = document.getElementById('rentMin').value;
+    const rentMaxVal = document.getElementById('rentMax').value;
+    const rentMinText = document.getElementById('rentMin').options[document.getElementById('rentMin').selectedIndex].text;
+    const rentMaxText = document.getElementById('rentMax').options[document.getElementById('rentMax').selectedIndex].text;
+    if (rentMinVal || rentMaxVal) {
+      const label = (rentMinVal ? rentMinText : '') + (rentMinVal && rentMaxVal ? ' ' : '') + (rentMaxVal ? rentMaxText : '');
+      chips.push({ key: 'rent', label: '賃料：' + label.trim() });
+    }
+
+    // 面積
+    const areaMinVal = document.getElementById('areaMin').value;
+    const areaMaxVal = document.getElementById('areaMax').value;
+    const areaMinText = document.getElementById('areaMin').options[document.getElementById('areaMin').selectedIndex].text;
+    const areaMaxText = document.getElementById('areaMax').options[document.getElementById('areaMax').selectedIndex].text;
+    if (areaMinVal || areaMaxVal) {
+      const label = (areaMinVal ? areaMinText : '') + (areaMinVal && areaMaxVal ? ' ' : '') + (areaMaxVal ? areaMaxText : '');
+      chips.push({ key: 'area', label: '面積：' + label.trim() });
+    }
+
+    // ピル（間取り・築年数・建物種別）
+    document.querySelectorAll('.filter-pill.is-active').forEach(p => {
+      chips.push({ key: p.dataset.group + '_' + p.dataset.label, label: p.dataset.label });
+    });
+
+    // チェックボックス（こだわり）
+    document.querySelectorAll('.filter-check-item input:checked').forEach(cb => {
+      chips.push({ key: 'kodawari_' + cb.dataset.label, label: cb.dataset.label });
+    });
+
+    renderChips(chips);
+    closeFilterPanel();
+  }
+
+  function renderChips(chips) {
+    const container = document.getElementById('filterChips');
+    container.innerHTML = '';
+    chips.forEach(({ key, label }) => {
+      const chip = document.createElement('span');
+      chip.className = 'filter-chip';
+      chip.dataset.key = key;
+      chip.innerHTML = `${label}<button class="filter-chip-remove" onclick="removeChip(this)" aria-label="削除"><svg width="8" height="8" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="2" y1="2" x2="10" y2="10"/><line x1="10" y1="2" x2="2" y2="10"/></svg></button>`;
+      container.appendChild(chip);
+    });
+    // リセットボタン表示制御
+    document.getElementById('btnReset').style.display = chips.length > 0 ? 'inline' : 'none';
+  }
+
+  function removeChip(btn) {
+    btn.closest('.filter-chip').remove();
+    const remaining = document.querySelectorAll('.filter-chip').length;
+    document.getElementById('btnReset').style.display = remaining > 0 ? 'inline' : 'none';
+  }
+
+  function resetAllFilters() {
+    document.getElementById('filterChips').innerHTML = '';
+    document.getElementById('btnReset').style.display = 'none';
+    resetPanelFilters();
+  }
 </script>
 </body>
 </html>
