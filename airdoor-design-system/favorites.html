@@ -1,0 +1,1415 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>お気に入り物件 | エアドア</title>
+  <style>
+    /* ============================================================
+       DESIGN TOKENS
+    ============================================================ */
+    :root {
+      --color-brand:        #1AAFE8;
+      --color-primary-50:   #EBF5FF;
+      --color-primary-100:  #DAEEFF;
+      --color-primary-200:  #B3DAFE;
+      --color-primary-600:  #1D6CC8;
+      --color-primary-700:  #1558A8;
+      --color-cta:          #F5A500;
+      --color-cta-dark:     #D98E00;
+      --color-coral:        #F06060;
+      --color-coral-bg:     #FFF0F0;
+      --color-coral-border: #FFBABA;
+      --color-green:        #3DAA6E;
+      --color-green-light:  #E8F7EF;
+      --color-navy:         #1A3564;
+      --color-info-bg:      #EAF5FF;
+      --color-info-text:    #1D6CC8;
+      --color-neutral-0:    #ffffff;
+      --color-neutral-50:   #f7f7f7;
+      --color-neutral-100:  #f0f0f0;
+      --color-neutral-200:  #e0e0e0;
+      --color-neutral-300:  #cccccc;
+      --color-neutral-400:  #aaaaaa;
+      --color-neutral-500:  #888888;
+      --color-neutral-600:  #666666;
+      --color-neutral-700:  #444444;
+      --color-neutral-800:  #222222;
+
+      --font-family-base: "Hiragino Kaku Gothic ProN","Hiragino Sans","Noto Sans JP","Yu Gothic",sans-serif;
+      --font-size-xs:   0.75rem;
+      --font-size-sm:   0.875rem;
+      --font-size-base: 1rem;
+      --font-size-lg:   1.125rem;
+      --font-size-xl:   1.25rem;
+      --font-size-2xl:  1.5rem;
+
+      --font-weight-normal:   400;
+      --font-weight-medium:   500;
+      --font-weight-semibold: 600;
+      --font-weight-bold:     700;
+
+      --space-1:  0.25rem;
+      --space-2:  0.5rem;
+      --space-3:  0.75rem;
+      --space-4:  1rem;
+      --space-5:  1.25rem;
+      --space-6:  1.5rem;
+      --space-8:  2rem;
+      --space-10: 2.5rem;
+      --space-12: 3rem;
+
+      --radius-sm:   0.25rem;
+      --radius-base: 0.5rem;
+      --radius-md:   0.75rem;
+      --radius-lg:   1rem;
+      --radius-full: 9999px;
+
+      --shadow-sm:   0 1px 2px rgba(0,0,0,.06);
+      --shadow-base: 0 2px 8px rgba(0,0,0,.08);
+      --shadow-md:   0 4px 16px rgba(0,0,0,.10);
+
+      --container-max: 1160px;
+    }
+
+    /* ============================================================
+       RESET
+    ============================================================ */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { font-size: 16px; }
+    body {
+      font-family: var(--font-family-base);
+      font-size: var(--font-size-base);
+      line-height: 1.6;
+      color: var(--color-neutral-800);
+      background: var(--color-neutral-50);
+    }
+    a { color: var(--color-primary-600); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    ul, ol { list-style: none; }
+    button { cursor: pointer; font-family: var(--font-family-base); border: none; background: none; }
+
+    /* ============================================================
+       HEADER
+    ============================================================ */
+    .header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: #fff;
+      border-bottom: 1px solid var(--color-neutral-200);
+      height: 56px;
+      display: flex;
+      align-items: center;
+    }
+    .header-inner {
+      max-width: var(--container-max);
+      margin: 0 auto;
+      padding: 0 var(--space-6);
+      width: 100%;
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+    }
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-shrink: 0;
+      text-decoration: none;
+    }
+    .logo-icon {
+      width: 26px;
+      height: 26px;
+      background: var(--color-brand);
+      clip-path: polygon(15% 10%, 90% 50%, 15% 90%);
+      flex-shrink: 0;
+    }
+    .logo-text {
+      font-size: var(--font-size-xl);
+      font-weight: var(--font-weight-bold);
+      color: var(--color-neutral-800);
+      letter-spacing: -.02em;
+    }
+    .header-search {
+      flex: 1;
+      max-width: 480px;
+      margin-left: var(--space-4);
+      display: flex;
+      align-items: center;
+      background: var(--color-neutral-100);
+      border: 1.5px solid var(--color-neutral-200);
+      border-radius: var(--radius-full);
+      padding: 0 var(--space-4);
+      height: 38px;
+      gap: var(--space-2);
+    }
+    .header-search input {
+      flex: 1;
+      border: none;
+      background: transparent;
+      outline: none;
+      font-size: var(--font-size-sm);
+      color: var(--color-neutral-800);
+    }
+    .header-search input::placeholder { color: var(--color-neutral-400); }
+    .header-nav {
+      margin-left: auto;
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+    }
+    .nav-icon-btn {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2px;
+      padding: 4px 10px;
+      color: var(--color-neutral-600);
+      font-size: 10px;
+      border-radius: var(--radius-base);
+      transition: background .15s;
+    }
+    .nav-icon-btn:hover { background: var(--color-neutral-100); text-decoration: none; }
+    .nav-icon-btn.is-active { color: var(--color-coral); }
+    .nav-icon-btn .nav-badge {
+      position: relative;
+      display: inline-flex;
+    }
+    .nav-icon-btn .badge-count {
+      position: absolute;
+      top: -4px;
+      right: -6px;
+      background: var(--color-coral);
+      color: #fff;
+      font-size: 9px;
+      font-weight: var(--font-weight-bold);
+      min-width: 16px;
+      height: 16px;
+      border-radius: var(--radius-full);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 3px;
+    }
+    .nav-divider {
+      width: 1px;
+      height: 28px;
+      background: var(--color-neutral-200);
+      margin: 0 var(--space-1);
+    }
+
+    /* ============================================================
+       PAGE LAYOUT
+    ============================================================ */
+    .page-wrap {
+      max-width: var(--container-max);
+      margin: 0 auto;
+      padding: var(--space-6) var(--space-6) var(--space-12);
+    }
+
+    /* ============================================================
+       PAGE HEADER
+    ============================================================ */
+    .page-header {
+      margin-bottom: var(--space-6);
+    }
+    .breadcrumb {
+      font-size: var(--font-size-xs);
+      color: var(--color-neutral-400);
+      display: flex;
+      align-items: center;
+      gap: var(--space-1);
+      margin-bottom: var(--space-3);
+    }
+    .breadcrumb a { color: var(--color-neutral-400); }
+    .breadcrumb a:hover { color: var(--color-primary-600); text-decoration: none; }
+    .page-title {
+      font-size: var(--font-size-2xl);
+      font-weight: var(--font-weight-bold);
+      color: var(--color-neutral-800);
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+    }
+    .page-title-icon {
+      color: var(--color-coral);
+    }
+    .page-title-count {
+      font-size: var(--font-size-base);
+      font-weight: var(--font-weight-normal);
+      color: var(--color-neutral-500);
+    }
+
+    /* ============================================================
+       TAB BAR
+    ============================================================ */
+    .tab-bar {
+      display: flex;
+      border-bottom: 2px solid var(--color-neutral-200);
+      margin-bottom: var(--space-5);
+      gap: 0;
+    }
+    .tab-item {
+      padding: var(--space-3) var(--space-5);
+      font-size: var(--font-size-sm);
+      font-weight: var(--font-weight-medium);
+      color: var(--color-neutral-500);
+      border-bottom: 2px solid transparent;
+      margin-bottom: -2px;
+      cursor: pointer;
+      transition: color .15s;
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+    }
+    .tab-item:hover { color: var(--color-neutral-700); }
+    .tab-item.is-active {
+      color: var(--color-primary-600);
+      border-bottom-color: var(--color-primary-600);
+      font-weight: var(--font-weight-semibold);
+    }
+    .tab-count {
+      background: var(--color-neutral-100);
+      color: var(--color-neutral-600);
+      font-size: 11px;
+      font-weight: var(--font-weight-bold);
+      min-width: 20px;
+      height: 20px;
+      border-radius: var(--radius-full);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 5px;
+    }
+    .tab-item.is-active .tab-count {
+      background: var(--color-primary-50);
+      color: var(--color-primary-600);
+    }
+
+    /* ============================================================
+       TOOLBAR
+    ============================================================ */
+    .toolbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: var(--space-4);
+    }
+    .toolbar-left {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+      font-size: var(--font-size-sm);
+      color: var(--color-neutral-600);
+    }
+    .select-all-btn {
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+      font-size: var(--font-size-sm);
+      color: var(--color-neutral-600);
+      padding: 5px 10px;
+      border-radius: var(--radius-base);
+      border: 1.5px solid var(--color-neutral-200);
+      background: #fff;
+      transition: border-color .15s;
+    }
+    .select-all-btn:hover { border-color: var(--color-neutral-400); }
+    .toolbar-right {
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+    }
+    .sort-select {
+      border: 1.5px solid var(--color-neutral-200);
+      border-radius: var(--radius-base);
+      padding: 6px 10px;
+      font-size: var(--font-size-sm);
+      color: var(--color-neutral-700);
+      background: #fff;
+      outline: none;
+      cursor: pointer;
+    }
+    .sort-select:hover { border-color: var(--color-neutral-400); }
+    .btn-delete-selected {
+      display: flex;
+      align-items: center;
+      gap: var(--space-1);
+      padding: 6px 12px;
+      border: 1.5px solid var(--color-coral-border);
+      border-radius: var(--radius-base);
+      font-size: var(--font-size-sm);
+      color: var(--color-coral);
+      background: var(--color-coral-bg);
+      transition: all .15s;
+      opacity: 0;
+      pointer-events: none;
+    }
+    .btn-delete-selected.is-visible {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    .btn-delete-selected:hover { background: #ffe0e0; }
+
+    /* ============================================================
+       PROPERTY LIST
+    ============================================================ */
+    .property-list { display: flex; flex-direction: column; gap: var(--space-3); }
+
+    .prop-card {
+      background: #fff;
+      border: 1.5px solid var(--color-neutral-200);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      display: flex;
+      transition: box-shadow .2s, border-color .2s;
+      position: relative;
+    }
+    .prop-card:hover { box-shadow: var(--shadow-md); }
+    .prop-card.is-selected {
+      border-color: var(--color-primary-600);
+      background: var(--color-primary-50);
+    }
+    .prop-card.is-applied {
+      border-color: var(--color-coral-border);
+    }
+
+    /* チェックボックスオーバーレイ */
+    .prop-card-check {
+      position: absolute;
+      top: var(--space-3);
+      left: var(--space-3);
+      z-index: 2;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      border: 2px solid var(--color-neutral-300);
+      background: rgba(255,255,255,.9);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: border-color .15s, background .15s;
+    }
+    .prop-card-check:hover { border-color: var(--color-primary-600); }
+    .prop-card.is-selected .prop-card-check {
+      border-color: var(--color-primary-600);
+      background: var(--color-primary-600);
+    }
+    .prop-card-check svg { display: none; }
+    .prop-card.is-selected .prop-card-check svg { display: block; }
+
+    /* 画像エリア */
+    .prop-card-img {
+      width: 200px;
+      flex-shrink: 0;
+      position: relative;
+      overflow: hidden;
+      background: #d8dfe4;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.5rem;
+      color: var(--color-neutral-400);
+    }
+    .prop-card-img-counter {
+      position: absolute;
+      bottom: var(--space-2);
+      right: var(--space-2);
+      background: rgba(0,0,0,.5);
+      color: #fff;
+      font-size: 10px;
+      padding: 2px 7px;
+      border-radius: var(--radius-full);
+    }
+    /* いいねボタン（ON状態） */
+    .prop-card-fav {
+      position: absolute;
+      top: var(--space-2);
+      right: var(--space-2);
+      width: 30px;
+      height: 30px;
+      border-radius: var(--radius-full);
+      background: rgba(255,255,255,.92);
+      border: 1px solid var(--color-coral-border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--color-coral);
+      transition: transform .15s;
+    }
+    .prop-card-fav:hover { transform: scale(1.15); }
+    .prop-card-fav svg { fill: var(--color-coral); }
+
+    /* いいね日時バッジ */
+    .fav-date-badge {
+      position: absolute;
+      bottom: var(--space-2);
+      left: var(--space-2);
+      background: rgba(0,0,0,.55);
+      color: #fff;
+      font-size: 10px;
+      padding: 2px 8px;
+      border-radius: var(--radius-full);
+      display: flex;
+      align-items: center;
+      gap: 3px;
+    }
+
+    /* 本文 */
+    .prop-card-body {
+      flex: 1;
+      padding: var(--space-4);
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+    }
+    .prop-card-top {
+      display: flex;
+      align-items: flex-start;
+      gap: var(--space-4);
+      margin-bottom: var(--space-2);
+    }
+    .prop-card-price-block { flex: 1; }
+    .prop-card-price {
+      font-size: var(--font-size-xl);
+      font-weight: var(--font-weight-bold);
+      color: var(--color-neutral-800);
+      line-height: 1.2;
+    }
+    .prop-card-kanri {
+      font-size: var(--font-size-xs);
+      color: var(--color-neutral-500);
+      margin-top: 2px;
+    }
+    .prop-card-fees {
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+      font-size: var(--font-size-xs);
+      margin-top: var(--space-2);
+      flex-wrap: wrap;
+    }
+    .fee-shiki { color: var(--color-coral); font-weight: var(--font-weight-semibold); }
+    .fee-muryo { color: var(--color-coral); }
+    .fee-divider { color: var(--color-neutral-300); }
+    .fee-chu-tag {
+      background: var(--color-neutral-100);
+      color: var(--color-neutral-600);
+      padding: 2px 8px;
+      border-radius: var(--radius-sm);
+      font-size: 11px;
+    }
+    .prop-card-badges {
+      display: flex;
+      gap: var(--space-2);
+      flex-wrap: wrap;
+      margin-top: var(--space-2);
+    }
+    .badge-tokku {
+      background: var(--color-navy);
+      color: #fff;
+      font-size: 11px;
+      font-weight: var(--font-weight-bold);
+      padding: 2px 8px;
+      border-radius: var(--radius-sm);
+    }
+    .badge-new-arrival {
+      background: var(--color-cta);
+      color: #fff;
+      font-size: 11px;
+      font-weight: var(--font-weight-bold);
+      padding: 2px 8px;
+      border-radius: var(--radius-sm);
+    }
+    .badge-applied {
+      color: var(--color-coral);
+      border: 1px solid var(--color-coral-border);
+      background: var(--color-coral-bg);
+      font-size: 11px;
+      padding: 2px 8px;
+      border-radius: var(--radius-sm);
+    }
+    .badge-closed {
+      background: var(--color-neutral-500);
+      color: #fff;
+      font-size: 11px;
+      font-weight: var(--font-weight-bold);
+      padding: 2px 8px;
+      border-radius: var(--radius-sm);
+    }
+    .prop-card-meta {
+      margin-top: var(--space-3);
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-1) var(--space-5);
+      font-size: var(--font-size-xs);
+      color: var(--color-neutral-600);
+    }
+    .prop-card-meta-item {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .meta-icon { color: var(--color-primary-600); flex-shrink: 0; }
+    .prop-card-station {
+      margin-top: var(--space-2);
+      font-size: var(--font-size-xs);
+      color: var(--color-neutral-600);
+      line-height: 1.6;
+    }
+    .prop-card-status {
+      margin-top: var(--space-2);
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+      font-size: var(--font-size-xs);
+    }
+    .status-movein { color: var(--color-primary-600); font-weight: var(--font-weight-medium); }
+    .status-current { color: var(--color-neutral-500); }
+    .status-update {
+      margin-left: auto;
+      color: var(--color-neutral-400);
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .update-dot {
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      background: var(--color-green);
+      flex-shrink: 0;
+    }
+    .prop-card-name {
+      margin-top: var(--space-2);
+      font-size: var(--font-size-xs);
+      color: var(--color-primary-600);
+      padding-top: var(--space-2);
+      border-top: 1px solid var(--color-neutral-100);
+    }
+
+    /* CTAエリア */
+    .prop-card-cta {
+      flex-shrink: 0;
+      width: 140px;
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-2);
+    }
+    .btn-cta {
+      width: 100%;
+      padding: 10px 0;
+      background: var(--color-cta);
+      color: #fff;
+      border-radius: var(--radius-base);
+      font-size: var(--font-size-xs);
+      font-weight: var(--font-weight-bold);
+      border: none;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding-left: 38px;
+      cursor: pointer;
+    }
+    .btn-cta::before {
+      content: '無料';
+      position: absolute;
+      left: 0; top: 0; bottom: 0;
+      width: 34px;
+      background: var(--color-cta-dark);
+      border-radius: var(--radius-base) 0 0 var(--radius-base);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 10px;
+    }
+    .btn-outline {
+      width: 100%;
+      padding: 8px 0;
+      background: #fff;
+      color: var(--color-primary-600);
+      border: 1.5px solid var(--color-primary-600);
+      border-radius: var(--radius-base);
+      font-size: var(--font-size-xs);
+      font-weight: var(--font-weight-medium);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      cursor: pointer;
+      transition: background .15s;
+    }
+    .btn-outline:hover { background: var(--color-primary-50); }
+    .btn-remove-fav {
+      width: 100%;
+      padding: 7px 0;
+      background: #fff;
+      color: var(--color-neutral-500);
+      border: 1.5px solid var(--color-neutral-200);
+      border-radius: var(--radius-base);
+      font-size: var(--font-size-xs);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      cursor: pointer;
+      transition: all .15s;
+    }
+    .btn-remove-fav:hover {
+      border-color: var(--color-coral-border);
+      color: var(--color-coral);
+      background: var(--color-coral-bg);
+    }
+
+    /* 募集終了オーバーレイ */
+    .prop-card.is-closed .prop-card-img::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(0,0,0,.35);
+    }
+    .prop-card.is-closed .prop-card-body {
+      opacity: .65;
+    }
+
+    /* ============================================================
+       MEMO AREA
+    ============================================================ */
+    .prop-memo {
+      margin-top: var(--space-3);
+      padding: var(--space-2) var(--space-3);
+      background: #fffbf0;
+      border: 1px solid #f0e0b0;
+      border-radius: var(--radius-base);
+      font-size: var(--font-size-xs);
+      color: var(--color-neutral-700);
+      display: flex;
+      align-items: flex-start;
+      gap: var(--space-2);
+    }
+    .prop-memo-icon { color: #c8a030; flex-shrink: 0; margin-top: 1px; }
+    .prop-memo-text { flex: 1; line-height: 1.5; }
+    .prop-memo-edit { color: var(--color-primary-600); font-size: 11px; flex-shrink: 0; cursor: pointer; }
+    .prop-memo-edit:hover { text-decoration: underline; }
+
+    /* ============================================================
+       PRICE CHANGE ALERT
+    ============================================================ */
+    .price-change-alert {
+      margin-top: var(--space-2);
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+      font-size: var(--font-size-xs);
+      color: var(--color-green);
+      font-weight: var(--font-weight-medium);
+    }
+    .price-change-alert.is-up {
+      color: var(--color-coral);
+    }
+
+    /* ============================================================
+       EMPTY STATE
+    ============================================================ */
+    .empty-state {
+      background: #fff;
+      border: 1px solid var(--color-neutral-200);
+      border-radius: var(--radius-lg);
+      padding: var(--space-12) var(--space-8);
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .empty-state-icon {
+      width: 80px;
+      height: 80px;
+      background: var(--color-neutral-100);
+      border-radius: var(--radius-full);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: var(--space-5);
+      color: var(--color-neutral-300);
+    }
+    .empty-state-title {
+      font-size: var(--font-size-lg);
+      font-weight: var(--font-weight-bold);
+      color: var(--color-neutral-700);
+      margin-bottom: var(--space-2);
+    }
+    .empty-state-desc {
+      font-size: var(--font-size-sm);
+      color: var(--color-neutral-500);
+      line-height: 1.7;
+      margin-bottom: var(--space-6);
+    }
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-2);
+      padding: 12px 28px;
+      background: var(--color-primary-600);
+      color: #fff;
+      border-radius: var(--radius-base);
+      font-size: var(--font-size-sm);
+      font-weight: var(--font-weight-bold);
+      text-decoration: none;
+      transition: background .15s;
+    }
+    .btn-primary:hover { background: var(--color-primary-700); text-decoration: none; }
+
+    /* ============================================================
+       CONSULT BANNER
+    ============================================================ */
+    .consult-banner {
+      background: linear-gradient(135deg, #EAF5FF 0%, #f0f8ff 100%);
+      border: 1px solid var(--color-primary-200);
+      border-radius: var(--radius-lg);
+      padding: var(--space-5) var(--space-6);
+      display: flex;
+      align-items: center;
+      gap: var(--space-5);
+      margin-top: var(--space-6);
+    }
+    .consult-banner-icon {
+      flex-shrink: 0;
+    }
+    .consult-banner-body { flex: 1; }
+    .consult-banner-label {
+      font-size: 11px;
+      font-weight: var(--font-weight-bold);
+      color: var(--color-primary-600);
+      background: var(--color-primary-100);
+      padding: 2px 8px;
+      border-radius: var(--radius-full);
+      display: inline-block;
+      margin-bottom: var(--space-2);
+    }
+    .consult-banner-title {
+      font-size: var(--font-size-base);
+      font-weight: var(--font-weight-bold);
+      color: var(--color-neutral-800);
+      margin-bottom: var(--space-1);
+    }
+    .consult-banner-desc {
+      font-size: var(--font-size-xs);
+      color: var(--color-neutral-600);
+      line-height: 1.6;
+    }
+    .btn-consult {
+      flex-shrink: 0;
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-2);
+      padding: 12px 20px;
+      background: var(--color-primary-600);
+      color: #fff;
+      border-radius: var(--radius-base);
+      font-size: var(--font-size-sm);
+      font-weight: var(--font-weight-bold);
+      text-decoration: none;
+      white-space: nowrap;
+      transition: background .15s;
+    }
+    .btn-consult:hover { background: var(--color-primary-700); text-decoration: none; }
+
+    /* ============================================================
+       FOOTER
+    ============================================================ */
+    .footer {
+      background: var(--color-neutral-800);
+      color: var(--color-neutral-300);
+      padding: var(--space-10) 0 var(--space-6);
+      margin-top: var(--space-12);
+    }
+    .footer-inner {
+      max-width: var(--container-max);
+      margin: 0 auto;
+      padding: 0 var(--space-6);
+    }
+    .footer-logo { display: flex; align-items: center; gap: 6px; margin-bottom: var(--space-5); }
+    .footer-logo-icon {
+      width: 22px; height: 22px;
+      background: var(--color-brand);
+      clip-path: polygon(15% 10%, 90% 50%, 15% 90%);
+    }
+    .footer-logo-text { font-size: var(--font-size-lg); font-weight: var(--font-weight-bold); color: #fff; }
+    .footer-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-2) var(--space-6);
+      font-size: var(--font-size-xs);
+      margin-bottom: var(--space-6);
+    }
+    .footer-links a { color: var(--color-neutral-400); }
+    .footer-links a:hover { color: #fff; text-decoration: none; }
+    .footer-copy {
+      font-size: var(--font-size-xs);
+      color: var(--color-neutral-500);
+      border-top: 1px solid var(--color-neutral-700);
+      padding-top: var(--space-4);
+    }
+
+    /* ============================================================
+       RESPONSIVE
+    ============================================================ */
+    @media (max-width: 900px) {
+      .header-search { display: none; }
+      .prop-card-img { width: 140px; }
+      .prop-card-cta { width: 120px; }
+      .consult-banner { flex-direction: column; }
+      .btn-consult { width: 100%; justify-content: center; }
+    }
+    @media (max-width: 600px) {
+      .prop-card { flex-wrap: wrap; }
+      .prop-card-img { width: 100%; height: 180px; }
+      .prop-card-cta { width: 100%; flex-direction: row; padding: 0 var(--space-4) var(--space-4); }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ========== HEADER ========== -->
+<header class="header">
+  <div class="header-inner">
+    <a href="index.html" class="logo">
+      <span class="logo-icon"></span>
+      <span class="logo-text">airdoor</span>
+    </a>
+    <div class="header-search">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color:#aaa;flex-shrink:0"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <input type="text" placeholder="エリア・駅名・住所で検索" />
+    </div>
+    <nav class="header-nav">
+      <a href="favorites.html" class="nav-icon-btn is-active">
+        <span class="nav-badge">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+          <span class="badge-count">8</span>
+        </span>
+        お気に入り
+      </a>
+      <div class="nav-divider"></div>
+      <a href="#" class="nav-icon-btn">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 012-2h10a2 2 0 012 2z"/></svg>
+        保存条件
+      </a>
+      <a href="#" class="nav-icon-btn">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        検索
+      </a>
+      <a href="#" class="nav-icon-btn">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+        メニュー
+      </a>
+    </nav>
+  </div>
+</header>
+
+<!-- ========== MAIN ========== -->
+<main class="page-wrap">
+
+  <!-- パンくず -->
+  <nav class="breadcrumb">
+    <a href="index.html">ホーム</a>
+    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9,18 15,12 9,6"/></svg>
+    <span>お気に入り</span>
+  </nav>
+
+  <!-- ページタイトル -->
+  <div class="page-header">
+    <h1 class="page-title">
+      <span class="page-title-icon">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+      </span>
+      お気に入り物件
+      <span class="page-title-count">8件</span>
+    </h1>
+  </div>
+
+  <!-- タブバー -->
+  <div class="tab-bar">
+    <button class="tab-item is-active">
+      すべて
+      <span class="tab-count">8</span>
+    </button>
+    <button class="tab-item">
+      募集中
+      <span class="tab-count">6</span>
+    </button>
+    <button class="tab-item">
+      申込あり
+      <span class="tab-count">1</span>
+    </button>
+    <button class="tab-item">
+      募集終了
+      <span class="tab-count">1</span>
+    </button>
+  </div>
+
+  <!-- ツールバー -->
+  <div class="toolbar">
+    <div class="toolbar-left">
+      <button class="select-all-btn" id="selectAllBtn" onclick="toggleSelectAll()">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/></svg>
+        すべて選択
+      </button>
+      <button class="btn-delete-selected" id="deleteBtn">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3,6 5,6 21,6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6M14 11v6"/><path d="M9 6V4h6v2"/></svg>
+        選択した物件を削除
+      </button>
+    </div>
+    <div class="toolbar-right">
+      <select class="sort-select">
+        <option>いいね順（新しい順）</option>
+        <option>賃料が安い順</option>
+        <option>賃料が高い順</option>
+        <option>面積が広い順</option>
+        <option>築年数が新しい順</option>
+        <option>最寄駅まで近い順</option>
+      </select>
+    </div>
+  </div>
+
+  <!-- ========== 物件リスト ========== -->
+  <div class="property-list" id="propertyList">
+
+    <!-- 物件① 通常・価格下落 -->
+    <div class="prop-card" data-id="1">
+      <button class="prop-card-check" onclick="toggleSelect(this)" aria-label="選択">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3"><polyline points="20,6 9,17 4,12"/></svg>
+      </button>
+      <div class="prop-card-img">
+        🏠
+        <div class="fav-date-badge">
+          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
+          3日前
+        </div>
+        <button class="prop-card-fav" title="お気に入りを解除">
+          <svg width="14" height="14" viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
+        </button>
+        <div class="prop-card-img-counter">写真 12枚</div>
+      </div>
+      <div class="prop-card-body">
+        <div class="prop-card-top">
+          <div class="prop-card-price-block">
+            <div class="prop-card-price">14.5万円</div>
+            <div class="prop-card-kanri">管理費 5,000円</div>
+          </div>
+          <div class="prop-card-cta">
+            <button class="btn-cta">見学を相談</button>
+            <button class="btn-outline">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14,2 14,8 20,8"/></svg>
+              詳細を見る
+            </button>
+            <button class="btn-remove-fav" onclick="removeFav(this)">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+              削除
+            </button>
+          </div>
+        </div>
+        <div class="prop-card-fees">
+          <span class="fee-shiki">敷 <span class="fee-muryo">無料</span></span>
+          <span class="fee-divider">|</span>
+          <span class="fee-shiki">礼 <span class="fee-muryo">無料</span></span>
+          <span class="fee-divider">|</span>
+          <span class="fee-chu-tag">仲介手数料 0.5ヶ月</span>
+        </div>
+        <div class="prop-card-badges">
+          <span class="badge-tokku">初期トク</span>
+          <span class="badge-new-arrival">新着</span>
+        </div>
+        <!-- 価格下落アラート -->
+        <div class="price-change-alert">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="18,15 12,9 6,15"/></svg>
+          いいね後に <strong>5,000円値下がり</strong>しました
+        </div>
+        <div class="prop-card-meta">
+          <span class="prop-card-meta-item">
+            <svg class="meta-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>
+            3LDK
+          </span>
+          <span class="prop-card-meta-item">
+            <svg class="meta-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18"/></svg>
+            75.2m²
+          </span>
+          <span class="prop-card-meta-item">
+            <svg class="meta-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/></svg>
+            築8年
+          </span>
+          <span class="prop-card-meta-item">
+            <svg class="meta-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V9z"/></svg>
+            6階 / 12階建
+          </span>
+        </div>
+        <div class="prop-card-station">
+          東京メトロ東西線「門前仲町」徒歩5分 / 東京メトロ有楽町線「月島」徒歩9分
+        </div>
+        <div class="prop-card-status">
+          <span class="status-movein">即入居可</span>
+          <span class="status-current">募集中</span>
+          <span class="status-update">
+            <span class="update-dot"></span>本日更新
+          </span>
+        </div>
+        <div class="prop-card-name">
+          <a href="#">グランドメゾン門前仲町レジデンス 601号室</a>
+        </div>
+        <!-- メモ -->
+        <div class="prop-memo">
+          <svg class="prop-memo-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+          <span class="prop-memo-text">リビングが広そう。内見したい！角部屋確認済み</span>
+          <span class="prop-memo-edit">編集</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 物件② 申込あり -->
+    <div class="prop-card is-applied" data-id="2">
+      <button class="prop-card-check" onclick="toggleSelect(this)" aria-label="選択">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3"><polyline points="20,6 9,17 4,12"/></svg>
+      </button>
+      <div class="prop-card-img">
+        🏢
+        <div class="fav-date-badge">
+          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
+          1週間前
+        </div>
+        <button class="prop-card-fav" title="お気に入りを解除">
+          <svg width="14" height="14" viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
+        </button>
+        <div class="prop-card-img-counter">写真 8枚</div>
+      </div>
+      <div class="prop-card-body">
+        <div class="prop-card-top">
+          <div class="prop-card-price-block">
+            <div class="prop-card-price">12.8万円</div>
+            <div class="prop-card-kanri">管理費 8,000円</div>
+          </div>
+          <div class="prop-card-cta">
+            <button class="btn-cta">見学を相談</button>
+            <button class="btn-outline">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14,2 14,8 20,8"/></svg>
+              詳細を見る
+            </button>
+            <button class="btn-remove-fav" onclick="removeFav(this)">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+              削除
+            </button>
+          </div>
+        </div>
+        <div class="prop-card-fees">
+          <span class="fee-shiki">敷 1ヶ月</span>
+          <span class="fee-divider">|</span>
+          <span class="fee-shiki">礼 <span class="fee-muryo">無料</span></span>
+          <span class="fee-divider">|</span>
+          <span class="fee-chu-tag">仲介手数料 1ヶ月</span>
+        </div>
+        <div class="prop-card-badges">
+          <span class="badge-applied">申込あり</span>
+        </div>
+        <div class="prop-card-meta">
+          <span class="prop-card-meta-item">
+            <svg class="meta-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>
+            2LDK
+          </span>
+          <span class="prop-card-meta-item">
+            <svg class="meta-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18"/></svg>
+            58.4m²
+          </span>
+          <span class="prop-card-meta-item">
+            <svg class="meta-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/></svg>
+            築5年
+          </span>
+          <span class="prop-card-meta-item">
+            <svg class="meta-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V9z"/></svg>
+            3階 / 15階建
+          </span>
+        </div>
+        <div class="prop-card-station">
+          JR山手線「渋谷」徒歩7分 / 東京メトロ副都心線「渋谷」徒歩8分
+        </div>
+        <div class="prop-card-status">
+          <span class="status-movein" style="color: var(--color-coral);">申込あり（見学可）</span>
+          <span class="status-update">
+            <span class="update-dot"></span>2日前更新
+          </span>
+        </div>
+        <div class="prop-card-name">
+          <a href="#">パークアクシス渋谷 302号室</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- 物件③ 通常 -->
+    <div class="prop-card" data-id="3">
+      <button class="prop-card-check" onclick="toggleSelect(this)" aria-label="選択">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3"><polyline points="20,6 9,17 4,12"/></svg>
+      </button>
+      <div class="prop-card-img">
+        🏗️
+        <div class="fav-date-badge">
+          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
+          2週間前
+        </div>
+        <button class="prop-card-fav" title="お気に入りを解除">
+          <svg width="14" height="14" viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
+        </button>
+        <div class="prop-card-img-counter">写真 5枚</div>
+      </div>
+      <div class="prop-card-body">
+        <div class="prop-card-top">
+          <div class="prop-card-price-block">
+            <div class="prop-card-price">15.0万円</div>
+            <div class="prop-card-kanri">管理費込み</div>
+          </div>
+          <div class="prop-card-cta">
+            <button class="btn-cta">見学を相談</button>
+            <button class="btn-outline">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14,2 14,8 20,8"/></svg>
+              詳細を見る
+            </button>
+            <button class="btn-remove-fav" onclick="removeFav(this)">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+              削除
+            </button>
+          </div>
+        </div>
+        <div class="prop-card-fees">
+          <span class="fee-shiki">敷 <span class="fee-muryo">無料</span></span>
+          <span class="fee-divider">|</span>
+          <span class="fee-shiki">礼 <span class="fee-muryo">無料</span></span>
+          <span class="fee-divider">|</span>
+          <span class="fee-chu-tag">仲介手数料 0.5ヶ月</span>
+        </div>
+        <div class="prop-card-badges">
+          <span class="badge-tokku">初期トク</span>
+        </div>
+        <div class="prop-card-meta">
+          <span class="prop-card-meta-item">
+            <svg class="meta-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>
+            3LDK
+          </span>
+          <span class="prop-card-meta-item">
+            <svg class="meta-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18"/></svg>
+            82.6m²
+          </span>
+          <span class="prop-card-meta-item">
+            <svg class="meta-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/></svg>
+            築3年
+          </span>
+          <span class="prop-card-meta-item">
+            <svg class="meta-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V9z"/></svg>
+            10階 / 20階建
+          </span>
+        </div>
+        <div class="prop-card-station">
+          東京メトロ丸ノ内線「新宿」徒歩6分 / JR山手線「新宿」徒歩8分
+        </div>
+        <div class="prop-card-status">
+          <span class="status-movein">4月1日入居可</span>
+          <span class="status-current">募集中</span>
+          <span class="status-update">
+            <span class="update-dot"></span>5日前更新
+          </span>
+        </div>
+        <div class="prop-card-name">
+          <a href="#">シティタワー新宿 1005号室</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- 物件④ 募集終了 -->
+    <div class="prop-card is-closed" data-id="4">
+      <button class="prop-card-check" onclick="toggleSelect(this)" aria-label="選択">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3"><polyline points="20,6 9,17 4,12"/></svg>
+      </button>
+      <div class="prop-card-img">
+        🏠
+        <div class="fav-date-badge">
+          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
+          1ヶ月前
+        </div>
+        <button class="prop-card-fav" title="お気に入りを解除">
+          <svg width="14" height="14" viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
+        </button>
+        <div class="prop-card-img-counter">写真 10枚</div>
+      </div>
+      <div class="prop-card-body">
+        <div class="prop-card-top">
+          <div class="prop-card-price-block">
+            <div class="prop-card-price" style="color:var(--color-neutral-400);">13.5万円</div>
+            <div class="prop-card-kanri">管理費 6,000円</div>
+          </div>
+          <div class="prop-card-cta">
+            <button class="btn-outline" style="width:100%; border-color:var(--color-neutral-300);color:var(--color-neutral-500);">
+              類似物件を探す
+            </button>
+            <button class="btn-remove-fav" onclick="removeFav(this)">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+              削除
+            </button>
+          </div>
+        </div>
+        <div class="prop-card-badges">
+          <span class="badge-closed">募集終了</span>
+        </div>
+        <div class="prop-card-meta">
+          <span class="prop-card-meta-item">
+            <svg class="meta-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>
+            3LDK
+          </span>
+          <span class="prop-card-meta-item">
+            <svg class="meta-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18"/></svg>
+            70.0m²
+          </span>
+          <span class="prop-card-meta-item">
+            <svg class="meta-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/></svg>
+            築7年
+          </span>
+        </div>
+        <div class="prop-card-station">
+          東急東横線「中目黒」徒歩4分
+        </div>
+        <div class="prop-card-status">
+          <span style="color:var(--color-neutral-400);font-size:var(--font-size-xs);">この物件は募集が終了しました</span>
+        </div>
+        <div class="prop-card-name">
+          <a href="#" style="color:var(--color-neutral-400);">プラウド中目黒 804号室</a>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /property-list -->
+
+  <!-- 相談バナー -->
+  <div class="consult-banner">
+    <div class="consult-banner-icon">
+      <svg width="52" height="52" viewBox="0 0 72 72" fill="none">
+        <circle cx="36" cy="36" r="36" fill="#DAEEFF"/>
+        <path d="M22 28C22 20.27 28.27 14 36 14C43.73 14 50 20.27 50 28V30H22V28Z" fill="#2D2D2D"/>
+        <circle cx="36" cy="30" r="12" fill="#FDDCB5"/>
+        <ellipse cx="24" cy="30" rx="2.5" ry="3" fill="#FDDCB5"/>
+        <ellipse cx="48" cy="30" rx="2.5" ry="3" fill="#FDDCB5"/>
+        <circle cx="31.5" cy="29" r="1.8" fill="#2D2D2D"/>
+        <circle cx="40.5" cy="29" r="1.8" fill="#2D2D2D"/>
+        <path d="M31 34Q36 38.5 41 34" stroke="#C47D5A" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+        <rect x="33" y="41" width="6" height="5" fill="#FDDCB5"/>
+        <path d="M18 68C18 58.06 26.06 50 36 50C45.94 50 54 58.06 54 68H18Z" fill="#1AAFE8"/>
+        <path d="M36 46L31 52H41L36 46Z" fill="white"/>
+        <path d="M36 46L28 50L26 60L31 52Z" fill="#0E8EC5"/>
+        <path d="M36 46L44 50L46 60L41 52Z" fill="#0E8EC5"/>
+      </svg>
+    </div>
+    <div class="consult-banner-body">
+      <span class="consult-banner-label">無料相談</span>
+      <div class="consult-banner-title">気になる物件が見つかったらスタッフに相談してみましょう</div>
+      <div class="consult-banner-desc">
+        お気に入り物件の内見予約・条件交渉・未公開物件のご紹介など、何でもお気軽にご相談ください。
+      </div>
+    </div>
+    <a href="consult.html" class="btn-consult">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+      スタッフに相談する
+    </a>
+  </div>
+
+</main>
+
+<!-- ========== FOOTER ========== -->
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-logo">
+      <div class="footer-logo-icon"></div>
+      <span class="footer-logo-text">airdoor</span>
+    </div>
+    <div class="footer-links">
+      <a href="#">会社概要</a>
+      <a href="#">利用規約</a>
+      <a href="#">プライバシーポリシー</a>
+      <a href="#">特定商取引法に基づく表示</a>
+      <a href="#">お問い合わせ</a>
+    </div>
+    <div class="footer-copy">© 2024 airdoor Inc. All rights reserved.</div>
+  </div>
+</footer>
+
+<script>
+  /* ============================================================
+     SELECT / DESELECT
+  ============================================================ */
+  let selectedCards = new Set();
+
+  function toggleSelect(btn) {
+    const card = btn.closest('.prop-card');
+    const id = card.dataset.id;
+    if (selectedCards.has(id)) {
+      selectedCards.delete(id);
+      card.classList.remove('is-selected');
+    } else {
+      selectedCards.add(id);
+      card.classList.add('is-selected');
+    }
+    updateDeleteBtn();
+  }
+
+  function toggleSelectAll() {
+    const cards = document.querySelectorAll('.prop-card');
+    const allSelected = selectedCards.size === cards.length;
+    cards.forEach(card => {
+      const id = card.dataset.id;
+      if (allSelected) {
+        selectedCards.delete(id);
+        card.classList.remove('is-selected');
+      } else {
+        selectedCards.add(id);
+        card.classList.add('is-selected');
+      }
+    });
+    updateDeleteBtn();
+  }
+
+  function updateDeleteBtn() {
+    const btn = document.getElementById('deleteBtn');
+    if (selectedCards.size > 0) {
+      btn.classList.add('is-visible');
+      btn.textContent = `選択した ${selectedCards.size} 件を削除`;
+    } else {
+      btn.classList.remove('is-visible');
+    }
+  }
+
+  /* ============================================================
+     REMOVE FAV
+  ============================================================ */
+  function removeFav(btn) {
+    const card = btn.closest('.prop-card');
+    card.style.transition = 'opacity .3s, transform .3s';
+    card.style.opacity = '0';
+    card.style.transform = 'translateX(20px)';
+    setTimeout(() => {
+      card.remove();
+      updateCount();
+    }, 300);
+  }
+
+  function updateCount() {
+    const count = document.querySelectorAll('.prop-card').length;
+    document.querySelector('.page-title-count').textContent = count + '件';
+    document.querySelector('.badge-count').textContent = count;
+  }
+
+  /* ============================================================
+     HEART TOGGLE on fav button
+  ============================================================ */
+  document.querySelectorAll('.prop-card-fav').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      removeFav(btn);
+    });
+  });
+</script>
+</body>
+</html>
