@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>反響人数（実）推移</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<style>
+  body { font-family: sans-serif; background: #f5f5f5; padding: 20px; }
+  h1 { text-align: center; color: #333; }
+  .chart-container { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); max-width: 1400px; margin: 0 auto; }
+</style>
+</head>
+<body>
+<h1>反響人数（実）月次推移</h1>
+<div class="chart-container">
+  <canvas id="myChart"></canvas>
+</div>
+<script>
+const labels = [
+  '202202','202203','202204','202205','202206','202207',
+  '202208','202209','202210','202211','202212',
+  '202301','202302','202303','202304','202305','202306','202307',
+  '202308','202309','202310','202311','202312',
+  '202401','202402','202403','202404','202405','202406','202407','202408','202409','202410','202411','202412',
+  '202501','202502','202503','202504','202505','202506','202507','202508','202509','202510','202511','202512',
+  '202601','202602'
+];
+
+const data = [
+  18, 18, 38, 24, 46, 50,
+  100, 149, 179, 190, 178,
+  250, 200, 310, 293, 256, 230, 156,
+  213, 300, 288, 317, 355,
+  574, 570, 588, 553, 654, 644, 576, 603, 630, 741, 788, 646,
+  1066, 1192, 1355, 1162, 1221, 1049, 888, 913, 1030, 925, 971, 1166,
+  2375, 2283
+];
+
+// 年ごとに色を変える
+const colors = labels.map(label => {
+  const year = label.substring(0, 4);
+  const palette = {
+    '2022': 'rgba(135, 206, 235, 0.8)',
+    '2023': 'rgba(144, 238, 144, 0.8)',
+    '2024': 'rgba(255, 165, 0, 0.8)',
+    '2025': 'rgba(220, 80, 80, 0.8)',
+    '2026': 'rgba(160, 100, 220, 0.8)',
+  };
+  return palette[year] || 'rgba(180,180,180,0.8)';
+});
+
+const ctx = document.getElementById('myChart').getContext('2d');
+new Chart(ctx, {
+  type: 'bar',
+  data: {
+    labels,
+    datasets: [{
+      label: '反響人数（実）',
+      data,
+      backgroundColor: colors,
+      borderColor: colors.map(c => c.replace('0.8', '1')),
+      borderWidth: 1
+    }]
+  },
+  options: {
+    responsive: true,
+    plugins: {
+      legend: { display: false },
+      tooltip: {
+        callbacks: {
+          label: ctx => `${ctx.parsed.y.toLocaleString()} 人`
+        }
+      },
+      title: {
+        display: true,
+        text: '■ 2022  ■ 2023  ■ 2024  ■ 2025  ■ 2026',
+        color: '#555',
+        font: { size: 12 }
+      }
+    },
+    scales: {
+      x: {
+        ticks: { maxRotation: 90, minRotation: 45, font: { size: 11 } }
+      },
+      y: {
+        beginAtZero: true,
+        ticks: {
+          callback: v => v.toLocaleString()
+        },
+        title: { display: true, text: '人数' }
+      }
+    }
+  }
+});
+</script>
+</body>
+</html>
