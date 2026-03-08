@@ -34,8 +34,26 @@
     ,{
       "name": "うきまる",
       "runtimeExecutable": "python3",
-      "runtimeArgs": ["-m", "http.server", "3006"],
+      "runtimeArgs": ["-m", "http.server", "3006", "--directory", "interview"],
       "port": 3006
+    }
+    ,{
+      "name": "chart",
+      "runtimeExecutable": "python3",
+      "runtimeArgs": ["-m", "http.server", "3007"],
+      "port": 3007
+    }
+    ,{
+      "name": "partner-expansion",
+      "runtimeExecutable": "python3",
+      "runtimeArgs": ["-m", "http.server", "3008"],
+      "port": 3008
+    }
+    ,{
+      "name": "broker-map",
+      "runtimeExecutable": "python3",
+      "runtimeArgs": ["-m", "http.server", "3009"],
+      "port": 3009
     }
   ]
 }
