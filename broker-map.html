@@ -7,63 +7,93 @@
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { font-family: 'Helvetica Neue', Arial, sans-serif; background: #f0f4f8; }
+    body { font-family: -apple-system, 'Helvetica Neue', Arial, sans-serif; }
     #map { height: 100vh; width: 100%; }
 
     #panel {
       position: fixed;
-      top: 12px;
-      left: 12px;
-      background: white;
-      padding: 14px 18px;
-      border-radius: 10px;
-      box-shadow: 0 4px 16px rgba(0,0,0,0.18);
+      top: 20px;
+      left: 20px;
+      background: rgba(255,255,255,0.95);
+      backdrop-filter: blur(8px);
+      padding: 16px 20px;
+      border-radius: 14px;
+      box-shadow: 0 2px 20px rgba(0,0,0,0.10);
       z-index: 1000;
-      min-width: 260px;
+      min-width: 240px;
+      border: 1px solid rgba(0,0,0,0.06);
     }
-    #panel h2 {
-      font-size: 15px;
+    #panel-title {
+      font-size: 13px;
       font-weight: 700;
-      color: #1a1a2e;
-      margin-bottom: 8px;
+      color: #111;
+      letter-spacing: 0.02em;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    #panel-title span.dot {
+      display: inline-block;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #3B82F6;
     }
     #status-text {
-      font-size: 12px;
-      color: #555;
-      margin-bottom: 6px;
+      font-size: 11px;
+      color: #888;
+      margin-bottom: 8px;
+      letter-spacing: 0.01em;
     }
     #progress-bar-outer {
       width: 100%;
-      height: 7px;
-      background: #e0e0e0;
-      border-radius: 4px;
+      height: 3px;
+      background: #f0f0f0;
+      border-radius: 99px;
       overflow: hidden;
+      margin-bottom: 12px;
     }
     #progress-bar-inner {
       height: 100%;
-      background: linear-gradient(90deg, #2196F3, #42a5f5);
-      border-radius: 4px;
+      background: #3B82F6;
+      border-radius: 99px;
       width: 0%;
-      transition: width 0.4s ease;
+      transition: width 0.3s ease;
     }
     #count-badges {
       display: flex;
-      gap: 8px;
-      margin-top: 8px;
+      gap: 6px;
     }
     .badge {
       font-size: 11px;
-      padding: 2px 8px;
-      border-radius: 20px;
       font-weight: 600;
+      padding: 3px 10px;
+      border-radius: 99px;
+      letter-spacing: 0.01em;
     }
-    .badge-ok { background: #e3f2fd; color: #1565c0; }
-    .badge-fail { background: #fce4ec; color: #c62828; }
+    .badge-ok  { background: #EFF6FF; color: #2563EB; }
+    .badge-fail{ background: #FEF2F2; color: #DC2626; }
+
+    /* Leaflet UI をフラットに */
+    .leaflet-control-zoom a {
+      border-radius: 8px !important;
+      border: none !important;
+      box-shadow: 0 1px 6px rgba(0,0,0,0.12) !important;
+      color: #333 !important;
+    }
+    .leaflet-popup-content-wrapper {
+      border-radius: 10px !important;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.12) !important;
+      border: 1px solid rgba(0,0,0,0.06) !important;
+    }
+    .leaflet-popup-tip { display: none; }
+    .leaflet-popup-content { margin: 10px 14px !important; }
   </style>
 </head>
 <body>
   <div id="panel">
-    <h2>🏢 仲介会社 マップ</h2>
+    <div id="panel-title"><span class="dot"></span>仲介会社マップ</div>
     <div id="status-text">読み込み中...</div>
     <div id="progress-bar-outer">
       <div id="progress-bar-inner"></div>
@@ -79,19 +109,22 @@
   <script>
     const map = L.map('map').setView([35.69, 139.70], 11);
 
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-      maxZoom: 19
+    // CartoDB Positron — フラット・ミニマルな白地図
+    L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+      attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> © <a href="https://carto.com/">CARTO</a>',
+      subdomains: 'abcd',
+      maxZoom: 20
     }).addTo(map);
 
-    // Blue pin icon
-    const blueIcon = L.icon({
-      iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-blue.png',
-      shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-shadow.png',
-      iconSize: [25, 41],
-      iconAnchor: [12, 41],
-      popupAnchor: [1, -34],
-      shadowSize: [41, 41]
+    // フラットなブルー丸ピン（SVG divIcon）
+    const blueIcon = L.divIcon({
+      className: '',
+      html: `<svg width="18" height="18" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="9" cy="9" r="7" fill="#3B82F6" stroke="white" stroke-width="2.5"/>
+      </svg>`,
+      iconSize: [18, 18],
+      iconAnchor: [9, 9],
+      popupAnchor: [0, -12]
     });
 
     const addresses = [
